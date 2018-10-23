@@ -1,0 +1,76 @@
+import org.gradle.internal.os.OperatingSystem
+
+import java.text.SimpleDateFormat
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+version = '1.0.0'
+
+mainClassName = 'gamejam.Gamejam'
+
+
+static String buildTime() {
+    def format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z")
+    format.setTimeZone(TimeZone.getTimeZone("UTC"))
+    return format.format(new Date())
+}
+
+
+jar {
+    includeEmptyDirs = false
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    manifest {
+        manifest.attributes "Main-Class": mainClassName
+
+        manifest.attributes "Build-Time": buildTime()
+        manifest.attributes "Build-Version": version
+        manifest.attributes "Build-Tools": "gradle-${project.getGradle().getGradleVersion()}, groovy-${GroovySystem.getVersion()}, java-${System.getProperty('java.version')}"
+        manifest.attributes "Build-System": "${System.getProperty("os.name")} '${System.getProperty("os.version")}' (${System.getProperty("os.arch")})"
+    }
+
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA', "about.html"
+}
+
+
+
+
+// LWJGL
+
+project.ext.lwjglVersion = "3.2.0"
+
+switch (OperatingSystem.current()) {
+    case OperatingSystem.WINDOWS:
+        project.ext.lwjglNatives = "natives-windows"
+        break
+    case OperatingSystem.LINUX:
+        project.ext.lwjglNatives = "natives-linux"
+        break
+    case OperatingSystem.MAC_OS:
+        project.ext.lwjglNatives = "natives-macos"
+        break
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.lwjgl:lwjgl:$lwjglVersion"
+    compile "org.lwjgl:lwjgl-assimp:$lwjglVersion"
+    compile "org.lwjgl:lwjgl-egl:$lwjglVersion"
+    compile "org.lwjgl:lwjgl-glfw:$lwjglVersion"
+    compile "org.lwjgl:lwjgl-openal:$lwjglVersion"
+    compile "org.lwjgl:lwjgl-opengles:$lwjglVersion"
+    compile "org.lwjgl:lwjgl-stb:$lwjglVersion"
+    compile "org.lwjgl:lwjgl:$lwjglVersion:$lwjglNatives"
+    compile "org.lwjgl:lwjgl-assimp:$lwjglVersion:$lwjglNatives"
+    compile "org.lwjgl:lwjgl-glfw:$lwjglVersion:$lwjglNatives"
+    compile "org.lwjgl:lwjgl-openal:$lwjglVersion:$lwjglNatives"
+    compile "org.lwjgl:lwjgl-opengles:$lwjglVersion:$lwjglNatives"
+    compile "org.lwjgl:lwjgl-stb:$lwjglVersion:$lwjglNatives"
+}
