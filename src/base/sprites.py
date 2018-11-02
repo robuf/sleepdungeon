@@ -1,6 +1,9 @@
 from .sprite import Sprite
 
-class Sprites(object):
+class Sprites(list):
+
+    def __init__(self):
+        super().__init__()
 
     def getSpritesInRoom(self) -> Sprite:
         pass

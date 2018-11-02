@@ -25,7 +25,7 @@ class Game(object):
 
         context = Context()
         context.input_events = event_set
-
+        #context.sprites = self.current_room.sprites()
 
 
     def render(self):
