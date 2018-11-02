@@ -9,7 +9,6 @@ class SpriteType(Enum):
     ENTITY = 4
     GHOST = 5
 
-
 class ZIndex(object):
     BACKGROUND = -128
     GROUND = -64

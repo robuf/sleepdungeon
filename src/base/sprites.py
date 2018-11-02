@@ -1,6 +1,6 @@
-from base.sprite import Sprite
+from .sprite import Sprite
 
-class Sprites():
+class Sprites(object):
 
     def getSpritesInRoom(self) -> Sprite:
         pass

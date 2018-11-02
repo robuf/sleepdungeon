@@ -2,6 +2,9 @@ import pygame
 
 from .render_context import RenderContext
 from .base.inputs import InputEvent, InputManager
+from .base.context import Context
+from .base.floor import Floor
+from .base.room import Room
 
 class Game(object):
     def __init__(self, render_context: RenderContext):
@@ -9,8 +12,10 @@ class Game(object):
         self.render_context = render_context
         self.input_manager = InputManager()
         self.clock = pygame.time.Clock()
+        self.current_floor: Floor = None
+        self.current_room: Room = None
 
-    def handle_events(self):
+    def update(self):
         events = pygame.event.get()
         event_set = self.input_manager.get_events(events)
 
@@ -18,12 +23,17 @@ class Game(object):
             if event == InputEvent.QUIT:
                 self.running = False
 
+        context = Context()
+        context.input_events = event_set
+
+
+
     def render(self):
         self.render_context.screen.fill((255, 255, 255))
 
     def game(self):
         while self.running:
-            self.handle_events()
+            self.update()
             self.render()
 
             delta_t = self.clock.tick(60)

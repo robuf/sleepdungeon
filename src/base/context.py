@@ -5,7 +5,7 @@ from .inputs import InputEvent
 class Context:
 
     def __init__(self):
-        self.inputEvents: Set[InputEvent] = set()
+        self.input_events: Set[InputEvent] = set()
         self.sprites = list()
         self.mixer = None
         self.delta_t: int = 0

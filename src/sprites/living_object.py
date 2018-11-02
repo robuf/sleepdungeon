@@ -1,6 +1,7 @@
 from typing import Tuple
 
-from ..base import Sprite, Context
+from ..base.sprite import Sprite
+from ..base.context import Context
 from ..base.sprites import Sprites
 
 # Kümmert sich um die Funktionen des Players
