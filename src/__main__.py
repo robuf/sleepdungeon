@@ -1,5 +1,5 @@
-from . import main
+from . import GameJam20
 
 
 if __name__ == "__main__":
-    main()
+    GameJam20.main()
