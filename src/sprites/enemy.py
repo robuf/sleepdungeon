@@ -1,8 +1,9 @@
-from ..base.sprite import Sprite, SpriteType
+from typing import Tuple
+from ..base.sprite import SpriteType
+from sprites import LivingObject
 
 
-class Enemy(Sprite):
-
-    def __init__(self):
-        super().__init__()
+class Enemy(LivingObject):
+    def __init__(self, pos: Tuple[int, int]):
+        super().__init__(pos, None)
         self.type = SpriteType.ENEMY
