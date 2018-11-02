@@ -1,12 +1,11 @@
 from typing import Tuple
+from .living_object import LivingObject
 
-import pygame
+#Kümmert sich um die Funktionen des Players
 
-from base import Sprite, SpriteType, ZIndex, Context
-from sprites import LivingObject
-
+#Bewegung
+#Angriffe (Schwert, Bogen)
+#Leben, Items
 
 class Player(LivingObject):
-
-    def __init__(self, pos_x, pos_y, width: float, height: float):
-        super().__init__(pos_x, pos_y, width, height)
+    pass

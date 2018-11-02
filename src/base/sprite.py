@@ -1,29 +1,21 @@
 from typing import Tuple
-from base import Context
-from base.game_constants import SpriteType
 from abc import ABC, abstractmethod
-
 import pygame
-
-TILE_SIZE = 32
+from .context import Context
+from .game_constants import SpriteType
 
 
 class Sprite(ABC):
-
-    def __init__(self, z_index: int, width: float, height: float):
-        self.z_index: int = z_index
-        self.width: float = width
-        self.height: float = height
-
-        self.tile_size: int = 32
+    def __init__(self, pos: Tuple[int, int]):
+        self.position: Tuple[int, int] = pos
+        self.z_index: int = 0
+        self.type: SpriteType = None
+        self.tile_size = 32
+        self.width = 0
+        self.height = 0
 
     @abstractmethod
     def update(self, context: Context):
-        pass
-
-    @property
-    @abstractmethod
-    def position(self) -> Tuple[int, int]:
         pass
 
     @property

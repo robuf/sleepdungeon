@@ -1,8 +1,7 @@
 from typing import Tuple
 
-from base import Sprite, ZIndex, SpriteType, Context
-
-from sprites.sprites import Sprites
+from ..base import Sprite, Context
+from ..base.sprites import Sprites
 
 # Kümmert sich um die Funktionen des Players
 
@@ -10,22 +9,14 @@ from sprites.sprites import Sprites
 # Angriffe (Schwert, Bogen)
 # Leben, Items
 
-import pygame
-
-
 class LivingObject(Sprite):
 
     # initialisieren
-    def __init__(self, pos_x, pos_y, width: float, height: float, init_weapon):
-        super().__init__(ZIndex.PLAYGROUND, width, height)
-
-        self.pos_x = pos_x
-        self.pos_y = pos_y
+    def __init__(self, pos: Tuple[int, int], init_weapon):
+        super().__init__(pos)
 
         self.facing = 0
         self.walking = False
-
-        self.lo_rect = pygame.Rect(self.pos_x, self.pos_y, self.width, self.height)
 
         self.weapon = init_weapon
 
@@ -37,22 +28,26 @@ class LivingObject(Sprite):
         # facing up
         if (facing == 0):
             if (self.walking):
-                self.lo_rect.move(0, -1)
+                #self.lo_rect.move(0, -1)
+                pass
 
         # facing right
         elif (facing == 1):
             if (self.walking):
-                self.lo_rect.move(1, 0)
+                #self.lo_rect.move(1, 0)
+                pass
 
         # facing down
         elif (facing == 2):
             if (self.walking):
-                self.lo_rect.move(0, 1)
+                #self.lo_rect.move(0, 1)
+                pass
 
         # facing left
         elif (facing == 3):
             if (self.walking):
-                self.lo_rect.move(1, 0)
+                #self.lo_rect.move(1, 0)
+                pass
 
     def update(self, context: Context):
         super().update(context)
@@ -66,19 +61,22 @@ class LivingObject(Sprite):
             # facing up
             if (self.facing == 0):
                 for i in range(0, spritecount):
-                    if(Sprites.checkForSprite(i)):
-                        
+                    if(Sprites.checkForSprite(i, self.facing)):
+                        pass
 
 
             # facing right
             elif (self.facing == 1):
+                pass
 
             # facing down
             elif (self.facing == 2):
+                pass
 
             # facing left
             elif (self.facing == 3):
+                pass
 
     @property
     def position(self) -> Tuple[int, int]:
-        return self.pos_x, self.pos_y
+        return self.pos

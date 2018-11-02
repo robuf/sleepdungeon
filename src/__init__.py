@@ -1,10 +1,11 @@
 import pygame
 import sys
 from .render_context import RenderContext
+from .game import Game
 
 class GameJam20(object):
     def __init__(self):
-        self.render_context = RenderContext()
+        pass
 
     def initialize(self):
         if not pygame.font:
@@ -16,13 +17,12 @@ class GameJam20(object):
         # Pre initialize the mixer with a smaller buffer size, this solves
         # problems.
         pygame.mixer.pre_init(22050, -16, 2, 512)
+        pygame.joystick.init()
         pygame.init()
 
-    def game(self):
-        running = True
-
-        while running:
-            pass
+        self.render_context = RenderContext((800, 450))
+        self.game = Game(self.render_context)
 
     def main(self):
         self.initialize()
+        self.game.game()

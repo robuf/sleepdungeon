@@ -1,4 +1,4 @@
-from base.inputs import InputEvent, InputManager
-from base.context import Context
-from base.sprite import Sprite
-from base.game_constants import SpriteType, ZIndex
+from .inputs import InputEvent, InputManager
+from .context import Context
+from .sprite import Sprite
+from .game_constants import SpriteType, ZIndex
