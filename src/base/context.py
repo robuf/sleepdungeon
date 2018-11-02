@@ -1,5 +1,5 @@
 from typing import Set
-from base import InputEvent
+from .inputs import InputEvent
 
 
 class Context:

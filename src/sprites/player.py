@@ -1,4 +1,4 @@
-from base import Sprite
+from ..base.sprite import Sprite
 
 #Kümmert sich um die Funktionen des Players
 

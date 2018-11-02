@@ -1,4 +1,4 @@
-from base import Sprite, SpriteType
+from ..base.sprite import Sprite, SpriteType
 
 
 class Enemy(Sprite):

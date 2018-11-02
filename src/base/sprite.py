@@ -1,7 +1,8 @@
 from typing import Tuple
-from base import Context
-from base.game_constants import SpriteType
 import pygame
+
+from .context import Context
+from .game_constants import SpriteType
 
 
 class Sprite:
