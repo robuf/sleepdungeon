@@ -2,11 +2,5 @@
 
 Run this project:
 ```bash
-./gradlew run
-```
-
-Create a standalone jar file:
-```bash
-./gradlew jar
-java -jar build/libs/gamejam2-[version].jar
+python src/main.py
 ```

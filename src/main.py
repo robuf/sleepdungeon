@@ -3,7 +3,6 @@ import pygame
 if not pygame.font: print('Error pygame.font not found!')
 if not pygame.mixer: print('Error pygame.mixer not found!')
 
- 
 
 def main():
     pygame.init()
@@ -28,6 +27,6 @@ def main():
 
         pygame.display.flip()
 
+
 if __name__ == '__main__':
     main()
-
