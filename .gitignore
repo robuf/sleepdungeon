@@ -3,5 +3,9 @@ build/
 target/
 .gradle/
 
+__pycache__/*
+**/__pycache__/*
+
 *.swp
 *.swo
+*.pyc
