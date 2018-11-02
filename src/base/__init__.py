@@ -1,1 +1,1 @@
-from base.inputs import InputEvent, InputManager
+from .inputs import InputEvent, InputManager
