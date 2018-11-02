@@ -1,0 +1,22 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+try:
+	import src
+except ImportError:
+	# Module is not installed.
+	import inspect
+	import os
+	from pathlib import Path
+	directory = Path(
+		os.path.dirname(
+			os.path.abspath(inspect.getfile(inspect.currentframe()))
+		)
+	)
+	import sys
+	sys.path.insert(0, str(directory.parent))
+	import src
+
+
+if __name__ == "__main__":
+	src.main()
