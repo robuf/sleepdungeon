@@ -24,7 +24,7 @@ class InputManager:
             self.joystick = pygame.joystick.Joystick(0)
             self.joystick.init()
 
-    def get_events(self) -> Set['InputEvent']:
+    def get_events(self, events: list) -> Set['InputEvent']:
         event_set: Set['InputEvent'] = set()
 
         keys = pygame.key.get_pressed()
@@ -37,7 +37,6 @@ class InputManager:
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             event_set.add(InputEvent.MOVE_LEFT)
 
-        events = pygame.event.get()
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
