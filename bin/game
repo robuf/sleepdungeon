@@ -19,4 +19,4 @@ except ImportError:
 
 
 if __name__ == "__main__":
-	src.main()
+	src.GameJam20().main()
