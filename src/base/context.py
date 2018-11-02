@@ -8,3 +8,4 @@ class Context:
         self.inputEvents: Set[InputEvent] = set()
         self.sprites = list()
         self.mixer = None
+        self.delta_t: int = 0

@@ -1,5 +1,7 @@
+from enum import Enum
 
-class SpriteType(object):
+
+class SpriteType(Enum):
     PLAYER = 0
     ENEMY = 1
     ITEM = 2
@@ -25,7 +27,6 @@ class ZIndex(object):
     @staticmethod
     def is_playground(index: int) -> bool:
         return ZIndex.GROUND < index <= ZIndex.PLAYGROUND
-
 
     @staticmethod
     def is_sky(index: int) -> bool:
