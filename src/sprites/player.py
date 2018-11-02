@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from ..base.sprite import Sprite
 
 #Kümmert sich um die Funktionen des Players
@@ -11,12 +13,8 @@ import pygame
 class Player(Sprite):
 
     #initialisieren
-    def __init__(self):
-
-        w, h = pygame.display.get_surface().getSize()
-
-        self.pos_x = w/2
-        self.pos_y = h/2
+    def __init__(self, pos: Tuple[int, int]):
+        super().__init__(pos)
 
         self.walking = False
 

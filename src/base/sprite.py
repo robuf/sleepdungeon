@@ -6,8 +6,8 @@ from .game_constants import SpriteType
 
 
 class Sprite:
-    def __init__(self):
-        self.position: Tuple[int, int] = (0, 0)
+    def __init__(self, pos: Tuple[int, int]):
+        self.position: Tuple[int, int] = pos
         self.image: pygame.image = None
         self.z_index: int = 0
         self.rect: pygame.rect = None
