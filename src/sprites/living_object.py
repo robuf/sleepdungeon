@@ -13,8 +13,8 @@ from ..base.sprites import Sprites
 class LivingObject(Sprite):
 
     # initialisieren
-    def __init__(self, pos: Tuple[int, int], init_weapon):
-        super().__init__(pos)
+    def __init__(self, init_weapon):
+        super().__init__()
 
         self.facing = 0
         self.walking = False
