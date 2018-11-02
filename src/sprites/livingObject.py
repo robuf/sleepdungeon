@@ -8,17 +8,19 @@ from base import Sprite
 
 import pygame
 
-class Player(Sprite):
+class LivingObject(Sprite):
 
     #initialisieren
-    def __init__(self):
+    def __init__(self, pos_x, pos_y, playerWidth, playerHeight):
 
-        w, h = pygame.display.get_surface().getSize()
-
-        self.pos_x = w/2
-        self.pos_y = h/2
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+        self.width = playerWidth
+        self.height = playerHeight
 
         self.walking = False
+
+        self.object = pygame.Rect(self.pos_x, self.pos_y, self.width, self.height)
 
     def move(self, facing, walking = False):
 
@@ -27,21 +29,21 @@ class Player(Sprite):
         #facing up
         if(facing == 0):
             if(self.walking):
-                self.pos_y -= 1
+                self.object.move(0, -1)
 
         #facing right
         elif(facing == 1):
             if(self.walking):
-                self.pos_x += 1
+                self.object.move(1, 0)
 
         #facing down
         elif(facing == 2):
             if(self.walking):
-                self.pos_y += 1
+                self.object.move(0, 1)
 
         #facing left
         elif(facing == 3):
             if(self.walking):
-                self.pos_x -= 1
+                self.object.move(1, 0)
 
         self.walking = False
