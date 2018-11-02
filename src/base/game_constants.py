@@ -9,18 +9,18 @@ class SpriteType(object):
 
 
 class ZIndex(object):
-    BACKROUND = -128
+    BACKGROUND = -128
     GROUND = -64
     PLAYGROUND = 0
     SKY = 64
 
     @staticmethod
     def is_background(index: int) -> bool:
-        return index <= ZIndex.BACKROUND
+        return index <= ZIndex.BACKGROUND
 
     @staticmethod
     def is_ground(index: int) -> bool:
-        return ZIndex.BACKROUND < index <= ZIndex.GROUND
+        return ZIndex.BACKGROUND < index <= ZIndex.GROUND
 
     @staticmethod
     def is_playground(index: int) -> bool:
