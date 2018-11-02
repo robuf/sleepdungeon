@@ -1,5 +1,8 @@
 import pygame
 
+from typing import Set
+from base import InputEvent, InputManager
+
 if not pygame.font: print('Error pygame.font not found!')
 if not pygame.mixer: print('Error pygame.mixer not found!')
 
@@ -8,8 +11,8 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((800, 600))
     pygame.display.set_caption("GameJam2 - Dungeon")
-    pygame.mouse.set_visible(1)
-    pygame.key.set_repeat(1, 30)
+
+    inputs = InputManager()
 
     clock = pygame.time.Clock()
     running = True
@@ -18,12 +21,9 @@ def main():
         clock.tick(60)
         screen.fill((100, 100, 0))
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    pygame.event.post(pygame.event.Event(pygame.QUIT))
+        events: Set[InputEvent] = inputs.get_events()
+        if InputEvent.QUIT in events:
+            running = False
 
         pygame.display.flip()
 
