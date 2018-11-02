@@ -27,21 +27,21 @@ class Player(Sprite):
         #facing up
         if(facing == 0):
             if(self.walking):
-                self.pos_y -= 5
+                self.pos_y -= 1
 
         #facing right
         elif(facing == 1):
             if(self.walking):
-                self.pos_x += 5
+                self.pos_x += 1
 
         #facing down
         elif(facing == 2):
             if(self.walking):
-                self.pos_y += 5
+                self.pos_y += 1
 
         #facing left
         elif(facing == 3):
             if(self.walking):
-                self.pos_x -= 5
+                self.pos_x -= 1
 
         self.walking = False
