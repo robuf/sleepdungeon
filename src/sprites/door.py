@@ -48,25 +48,25 @@ class Door(Sprite):
 
         self.center: Position = Position(0, 0)
         self.facing = None
-        if side == "top":
+        if side == "TOP":
             self.position = Position(5, 0)
             self.width = 3
             self.height = 1
             self.center = Position(6, 0)
             self.facing = Facing.FACING_UP
-        elif side == "bottom":
+        elif side == "BOTTOM":
             self.position = Position(5, 8)
             self.width = 3
             self.height = 1
             self.center = Position(6, 8)
             self.facing = Facing.FACING_DOWN
-        elif side == "left":
+        elif side == "LEFT":
             self.position = Position(0, 3)
             self.width = 1
             self.height = 3
             self.center = Position(0, 4)
             self.facing = Facing.FACING_LEFT
-        elif side == "right":
+        elif side == "RIGHT":
             self.position = Position(12, 3)
             self.width = 1
             self.height = 3
