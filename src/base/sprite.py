@@ -21,13 +21,14 @@ class Sprite(ABC):
 
     @property
     @abstractmethod
-    def image(self) -> pygame.image:
+    def image(self) -> pygame.Surface:
         pass
 
     @property
-    @abstractmethod
     def rect(self) -> pygame.Rect:
-        pass
+        (x, y) = self.position
+        tile = self.tile_size
+        return pygame.Rect(x * tile, y * tile, self.width * tile, self.height * tile)
 
     @property
     def bounding_box(self) -> pygame.Rect:
