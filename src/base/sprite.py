@@ -11,7 +11,6 @@ class Sprite(ABC):
     def __init__(self):
         self.position: Position = Position(0, 0)
         self.z_index: int = 0
-        self.type: SpriteType = None
         self.tile_size = 32
         self.width = 0
         self.height = 0
@@ -22,6 +21,7 @@ class Sprite(ABC):
         pass
 
     def _update_render_context(self, render_context: RenderContext):
+        print(self)
         self.sidebar_width = render_context.sidebar_width
         self.tile_size =  render_context.tile_size
         self.update_render_context(render_context)
@@ -44,7 +44,7 @@ class Sprite(ABC):
         (x, y) = self.position
         tile = self.tile_size
         return pygame.Rect(
-            x * tile,
+            self.sidebar_width + x * tile,
             y * tile,
             self.width * tile,
             self.height * tile

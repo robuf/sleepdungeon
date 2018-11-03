@@ -24,8 +24,9 @@ class Game(object):
     def load(self):
         self.floors = LevelLoader().load_levels()
         self.current_floor = self.floors[0]
-        self.current_room = self.current_floor.rooms[0]
+        self.current_room = self.current_floor.initial_room
         for sprite in self.current_room.sprites:
+            print(sprite)
             sprite._update_render_context(self.render_context)
 
     def update(self):

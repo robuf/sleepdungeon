@@ -21,7 +21,10 @@ class Background(Sprite):
         self.tile_size = render_context.tile_size
         self.surface = pygame.transform.scale(
             self.surface,
-            render_context.resolution
+            [
+                render_context.resolution[0] - self.sidebar_width,
+                render_context.resolution[1]
+            ]
         )
 
     @property

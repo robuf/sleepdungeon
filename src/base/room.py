@@ -2,11 +2,15 @@ from typing import List, Optional
 
 from ..sprites.door import Door
 from ..sprites.background import Background
+from ..sprites.player import Player
 from ..sprites.stone import Stone
-from ..base.sprite import Sprite
-from ..base.sprites import Sprites
-
-
+from .sprite import Sprite
+from .sprites import Sprites
+from ..sprites.key import Key, KeyType
+from ..sprites.spdup import Spdup
+from ..sprites.dmgup import Dmgup
+from ..sprites.hpup import Hpup
+from .position import Position
 
 class Room(object):
     def __init__(self, path):
@@ -37,35 +41,48 @@ class Room(object):
             x = int(token[1])
             y = int(token[2])
 
+            pl = Player()
+            pl.position = Position(x, y)
+
+            return pl
+
         elif token[0] == "ENEMY":
             t = token[1]
             x = int(token[2])
             y = int(token[3])
-        
+
             if t == "":
                 pass
-                
+
         elif token[0] == "ITEM":
             t = token[1]
             x = int(token[2])
             y = int(token[3])
-        
-            if t == "":
-                pass                
+
+            if t == "KEY":
+                return Key(KeyType.NORMAL, x, y)
+            elif t == "BOSSKEY":
+                return Key(KeyType.BOSS, x, y)
+            elif t == "HPUP":
+                return Hpup(x, y)
+            elif t == "DMGUP":
+                return Dmgup(x, y)
+            elif t == "SPEEDUP":
+                return Spdup(x, y)
+
         elif token[0] == "ENTITY":
             t = token[1]
             x = int(token[2])
             y = int(token[3])
-        
+
             if t == "STONE":
                 return Stone(x, y)
-                pass
+
         elif token[0] == "GHOST":
             t = token[1]
             x = int(token[2])
             y = int(token[3])
-        
+
             if t == "":
                 pass
         return None
-
