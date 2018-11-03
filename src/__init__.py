@@ -2,6 +2,14 @@ import pygame
 import sys
 from .render_context import RenderContext
 from .game import Game
+from os.path import dirname, abspath
+import inspect
+
+FILE_DIRECTORY = dirname(
+    abspath(inspect.getfile(inspect.currentframe()))
+)
+
+RESOURCE_DIR = FILE_DIRECTORY + "/res/"
 
 class GameJam20(object):
     def __init__(self):
