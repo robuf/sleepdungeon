@@ -43,7 +43,11 @@ class Room(object):
         elif token[0] == "DOOR":
             side = token[1]
             next_room = token[2]
-            return Door(side, next_room)
+
+            key_count = 0
+            if len(token) > 3:
+                key_count = int(token[3])
+            return Door(side, next_room, key_count)
 
         elif token[0] == "PLAYER":
             x = int(token[1])
