@@ -80,7 +80,7 @@ class LivingObject(Sprite):
             index = 0
 
         if old_index != index:
-            self.move_cooldown_current = self._MO
+            self.move_cooldown_current = self._MOVE_COOLDOWN
             self.selected_weapon = self.weapon_list[index]
 
     def update(self, context: Context):
