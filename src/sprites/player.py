@@ -33,6 +33,8 @@ class Player(LivingObject):
     _WIDTH = 1
     _HEIGHT = 1
     _ANIMATION_LENGTH = 4
+    _MILISECONDS_PER_FRAME = 200
+    _MOVE_COOLDOWN = 200
 
     def __init__(self):
         super().__init__([1,1])
@@ -43,8 +45,6 @@ class Player(LivingObject):
             Player.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
 
         self.animation_i = 0
-        self.miliseconds_per_frame = 0
-        self.move_cooldown = 200
 
         self.lifes = 6
         self.max_lifes = 6
@@ -57,13 +57,6 @@ class Player(LivingObject):
         super().update(context)
 
         self.find_item(context)
-
-        if self.miliseconds_per_frame > 200:
-            self.miliseconds_per_frame = 0
-            self.animation_i += 1
-            if self.animation_i == Player._ANIMATION_LENGTH:
-                self.animation_i = 0
-        self.miliseconds_per_frame += context.delta_t
 
         for i in context.input_events:
             if i == InputEvent.SWAP:

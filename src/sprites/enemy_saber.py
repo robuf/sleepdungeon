@@ -21,6 +21,8 @@ class EnemySaber(LivingObject):
     _WIDTH = 1
     _HEIGHT = 1
     _ANIMATION_LENGTH = 4
+    _MILISECONDS_PER_FRAME = 200
+    _MOVE_COOLDOWN = 400
 
     def __init__(self):
         super().__init__([1, 1])
@@ -31,18 +33,10 @@ class EnemySaber(LivingObject):
             EnemySaber.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
 
         self.animation_i = 0
-        self.miliseconds_per_frame = 0
-        self.move_cooldown = 400
+        self.frame_cooldown = 0
 
     def update(self, context):
         super().update(context)
-
-        if self.miliseconds_per_frame > 200:
-            self.miliseconds_per_frame = 0
-            self.animation_i += 1
-            if self.animation_i == EnemySaber._ANIMATION_LENGTH:
-                self.animation_i = 0
-        self.miliseconds_per_frame += context.delta_t
 
         player = context.sprites.find_by_type(SpriteType.PLAYER)[0]
 

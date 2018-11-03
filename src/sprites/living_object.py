@@ -25,7 +25,7 @@ class LivingObject(Sprite):
 
         self.facing: Facing = Facing.FACING_UP
         self.move_cooldown_current = 0
-        self.move_cooldown = 150
+        self.animation_cooldown = 0
 
         self.weapon_list: List[Weapon] = []
         self.selected_weapon = None
@@ -68,7 +68,7 @@ class LivingObject(Sprite):
                 return
 
         self.position = new_pos
-        self.move_cooldown_current = self.move_cooldown
+        self.move_cooldown_current = self._MOVE_COOLDOWN
 
     def swap(self):
         if self.move_cooldown_current > 0:
@@ -80,11 +80,18 @@ class LivingObject(Sprite):
             index = 0
 
         if old_index != index:
-            self.move_cooldown_current = self.move_cooldown
+            self.move_cooldown_current = self._MO
             self.selected_weapon = self.weapon_list[index]
 
     def update(self, context: Context):
         super().update(context)
+
+        if self.animation_cooldown < 0:
+            self.animation_cooldown = self._MILISECONDS_PER_FRAME
+            self.animation_i += 1
+            if self.animation_i == self._ANIMATION_LENGTH:
+                self.animation_i = 0
+        self.animation_cooldown -= context.delta_t
 
         if self.move_cooldown_current > 0:
             self.move_cooldown_current -= context.delta_t
@@ -93,7 +100,7 @@ class LivingObject(Sprite):
         if self.move_cooldown_current > 0:
             return
 
-        self.move_cooldown_current = self.move_cooldown
+        self.move_cooldown_current = self._MOVE_COOLDOWN
         self.selected_weapon.attack(context)
 
     def damage(self, context: Context, damage: int):
