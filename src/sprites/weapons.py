@@ -2,7 +2,9 @@ from typing import Tuple
 
 import pygame
 
-from base import WeaponType, Sprite, SpriteType, Context, ZIndex
+from ..base.game_constants import ZIndex, WeaponType, SpriteType
+from ..base.context import Context
+from ..base.sprite import Sprite
 
 
 class Weapon(Sprite):

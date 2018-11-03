@@ -4,6 +4,7 @@ from ..base.sprite import Sprite
 from ..base.context import Context
 from ..base.sprites import Sprites
 from ..base.game_constants import ZIndex, Facing
+from .weapons import Weapon
 
 
 # Kümmert sich um die Funktionen des Players
@@ -15,7 +16,7 @@ from ..base.game_constants import ZIndex, Facing
 class LivingObject(Sprite):
 
     # initialisieren
-    def __init__(self, pos_x, pos_y, width: float, height: float, init_weapon: Wea):
+    def __init__(self, pos_x, pos_y, width: float, height: float, init_weapon: Weapon):
         super().__init__(ZIndex.PLAYGROUND, width, height)
 
         self.pos_x = pos_x
