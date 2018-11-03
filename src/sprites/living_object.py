@@ -3,8 +3,8 @@ from typing import Tuple
 from ..base.sprite import Sprite
 from ..base.context import Context
 from ..base.sprites import Sprites
-from ..base.game_constants import ZIndex, Facing, WeaponType
-from .weapons import Weapon, Sword, Bow
+from ..base.game_constants import ZIndex, Facing
+from .weapons import Weapon
 
 
 # Kümmert sich um die Funktionen des Players
@@ -16,15 +16,14 @@ from .weapons import Weapon, Sword, Bow
 class LivingObject(Sprite):
 
     # initialisieren
-    def __init__(self, pos_x, pos_y, width: float, height: float, init_weapon):
+    def __init__(self, pos_x, pos_y, width: float, height: float, init_weapon: Weapon):
         super().__init__(ZIndex.PLAYGROUND, width, height)
 
-        self.pos_x = pos_x
-        self.pos_y = pos_y
+        self.position.x = pos_x
+        self.position_y = pos_y
         self.facing: Facing = Facing.FACING_UP
         self.walking = False
 
-        #init_weapon: entweder Schwert oder Bogen
         self.weapon = init_weapon
 
     def move(self, facing: 'Facing', walking=False):
@@ -59,15 +58,24 @@ class LivingObject(Sprite):
         spritecount: int = Sprites.get_sprites_in_room()
 
         # Sword
-        if self.weapon.weapon_type == WeaponType.SWORD:
-            for i in range(0, spritecount):
-                if Sprites.check_for_sprite(i, self.facing, self.weapon.attack_range):
-                    Sword.attack(self.weapon, Sprites.get_sprite_in_front(i))
+        if self.weapon == 0:
+            # facing up
+            if self.facing == Facing.FACING_UP:
+                for i in range(0, spritecount):
+                    if Sprites.checkForSprite(i, self.facing):
+                        pass
 
-        elif self.weapon.weapon_type == WeaponType.Bow:
-            for i in range(0, spritecount):
-                if Sprites.check_for_sprite(i, self.facing, self.weapon.attack_range):
-                    Bow.attack(self.weapon, Sprites.get_sprite_in_front(i))
+            # facing right
+            elif self.facing == Facing.FACING_RIGHT:
+                pass
+
+            # facing down
+            elif self.facing == Facing.FACING_DOWN:
+                pass
+
+            # facing left
+            elif self.facing == Facing.FACING_LEFT:
+                pass
 
     @property
     def position(self) -> Tuple[int, int]:

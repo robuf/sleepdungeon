@@ -2,12 +2,13 @@ from typing import Tuple
 from abc import ABC, abstractmethod
 import pygame
 from .context import Context
+from .position import Position
 from .game_constants import SpriteType
 
 
 class Sprite(ABC):
     def __init__(self):
-        self.position: Tuple[int, int] = (0, 0)
+        self.position: Position = Position(0, 0)
         self.z_index: int = 0
         self.type: SpriteType = None
         self.tile_size = 32
