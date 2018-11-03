@@ -21,7 +21,6 @@ class Sprite(ABC):
         pass
 
     def _update_render_context(self, render_context: RenderContext):
-        print(self)
         self.sidebar_width = render_context.sidebar_width
         self.tile_size =  render_context.tile_size
         self.update_render_context(render_context)
