@@ -7,3 +7,5 @@ class Enemy(LivingObject):
     def __init__(self):
         super().__init__()
         self.type = SpriteType.ENEMY
+
+

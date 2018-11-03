@@ -67,7 +67,7 @@ class Room(object):
                 return Hpup(x, y)
             elif t == "DMGUP":
                 return Dmgup(x, y)
-            elif t == "SPEEDUP":
+            elif t == "SPDUP":
                 return Spdup(x, y)
 
         elif token[0] == "ENTITY":

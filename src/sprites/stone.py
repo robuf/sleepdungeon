@@ -1,5 +1,6 @@
 import pygame
 
+from src import RenderContext
 from ..base.context import Context
 from ..base.game_constants import SpriteType
 from ..base.sprite import Sprite
@@ -24,3 +25,8 @@ class Stone(Sprite):
     @property
     def sprite_type(self) -> SpriteType:
         return SpriteType.ENTITY
+
+    def update_render_context(self, render_context: RenderContext):
+        self.render_context = render_context
+        self.surface = pygame.transform.scale(
+            self.surface, (self.width * self.tile_size, self.height * self.tile_size))
