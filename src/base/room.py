@@ -1,6 +1,7 @@
 from typing import List, Optional
 
 from ..sprites.door import Door
+from ..sprites.background import Background
 from ..base.sprite import Sprite
 
 
