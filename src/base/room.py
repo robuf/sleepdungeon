@@ -68,11 +68,11 @@ class Room(object):
             y = int(token[3])
 
             en = None
-            if t == "saber":
+            if t == "SABER":
                 en = EnemySaber()
-            elif t == "archer":
+            elif t == "ARCHER":
                 en = EnemyArcher()
-            elif t == "shielder":
+            elif t == "SHIELDER":
                 en = EnemyShielder()
 
             en.position = Position(x, y)
