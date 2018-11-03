@@ -1,10 +1,10 @@
 from ..base.sprite import Sprite
 from ..base.context import Context
 from ..base.position import Position
-from ..base.game_constants import ZIndex, Facing, WeaponType, SpriteType
-from .weapons import Weapon, Sword, Bow
+from ..base.game_constants import ZIndex, Facing, SpriteType
+from .weapons import Weapon
 
-from typing import Optional
+from typing import List, Optional
 
 import pygame
 
@@ -18,16 +18,20 @@ import pygame
 class LivingObject(Sprite):
 
     # initialisieren
-    def __init__(self, size, init_weapon: Optional[Weapon]):
+    def __init__(self, size):
         super().__init__()
         self.z_index = ZIndex.PLAYGROUND
         self.width, self.height = size
 
         self.facing: Facing = Facing.FACING_UP
         self.move_cooldown_current = 0
-        self.move_cooldown = 150
+        self.animation_cooldown = 0
 
-        self.weapon = init_weapon
+        self.weapon_list: List[Weapon] = []
+        self.selected_weapon = None
+
+        self.lifes = 0
+        self.max_lifes = 0
 
     def move(self, facing: Facing, context: Context):
         if self.move_cooldown_current > 0:
@@ -64,58 +68,50 @@ class LivingObject(Sprite):
                 return
 
         self.position = new_pos
-        self.move_cooldown_current = self.move_cooldown
+        self.move_cooldown_current = self._MOVE_COOLDOWN
+
+    def swap(self):
+        if self.move_cooldown_current > 0:
+            return
+
+        old_index = self.weapon_list.index(self.selected_weapon)
+        index = old_index + 1
+        if index >= len(self.weapon_list):
+            index = 0
+
+        if old_index != index:
+            self.move_cooldown_current = self._MOVE_COOLDOWN
+            self.selected_weapon = self.weapon_list[index]
 
     def update(self, context: Context):
         super().update(context)
+
+        if self.animation_cooldown < 0:
+            self.animation_cooldown = self._MILISECONDS_PER_FRAME
+            self.animation_i += 1
+            if self.animation_i == self._ANIMATION_LENGTH:
+                self.animation_i = 0
+        self.animation_cooldown -= context.delta_t
+
         if self.move_cooldown_current > 0:
             self.move_cooldown_current -= context.delta_t
 
-    def attack(self, context: Context):
+    def can_attack(self, context: Context, sprite_type: SpriteType) -> bool:
+        return self.selected_weapon is not None and self.selected_weapon.can_attack(context, sprite_type, self.position,
+                                                                                    self.facing)
 
-        # Sword
-        if self.weapon.weapon_type == WeaponType.SWORD:
+    def attack(self, context: Context, sprite_type: SpriteType):
+        if self.move_cooldown_current > 0:
+            return
 
-            # Animation einfügen Schwert
+        self.move_cooldown_current = self._MOVE_COOLDOWN
+        self.selected_weapon.attack(context, sprite_type, self.position, self.facing)
 
-            for model in context.sprites:
-                if self.facing == Facing.FACING_UP:
-                    if self.position.y - self.weapon.attack_range == model.position.y:
-                        Sword.attack(self.weapon, model)
-
-                if self.facing == Facing.FACING_RIGHT:
-                    if self.position.x + self.weapon.attack_range == model.position.y:
-                        Sword.attack(self.weapon, model)
-
-                if self.facing == Facing.FACING_LEFT:
-                    if self.position.x - self.weapon.attack_range == model.position.y:
-                        Sword.attack(self.weapon, model)
-
-                if self.facing == Facing.FACING_DOWN:
-                    if self.position.y + self.weapon.attack_range == model.position.y:
-                        Sword.attack(self.weapon, model)
-
-        # Bow
-        if self.weapon.weapon_type == WeaponType.BOW:
-
-            # Animation einfügen Bogen, Pfeil
-
-            for model in context.sprites:
-                if self.facing == Facing.FACING_UP:
-                    if self.position.y - self.weapon.attack_range == model.position.y:
-                        Bow.attack(self.weapon, model)
-
-                if self.facing == Facing.FACING_RIGHT:
-                    if self.position.x + self.weapon.attack_range == model.position.y:
-                        Bow.attack(self.weapon, model)
-
-                if self.facing == Facing.FACING_LEFT:
-                    if self.position.x - self.weapon.attack_range == model.position.y:
-                        Bow.attack(self.weapon, model)
-
-                if self.facing == Facing.FACING_DOWN:
-                    if self.position.y + self.weapon.attack_range == model.position.y:
-                        Bow.attack(self.weapon, model)
+    def damage(self, context: Context, damage: int):
+        self.lifes -= damage
+        # print(str(type(self)) + " has " + str(self.lifes) + " left")
+        if self.lifes <= 0:
+            context.sprites.remove(self)
 
     @property
     def bounding_box(self) -> pygame.Rect:

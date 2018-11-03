@@ -20,35 +20,50 @@ import pygame
 # Leben, Items
 
 class Player(LivingObject):
+    __BASE_UP_SURFACE: pygame.Surface = None
+    __BASE_DOWN_SURFACE: pygame.Surface = None
+    __BASE_LEFT_SURFACE: pygame.Surface = None
+    __BASE_RIGHT_SURFACE: pygame.Surface = None
+
+    __SURFACE_UP: pygame.Surface = None
+    __SURFACE_DOWN: pygame.Surface = None
+    __SURFACE_LEFT: pygame.Surface = None
+    __SURFACE_RIGHT: pygame.Surface = None
+
+    _WIDTH = 1
+    _HEIGHT = 1
+    _ANIMATION_LENGTH = 4
+    _MILISECONDS_PER_FRAME = 200
+    _MOVE_COOLDOWN = 200
+
     def __init__(self):
-        super().__init__([1, 1], None)
-        self.__image_up = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
-        self.__image_down = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
-        self.__image_left = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
-        self.__image_right = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
+        super().__init__([1,1])
+        if not Player.__BASE_UP_SURFACE:
+            Player.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
+            Player.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
+            Player.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
+            Player.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
 
-        self.animation_length = 4
         self.animation_i = 0
-        self.miliseconds_per_frame = 0
-        self.move_cooldown = 200
 
-        self.lifes = 0
+        self.lifes = 6
         self.max_lifes = 6
         self.key = 0
+
+        self.selected_weapon = Sword()
+        self.weapon_list = [self.selected_weapon, Bow()]
 
     def update(self, context):
         super().update(context)
 
         self.find_item(context)
 
-        if self.miliseconds_per_frame > 200:
-            self.miliseconds_per_frame = 0
-            self.animation_i += 1
-            if self.animation_i == self.animation_length:
-                self.animation_i = 0
-        self.miliseconds_per_frame += context.delta_t
-
         for i in context.input_events:
+            if i == InputEvent.SWAP:
+                self.swap()
+            if i == InputEvent.ATTACK:
+                self.attack(context, SpriteType.ENEMY)
+
             if i == InputEvent.MOVE_UP:
                 self.move(Facing.FACING_UP, context)
             if i == InputEvent.MOVE_DOWN:
@@ -61,13 +76,13 @@ class Player(LivingObject):
     @property
     def image(self):
         if self.facing == Facing.FACING_UP:
-            img = self.__image_up
+            img = Player.__SURFACE_UP
         elif self.facing == Facing.FACING_DOWN:
-            img = self.__image_down
+            img = Player.__SURFACE_DOWN
         if self.facing == Facing.FACING_LEFT:
-            img = self.__image_left
+            img = Player.__SURFACE_LEFT
         elif self.facing == Facing.FACING_RIGHT:
-            img = self.__image_right
+            img = Player.__SURFACE_RIGHT
 
         return img.subsurface(
             pygame.Rect(
@@ -82,23 +97,35 @@ class Player(LivingObject):
     def sprite_type(self) -> SpriteType:
         return SpriteType.PLAYER
 
-    def update_render_context(self, render_context):
-        self.render_context = render_context
-        self.__image_up = scale(
-            self.__image_up,
-            (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
+    @classmethod
+    def update_render_context(cls, render_context):
+        Player.__SURFACE_UP = pygame.transform.smoothscale(
+            Player.__BASE_UP_SURFACE,
+            (
+                Player._WIDTH * cls.tile_size * Player._ANIMATION_LENGTH,
+                Player._HEIGHT * cls.tile_size
+            )
         )
-        self.__image_down = scale(
-            self.__image_down,
-            (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
+        Player.__SURFACE_DOWN = pygame.transform.smoothscale(
+            Player.__BASE_DOWN_SURFACE,
+            (
+                Player._WIDTH * cls.tile_size * Player._ANIMATION_LENGTH,
+                Player._HEIGHT * cls.tile_size
+            )
         )
-        self.__image_left = scale(
-            self.__image_left,
-            (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
+        Player.__SURFACE_LEFT = pygame.transform.smoothscale(
+            Player.__BASE_LEFT_SURFACE,
+            (
+                Player._WIDTH * cls.tile_size * Player._ANIMATION_LENGTH,
+                Player._HEIGHT * cls.tile_size
+            )
         )
-        self.__image_right = scale(
-            self.__image_right,
-            (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
+        Player.__SURFACE_RIGHT = pygame.transform.smoothscale(
+            Player.__BASE_RIGHT_SURFACE,
+            (
+                Player._WIDTH * cls.tile_size * Player._ANIMATION_LENGTH,
+                Player._HEIGHT * cls.tile_size
+            )
         )
 
     def find_item(self, context):
@@ -119,12 +146,9 @@ class Player(LivingObject):
 
             elif isinstance(item, Dmgup):
                 context.sprites.remove(item)
-                #self.weapon.attack_damage += 1
-                #increment damage
+                for weapon in self.weapon_list:
+                    weapon.attack_damage += 1
 
             elif isinstance(item, Spdup):
                 context.sprites.remove(item)
-                #increment speed
-
-
-
+                # increment speed

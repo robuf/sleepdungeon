@@ -1,96 +1,64 @@
-from typing import Tuple
-
-import pygame
-
-from src import RenderContext
-from ..base.game_constants import ZIndex, WeaponType, SpriteType, Facing
+from ..base.game_constants import WeaponType, SpriteType, Facing
 from ..base.context import Context
-from ..base.sprite import Sprite
+from ..base.position import Position
+from typing import Optional
 
 
-class Weapon(Sprite):
-    def __init__(self, weapon_type: WeaponType, player_facing, atk_damage: int, atk_range: int):
-        super().__init__()
-
-        self.z_index = ZIndex.PLAYGROUND
-        self.width = 1
-        self.height = 1
-
+class Weapon(object):
+    def __init__(self, weapon_type: WeaponType, attack_damage: int, attack_range: int):
         self.weapon_type = weapon_type
 
-        self.attack_damage = atk_damage
-        self.attack_range = atk_range
+        self.attack_damage = attack_damage
+        self.attack_range = attack_range
 
-        self.facing = player_facing
+    @staticmethod
+    def get_field(start: Position, facing: Facing, steps: int) -> Position:
+        if facing == Facing.FACING_UP:
+            if start.y - steps < 0:
+                return
+            return Position(start.x, start.y - steps)
+        elif facing == Facing.FACING_RIGHT:
+            if start.x + steps > 12:
+                return
+            return Position(start.x + steps, start.y)
+        elif facing == Facing.FACING_DOWN:
+            if start.y + steps > 8:
+                return
+            return Position(start.x, start.y + steps)
+        elif facing == Facing.FACING_LEFT:
+            if start.x - steps < 0:
+                return
+            return Position(start.x - steps, start.y)
 
-    def update(self, context: Context):
-        pass
+        return None
 
-    def update_render_context(self, render_context: RenderContext):
-        pass
+    def attack(self, context: Context, sprite_type: SpriteType, position: Position, facing: Facing):
+        target = self.find_target(context, sprite_type, position, facing)
 
-    @property
-    def position(self) -> Tuple[int, int]:
-        pass
+        if target is not None:
+            target.damage(context, self.attack_damage)
 
-    @property
-    def image(self) -> pygame.Surface:
-        pass
+    def find_target(self, context: Context, sprite_type: SpriteType, position: Position, facing: Facing) -> Optional[
+        object]:
+        for i in range(0, self.attack_range):
+            pos = Weapon.get_field(position, facing, i + 1)
+            if not pos:
+                continue
+            sprite_list = context.sprites.find_by_type_and_pos(sprite_type, pos)
 
-    @property
-    def rect(self) -> pygame.Rect:
-        pass
+            for sprite in sprite_list:
+                return sprite
+        return None
 
-    @property
-    def bounding_box(self) -> pygame.Rect:
-        (x, y) = self.position
-        tile = self.tile_size
-
-        if self.facing == Facing.FACING_UP:
-            return pygame.Rect(
-                self.sidebar_width + x * tile,
-                (y - 1) * tile,
-                self.width * tile,
-                self.height * self.attack_range * tile
-            )
-        elif self.facing == Facing.FACING_RIGHT:
-            return pygame.Rect(
-                self.sidebar_width + (x + 1) * tile,
-                y * tile,
-                self.width * self.attack_range * tile,
-                self.height * tile
-            )
-        elif self.facing == Facing.FACING_DOWN:
-            return pygame.Rect(
-                self.sidebar_width + x * tile,
-                (y + 1) * tile,
-                self.width * tile,
-                self.height * self.attack_range * tile
-            )
-        elif self.facing == Facing.FACING_LEFT:
-            return pygame.Rect(
-                self.sidebar_width + (x - 1) * tile,
-                y * tile,
-                self.width * self.attack_range * tile,
-                self.height * tile
-            )
-
-    @property
-    def sprite_type(self) -> SpriteType:
-        return SpriteType.ITEM
+    def can_attack(self, context: Context, sprite_type: SpriteType, position: Position, facing: Facing) -> bool:
+        return self.find_target(context, sprite_type, position, facing) is not None
 
 
 class Sword(Weapon):
     def __init__(self):
-        super().__init__(WeaponType.SWORD)
-
-    def attack(self: Weapon, in_front):
-        in_front.life -= self.attack_damage
+        super().__init__(WeaponType.SWORD, 1, 1)
 
 
 class Bow(Weapon):
     def __init__(self):
-        super().__init__(WeaponType.SWORD)
-
-    def attack(self: Weapon, on_line):
-        on_line.life -= self.attack_damage
+        super().__init__(WeaponType.BOW, 1, 4)

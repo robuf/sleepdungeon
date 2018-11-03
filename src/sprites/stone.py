@@ -10,9 +10,13 @@ from ..res import IMG_DIR
 
 
 class Stone(Sprite):
+    __BASE_SURFACE: pygame.Surface = None
+    __SURFACE: pygame.Surface = None
+
     def __init__(self, x: int, y: int):
         super().__init__()
-        self.surface = pygame.image.load(IMG_DIR + "room/stone/stone.png")
+        if not Stone.__BASE_SURFACE:
+            Stone.__BASE_SURFACE = pygame.image.load(IMG_DIR + "room/stone/stone.png")
         self.width = 1
         self.height = 1
         self.position = Position(x, y)
@@ -22,13 +26,18 @@ class Stone(Sprite):
 
     @property
     def image(self) -> pygame.Surface:
-        return self.surface
+        return Stone.__SURFACE
 
     @property
     def sprite_type(self) -> SpriteType:
         return SpriteType.STATIC
 
-    def update_render_context(self, render_context: RenderContext):
-        self.render_context = render_context
-        self.surface = scale(
-            self.surface, (self.width * self.tile_size, self.height * self.tile_size))
+    @classmethod
+    def update_render_context(cls, render_context: RenderContext):
+        Stone.__SURFACE = pygame.transform.smoothscale(
+            Stone.__BASE_SURFACE,
+            (
+                cls.tile_size,
+                cls.tile_size
+            )
+        )
