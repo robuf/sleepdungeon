@@ -21,7 +21,7 @@ import pygame
 
 class Player(LivingObject):
     def __init__(self):
-        super().__init__([1, 1], None)
+        super().__init__([1, 1])
         self.__image_up = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
         self.__image_down = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
         self.__image_left = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
@@ -32,9 +32,12 @@ class Player(LivingObject):
         self.miliseconds_per_frame = 0
         self.move_cooldown = 200
 
-        self.lifes = 0
+        self.lifes = 6
         self.max_lifes = 6
         self.key = 0
+
+        self.selected_weapon = Sword()
+        self.weapon_list = [self.selected_weapon, Bow()]
 
     def update(self, context):
         super().update(context)
@@ -49,6 +52,11 @@ class Player(LivingObject):
         self.miliseconds_per_frame += context.delta_t
 
         for i in context.input_events:
+            if i == InputEvent.SWAP:
+                self.swap()
+            if i == InputEvent.ATTACK:
+                self.attack(context)
+
             if i == InputEvent.MOVE_UP:
                 self.move(Facing.FACING_UP, context)
             if i == InputEvent.MOVE_DOWN:
@@ -119,12 +127,9 @@ class Player(LivingObject):
 
             elif isinstance(item, Dmgup):
                 context.sprites.remove(item)
-                #self.weapon.attack_damage += 1
-                #increment damage
+                for weapon in self.weapon_list:
+                    weapon.attack_damage += 1
 
             elif isinstance(item, Spdup):
                 context.sprites.remove(item)
-                #increment speed
-
-
-
+                # increment speed
