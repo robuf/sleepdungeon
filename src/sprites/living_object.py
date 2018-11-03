@@ -1,10 +1,10 @@
 from ..base.sprite import Sprite
 from ..base.context import Context
 from ..base.position import Position
-from ..base.game_constants import ZIndex, Facing, WeaponType, SpriteType
-from .weapons import Weapon, Sword, Bow
+from ..base.game_constants import ZIndex, Facing, SpriteType
+from .weapons import Weapon
 
-from typing import List
+from typing import List, Optional
 
 import pygame
 
@@ -89,16 +89,21 @@ class LivingObject(Sprite):
         if self.move_cooldown_current > 0:
             self.move_cooldown_current -= context.delta_t
 
-    def attack(self, context: Context):
+    def can_attack(self, context: Context, sprite_type: SpriteType) -> bool:
+        return self.selected_weapon is not None and self.selected_weapon.can_attack(context, sprite_type, self.position,
+                                                                                    self.facing)
+
+    def attack(self, context: Context, sprite_type: SpriteType):
         if self.move_cooldown_current > 0:
             return
 
         self.move_cooldown_current = self.move_cooldown
-        self.selected_weapon.attack(context)
+        self.selected_weapon.attack(context, sprite_type, self.position, self.facing)
 
     def damage(self, context: Context, damage: int):
         self.lifes -= damage
-        if self.lifes < 0:
+        # print(str(type(self)) + " has " + str(self.lifes) + " left")
+        if self.lifes <= 0:
             context.sprites.remove(self)
 
     @property

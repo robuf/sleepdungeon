@@ -1,6 +1,7 @@
 from ..base.game_constants import WeaponType, SpriteType, Facing
 from ..base.context import Context
 from ..base.position import Position
+from typing import Optional
 
 
 class Weapon(object):
@@ -23,17 +24,27 @@ class Weapon(object):
 
         return None
 
-    def attack(self, context: Context):
-        player = context.sprites.find_by_type(SpriteType.PLAYER)[0]
+    def attack(self, context: Context, sprite_type: SpriteType, position: Position, facing: Facing):
+        target = self.find_target(context, sprite_type, position, facing)
 
+        if target is not None:
+            target.damage(context, self.attack_damage)
+
+    def find_target(self, context: Context, sprite_type: SpriteType, position: Position, facing: Facing) -> Optional[
+        object]:
         for i in range(0, self.attack_range):
-            pos = Weapon.get_field(player.position, player.facing, i + 1)
-            enemies = context.sprites.find_by_type_and_pos(SpriteType.ENEMY, pos)
+            try:
+                pos = Weapon.get_field(position, facing, i + 1)
+                sprite_list = context.sprites.find_by_type_and_pos(sprite_type, pos)
 
-            if len(enemies) > 0:
-                enemy = enemies[0]
-                enemy.damage(context, self.attack_damage)
-                return
+                for sprite in sprite_list:
+                    return sprite
+            except:
+                pass
+        return None
+
+    def can_attack(self, context: Context, sprite_type: SpriteType, position: Position, facing: Facing) -> bool:
+        return self.find_target(context, sprite_type, position, facing) is not None
 
 
 class Sword(Weapon):

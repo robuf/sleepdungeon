@@ -1,3 +1,4 @@
+from .weapons import Sword
 from ..util.scale import scale
 from .living_object import LivingObject
 from ..base.game_constants import SpriteType
@@ -20,6 +21,12 @@ class EnemySaber(LivingObject):
         self.miliseconds_per_frame = 0
         self.move_cooldown = 400
 
+        self.lifes = 3
+        self.max_lifes = 3
+
+        self.selected_weapon = Sword()
+        self.weapon_list = [self.selected_weapon]
+
     def update(self, context):
         super().update(context)
 
@@ -29,6 +36,9 @@ class EnemySaber(LivingObject):
             if self.animation_i == self.animation_length:
                 self.animation_i = 0
         self.miliseconds_per_frame += context.delta_t
+
+        if self.can_attack(context, SpriteType.PLAYER):
+            self.attack(context, SpriteType.PLAYER)
 
         player = context.sprites.find_by_type(SpriteType.PLAYER)[0]
 

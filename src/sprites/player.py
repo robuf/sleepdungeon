@@ -55,7 +55,7 @@ class Player(LivingObject):
             if i == InputEvent.SWAP:
                 self.swap()
             if i == InputEvent.ATTACK:
-                self.attack(context)
+                self.attack(context, SpriteType.ENEMY)
 
             if i == InputEvent.MOVE_UP:
                 self.move(Facing.FACING_UP, context)
