@@ -11,6 +11,7 @@ FILE_DIRECTORY = dirname(
 
 RESOURCE_DIR = FILE_DIRECTORY + "/res/"
 
+
 class GameJam20(object):
     def __init__(self):
         pass

@@ -1,14 +1,10 @@
-from typing import Tuple
-import pygame
-
 from ..base.sprite import Sprite
 from ..base.context import Context
-from ..base.sprites import Sprites
 from ..base.game_constants import ZIndex, Facing, WeaponType
-from ..base.position import Position
 from .weapons import Weapon, Sword, Bow
 
 import pygame
+
 
 # Kümmert sich um die Funktionen des Players
 
@@ -78,7 +74,6 @@ class LivingObject(Sprite):
 
             if collided >= 0:
                 Bow.attack(self.weapon, context.sprites[collided])
-
 
     @property
     def bounding_box(self) -> pygame.Rect:

@@ -8,6 +8,7 @@ from .base.floor import Floor
 from .base.room import Room
 from .level_loader import LevelLoader
 
+
 class Game(object):
     def __init__(self, render_context: RenderContext):
         self.running = True
