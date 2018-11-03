@@ -3,9 +3,13 @@ from typing import List, Optional
 from ..sprites.door import Door
 from ..sprites.background import Background
 from ..sprites.stone import Stone
+from ..sprites.key import Key
+from ..sprites.key import KeyType
+from ..sprites.spdup import Spdup
+from ..sprites.dmgup import Dmgup
+from ..sprites.hpup import Hpup
 from ..base.sprite import Sprite
 from ..base.sprites import Sprites
-
 
 
 class Room(object):
@@ -50,8 +54,17 @@ class Room(object):
             x = int(token[2])
             y = int(token[3])
         
-            if t == "":
-                pass                
+            if t == "KEY":
+                return Key(KeyType.NORMAL, x, y)
+            elif t == "BOSSKEY":
+                return Key(KeyType.BOSS, x, y)
+            elif t == "HPUP":
+                return Hpup(x, y)
+            elif t == "DMGUP":
+                return Dmgup(x, y)
+            elif t == "SPEEDUP":
+                return Spdup(x, y)
+
         elif token[0] == "ENTITY":
             t = token[1]
             x = int(token[2])
@@ -59,7 +72,7 @@ class Room(object):
         
             if t == "STONE":
                 return Stone(x, y)
-                pass
+
         elif token[0] == "GHOST":
             t = token[1]
             x = int(token[2])
