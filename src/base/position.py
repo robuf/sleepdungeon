@@ -1,7 +1,7 @@
 
 class Position(list):
     def __init__(self, x: int, y: int):
-        super().__init__()
+        super().__init__((0, 0))
         self.x = x
         self.y = y
 
@@ -10,7 +10,7 @@ class Position(list):
         return self[0]
 
     @x.setter
-    def set_x(self, value):
+    def x(self, value):
         if 0 <= value <= 12:
             self[0] = value
             return
@@ -22,7 +22,7 @@ class Position(list):
         return self[1]
 
     @y.setter
-    def set_y(self, value):
+    def y(self, value):
         if 0 <= value <= 12:
             self[1] = value
             return

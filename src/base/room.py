@@ -3,11 +3,12 @@ from typing import List, Optional
 from ..sprites.door import Door
 from ..sprites.background import Background
 from ..base.sprite import Sprite
+from ..base.sprites import Sprites
 
 
 class Room(object):
     def __init__(self, path):
-        self.sprites = list()
+        self.sprites = Sprites()
         with open(path, 'r') as f:
             for line in f.readlines():
                 line = line.split(" ")
@@ -18,7 +19,7 @@ class Room(object):
     @staticmethod
     def parse(token: List[str]) -> Optional[Sprite]:
         if token[0] == "BACKGROUND":
-            name = token[1]
+            name = token[1].strip()
 
             return Background(name)
 
