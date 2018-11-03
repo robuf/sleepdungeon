@@ -3,8 +3,8 @@ from typing import Tuple
 from ..base.sprite import Sprite
 from ..base.context import Context
 from ..base.sprites import Sprites
-from ..base.game_constants import ZIndex, Facing
-from .weapons import Weapon
+from ..base.game_constants import ZIndex, Facing, WeaponType
+from .weapons import Weapon, Sword, Bow
 
 
 # Kümmert sich um die Funktionen des Players
@@ -58,24 +58,23 @@ class LivingObject(Sprite):
         spritecount: int = Sprites.get_sprites_in_room()
 
         # Sword
-        if self.weapon == 0:
-            # facing up
-            if self.facing == Facing.FACING_UP:
-                for i in range(0, spritecount):
-                    if Sprites.checkForSprite(i, self.facing):
-                        pass
+        if self.weapon.weapon_type == WeaponType.SWORD:
 
-            # facing right
-            elif self.facing == Facing.FACING_RIGHT:
-                pass
+            # Animation einfügen Schwert
 
-            # facing down
-            elif self.facing == Facing.FACING_DOWN:
-                pass
+            for i in range(0, spritecount):
+                if Sprites.checkForSprite(i, self.facing, Sword.attack_range):
+                    pass
 
-            # facing left
-            elif self.facing == Facing.FACING_LEFT:
-                pass
+        # Bow
+        elif self.weapon.weapon_type == WeaponType.SWORD:
+
+            # Animation einfügen Bogen
+            # Animation einfügen Pfeil
+
+            for i in range(0, spritecount):
+                if Sprites.checkForSprite(i, self.facing, Bow.attack_range):
+                    pass
 
     @property
     def position(self) -> Tuple[int, int]:
