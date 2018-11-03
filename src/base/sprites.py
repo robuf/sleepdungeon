@@ -1,4 +1,6 @@
+from typing import Optional, Tuple
 from .sprite import Sprite
+
 
 class Sprites(list):
 
@@ -9,4 +11,7 @@ class Sprites(list):
         pass
 
     def checkForSprite(self) -> Sprite:
+        pass
+
+    def find_sprites_by_type(self, sprite_type: Optional[object], position: Optional[Tuple[int, int]] = None):
         pass

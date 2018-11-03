@@ -1,13 +1,12 @@
-from ..sprites.player import Player
-from ..res import IMG_DIR, LEVEL_DIR
 from typing import List, Optional
-import pygame
+
+from ..sprites.door import Door
+from ..base.sprite import Sprite
 
 
 class Room(object):
     def __init__(self, path):
         self.sprites = list()
-        self.room = list()
         with open(path, 'r') as f:
             for line in f.readlines():
                 line = line.split(" ")
@@ -16,15 +15,17 @@ class Room(object):
                     self.sprites.append(x)
 
     @staticmethod
-    def parse(token: List[str]) -> Optional[object]:
+    def parse(token: List[str]) -> Optional[Sprite]:
         if token[0] == "BACKGROUND":
             name = token[1]
-            surface = pygame.image.load(IMG_DIR + "room/room_" + name + ".png")
+
+            return Background(name)
 
         elif token[0] == "DOOR":
             side = token[1]
             next_room = token[2]
-            surface = pygame.image.load(IMG_DIR + "room/doors.png")
+
+            return Door(side, next_room)
 
         elif token[0] == "PLAYER":
             x = int(token[1])
