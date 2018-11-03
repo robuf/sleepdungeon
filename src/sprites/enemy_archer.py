@@ -1,12 +1,8 @@
 from .enemy import Enemy
 from .weapons import Bow
-from ..util.scale import scale
-from .living_object import LivingObject
-from ..base.context import Context
 from ..base.game_constants import SpriteType
 from .. import res
 from ..base.game_constants import Facing
-from ..util.path_finder import get_border_with_obstacles, find_path, ActionType
 import pygame
 
 

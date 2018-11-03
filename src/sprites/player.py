@@ -151,9 +151,8 @@ class Player(LivingObject):
 
             elif isinstance(item, Spdup):
                 context.sprites.remove(item)
-                # increment speed
+                self._MOVE_COOLDOWN *= 0.9
 
     def die(self, context: Context):
         super().die(context)
-
         context.lost = True

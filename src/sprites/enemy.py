@@ -1,4 +1,3 @@
-from ..util.scale import scale
 from .living_object import LivingObject
 from ..base.game_constants import SpriteType
 from .. import res
@@ -21,6 +20,8 @@ class Enemy(LivingObject):
     _WIDTH = 1
     _HEIGHT = 1
     _ANIMATION_LENGTH = 4
+    _MILISECONDS_PER_FRAME = 200
+    _MOVE_COOLDOWN = 400
 
     def __init__(self, size):
         super().__init__(size)
@@ -49,6 +50,7 @@ class Enemy(LivingObject):
 
         if self.can_attack(context, SpriteType.PLAYER):
             self.attack(context, SpriteType.PLAYER)
+            return
 
         player = context.sprites.find_by_type(SpriteType.PLAYER)[0]
 

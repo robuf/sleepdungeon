@@ -27,6 +27,7 @@ def get_border_with_obstacles(obstacles: List[Point]) -> List[Point]:
 
 def find_path(source: Entity, target: Point, obstacles: List[Point], distance: int = 0) -> Optional[List['Action']]:
     source_point = source[0], source[1]
+    real_target: Point = target
 
     parent: Dict[Point, Point] = {source_point: None}
 
@@ -91,6 +92,20 @@ def find_path(source: Entity, target: Point, obstacles: List[Point], distance: i
 
         current = item[0], item[1], next_facing
 
+    if len(result) == 0:
+        next_facing = 0
+        if current[0] > real_target[0]:
+            next_facing = 3
+        elif current[0] < real_target[0]:
+            next_facing = 1
+        elif current[1] > real_target[1]:
+            next_facing = 0
+        elif current[1] < real_target[1]:
+            next_facing = 2
+
+        if current[2] != next_facing:
+            result.append(Action(ActionType.TURN, next_facing))
+
     return result
 
 
@@ -106,8 +121,8 @@ class ActionType(Enum):
 
 
 if __name__ == "__main__":
-    source = 1, 1, 0
-    target = 5, 1
+    source = 1, 1, 1
+    target = 4, 1
 
     with_border = get_border_with_obstacles([])
     path = find_path(source, target, with_border, 3)

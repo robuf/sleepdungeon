@@ -1,7 +1,6 @@
 import pygame
 
 from src import RenderContext
-from ..util.scale import scale
 from ..base.context import Context
 from ..base.game_constants import SpriteType, ZIndex
 from ..base.sprite import Sprite

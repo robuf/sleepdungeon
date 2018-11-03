@@ -57,7 +57,7 @@ class Game(object):
 
         for sprite in self.context.sprites:
             sprite.update(self.context)
-            if (self.context.lost):
+            if self.context.lost:
                 self.running = False
                 print("You lost!")
                 return

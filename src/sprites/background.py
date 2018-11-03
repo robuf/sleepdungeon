@@ -1,6 +1,5 @@
 import pygame
 
-from ..util.scale import scale
 from ..base.context import Context
 from ..base.sprite import Sprite
 from ..base.game_constants import SpriteType, ZIndex
@@ -8,8 +7,8 @@ from ..res import IMG_DIR
 
 
 class Background(Sprite):
-    __BASE_SURFACE: pygame.surface = None
-    __SURFACE: pygame.surface = None
+    __BASE_SURFACE: pygame.Surface = None
+    __SURFACE: pygame.Surface = None
 
     def __init__(self, name: str):
         super().__init__()

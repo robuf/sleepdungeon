@@ -110,11 +110,12 @@ class LivingObject(Sprite):
     def damage(self, context: Context, damage: int):
         self.lifes -= damage
         # print(str(type(self)) + " has " + str(self.lifes) + " left")
-        self.die(context)
+
+        if self.lifes <= 0:
+            self.die(context)
 
     def die(self, context: Context):
-        if self.lifes <= 0:
-            context.sprites.remove(self)
+        context.sprites.remove(self)
 
     @property
     def bounding_box(self) -> pygame.Rect:
