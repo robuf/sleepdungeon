@@ -1,6 +1,6 @@
 import pygame
 
-from base.context import Context
+from ..base.context import Context
 from ..base.sprite import SpriteType, Sprite
 from ..res import IMG_DIR
 

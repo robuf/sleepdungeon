@@ -12,6 +12,7 @@ class LevelLoader(object):
 
     def _load_floor(self, floor_dir) -> Floor:
         level_files = []
+        with os.scandir(floor_dir.path) as it:
             for level_file in it:
                 level_files.append(level_file)
         if len(level_files) == 0:
