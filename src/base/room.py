@@ -122,6 +122,4 @@ class Room(object):
         elif player.position.y == 8:
             player.position.y = 0
 
-        player.move_cooldown_current = player.move_cooldown
-
         self.sprites.append(player)
