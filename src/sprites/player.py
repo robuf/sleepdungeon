@@ -47,6 +47,7 @@ class Player(LivingObject):
         self.animation_i = 0
 
         self.lifes = 6
+
         self.max_lifes = 6
         self.key = 0
 

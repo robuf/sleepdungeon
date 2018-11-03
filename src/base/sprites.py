@@ -12,9 +12,6 @@ class Sprites(list):
     def by_z_index(self):
         return sorted(self, key=lambda x: x.z_index)
 
-    def get_sprites_in_room(self) -> int:
-        return len(self)
-
     def find_by_type(self, sprite_type: SpriteType):
         return sorted(
             [sprite for sprite in self if sprite.sprite_type == sprite_type],
