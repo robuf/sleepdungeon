@@ -38,15 +38,10 @@ class Player(LivingObject):
 
     def __init__(self):
         super().__init__([1, 1])
-        if not Player.__BASE_UP_SURFACE:
-            Player.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
-            Player.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
-            Player.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
-            Player.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
-
         self.animation_i = 0
 
         self.lifes = 6
+
         self.max_lifes = 6
         self.key = 0
 
@@ -99,32 +94,38 @@ class Player(LivingObject):
 
     @classmethod
     def update_render_context(cls, render_context):
-        Player.__SURFACE_UP = pygame.transform.smoothscale(
-            Player.__BASE_UP_SURFACE,
+        if not cls.__BASE_UP_SURFACE:
+            cls.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
+            cls.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
+            cls.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
+            cls.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
+
+        cls.__SURFACE_UP = pygame.transform.smoothscale(
+            cls.__BASE_UP_SURFACE,
             (
-                Player._WIDTH * cls.tile_size * Player._ANIMATION_LENGTH,
-                Player._HEIGHT * cls.tile_size
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
             )
         )
-        Player.__SURFACE_DOWN = pygame.transform.smoothscale(
-            Player.__BASE_DOWN_SURFACE,
+        cls.__SURFACE_DOWN = pygame.transform.smoothscale(
+            cls.__BASE_DOWN_SURFACE,
             (
-                Player._WIDTH * cls.tile_size * Player._ANIMATION_LENGTH,
-                Player._HEIGHT * cls.tile_size
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
             )
         )
-        Player.__SURFACE_LEFT = pygame.transform.smoothscale(
-            Player.__BASE_LEFT_SURFACE,
+        cls.__SURFACE_LEFT = pygame.transform.smoothscale(
+            cls.__BASE_LEFT_SURFACE,
             (
-                Player._WIDTH * cls.tile_size * Player._ANIMATION_LENGTH,
-                Player._HEIGHT * cls.tile_size
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
             )
         )
-        Player.__SURFACE_RIGHT = pygame.transform.smoothscale(
-            Player.__BASE_RIGHT_SURFACE,
+        cls.__SURFACE_RIGHT = pygame.transform.smoothscale(
+            cls.__BASE_RIGHT_SURFACE,
             (
-                Player._WIDTH * cls.tile_size * Player._ANIMATION_LENGTH,
-                Player._HEIGHT * cls.tile_size
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
             )
         )
 
