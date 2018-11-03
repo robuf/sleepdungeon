@@ -6,21 +6,23 @@ from ..res import IMG_DIR
 
 
 class Background(Sprite):
+    __BASE_SURFACE: pygame.surface = None
+    __SURFACE: pygame.surface = None
 
     def __init__(self, name: str):
         super().__init__()
-        self.surface = pygame.image.load(IMG_DIR + "room/room_" + name + ".png")
+        if not Background.__BASE_SURFACE:
+            Background.__BASE_SURFACE = pygame.image.load(IMG_DIR + "room/room_" + name + ".png")
         self.width = 13
         self.height = 9
 
     def update(self, context: Context):
         pass
 
+    @classmethod
     def update_render_context(self, render_context):
-        self.render_context = render_context
-        self.tile_size = render_context.tile_size
-        self.surface = pygame.transform.scale(
-            self.surface,
+        Background.__SURFACE = pygame.transform.smoothscale(
+            Background.__BASE_SURFACE,
             [
                 render_context.resolution[0] - self.sidebar_width,
                 render_context.resolution[1]
@@ -29,7 +31,7 @@ class Background(Sprite):
 
     @property
     def image(self) -> pygame.Surface:
-        return self.surface
+        return Background.__SURFACE
 
     @property
     def sprite_type(self) -> SpriteType:
