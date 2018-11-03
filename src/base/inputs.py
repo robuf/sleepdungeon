@@ -41,9 +41,9 @@ class InputManager:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     event_set.add(InputEvent.ATTACK)
-                if event.key == pygame.K_e:
+                elif event.key == pygame.K_e:
                     event_set.add(InputEvent.SWAP)
-                if event.key == pygame.K_ESCAPE:
+                elif event.key == pygame.K_ESCAPE:
                     event_set.add(InputEvent.QUIT)
 
             elif event.type == pygame.JOYBUTTONDOWN:

@@ -28,8 +28,8 @@ class EnemyShielder(Enemy):
     def __init__(self):
         super().__init__([1, 1])
         if not EnemyShielder.__BASE_UP_SURFACE:
-            EnemyShielder.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
-            EnemyShielder.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
+            EnemyShielder.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "enemy/shielder/walk/up.png").convert_alpha()
+            EnemyShielder.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "enemy/shielder/walk/down.png").convert_alpha()
             EnemyShielder.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
             EnemyShielder.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
 
