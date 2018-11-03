@@ -1,4 +1,4 @@
-from ..util.scale import scale
+from ..base.context import Context
 from .living_object import LivingObject
 from ..base.game_constants import SpriteType
 from ..base.inputs import InputEvent
@@ -37,7 +37,7 @@ class Player(LivingObject):
     _MOVE_COOLDOWN = 200
 
     def __init__(self):
-        super().__init__([1,1])
+        super().__init__([1, 1])
         if not Player.__BASE_UP_SURFACE:
             Player.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
             Player.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
@@ -152,3 +152,8 @@ class Player(LivingObject):
             elif isinstance(item, Spdup):
                 context.sprites.remove(item)
                 # increment speed
+
+    def die(self, context: Context):
+        super().die(context)
+
+        context.lost = True
