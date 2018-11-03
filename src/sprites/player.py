@@ -1,6 +1,7 @@
 from typing import Tuple
 from .living_object import LivingObject
 from ..base.game_constants import SpriteType
+from ..base.position import Position
 from ..base.inputs import InputEvent
 from .. import res
 from ..base.game_constants import Facing
@@ -24,44 +25,27 @@ class Player(LivingObject):
         self.animation_length = 4
         self.animation_i = 0
         self.miliseconds_per_frame = 0
-        self.move_cooldown = 100
+        self.move_cooldown = 200
 
     def update(self, context):
         super().update(context)
 
-        if self.miliseconds_per_frame > 500:
+        if self.miliseconds_per_frame > 200:
             self.miliseconds_per_frame = 0
             self.animation_i += 1
             if self.animation_i == self.animation_length:
                 self.animation_i = 0
         self.miliseconds_per_frame += context.delta_t
 
-        if self.move_cooldown > 0:
-            self.move_cooldown -= context.delta_t
-
         for i in context.input_events:
             if i == InputEvent.MOVE_UP:
-                self.facing = Facing.FACING_UP
-                self.move(0, -1)
+                self.move(Facing.FACING_UP, context)
             if i == InputEvent.MOVE_DOWN:
-                self.facing = Facing.FACING_DOWN
-                self.move(0, 1)
+                self.move(Facing.FACING_DOWN, context)
             if i == InputEvent.MOVE_LEFT:
-                self.facing = Facing.FACING_LEFT
-                self.move(-1, 0)
+                self.move(Facing.FACING_LEFT, context)
             if i == InputEvent.MOVE_RIGHT:
-                self.facing = Facing.FACING_RIGHT
-                self.move(1, 0)
-
-    def move(self, x, y):
-        if self.move_cooldown > 0:
-            return
-        try:
-            self.position.x += x
-            self.position.y += y
-            self.move_cooldown = 50
-        except:
-            pass
+                self.move(Facing.FACING_RIGHT, context)
 
     @property
     def image(self):

@@ -8,6 +8,7 @@ class SpriteType(Enum):
     STATIC = 3
     ENTITY = 4
     GHOST = 5
+    DOOR = 6
 
 
 class WeaponType(Enum):
