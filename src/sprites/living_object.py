@@ -21,7 +21,7 @@ class LivingObject(Sprite):
         super().__init__(ZIndex.PLAYGROUND, width, height)
 
         self.position.x = pos_x
-        self.position_y = pos_y
+        self.position.y = pos_y
         self.facing: Facing = Facing.FACING_UP
         self.walking = False
 
@@ -76,10 +76,6 @@ class LivingObject(Sprite):
             for i in range(0, spritecount):
                 if Sprites.checkForSprite(i, self.facing, Bow.attack_range):
                     pass
-
-    @property
-    def position(self) -> Tuple[int, int]:
-        return self.pos_x, self.pos_y
 
     @property
     def bounding_box(self) -> pygame.Rect:
