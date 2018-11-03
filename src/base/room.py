@@ -26,7 +26,11 @@ class Room(object):
         self.sprites = Sprites()
         with open(path, 'r') as f:
             for line in f.readlines():
-                line = line.strip().split(" ")
+                line = line.strip()
+                if line.startswith("#"):
+                    continue
+
+                line = line.split(" ")
                 x = Room.parse(line)
                 if x is not None:
                     self.sprites.append(x)

@@ -23,7 +23,7 @@ class Game(object):
         self.context.render_context = self.render_context
         self.sidebar: SideBar = None
 
-        print(pygame.transform.get_smoothscale_backend())
+        print("Scale acceleration: " + pygame.transform.get_smoothscale_backend())
 
     def load(self):
         self.floors = LevelLoader().load_levels()
