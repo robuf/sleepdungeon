@@ -2,5 +2,5 @@
 
 Run this project:
 ```bash
-python src/main.py
+python3 bin/game
 ```
