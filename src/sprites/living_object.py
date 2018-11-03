@@ -5,6 +5,7 @@ from ..base.sprite import Sprite
 from ..base.context import Context
 from ..base.sprites import Sprites
 from ..base.game_constants import ZIndex, Facing, WeaponType
+from ..base.position import Position
 from .weapons import Weapon, Sword, Bow
 
 import pygame
@@ -18,17 +19,17 @@ import pygame
 class LivingObject(Sprite):
 
     # initialisieren
-    def __init__(self, pos_x, pos_y, width: float, height: float, init_weapon: Weapon):
-        super().__init__(ZIndex.PLAYGROUND, width, height)
+    def __init__(self, size, init_weapon: Weapon):
+        super().__init__()
+        self.z_index = ZIndex.PLAYGROUND
+        self.width, self.height = size
 
-        self.position.x = pos_x
-        self.position.y = pos_y
         self.facing: Facing = Facing.FACING_UP
         self.walking = False
 
         self.weapon = init_weapon
 
-    def move(self, facing: 'Facing', walking=False):
+    def move(self, facing: Facing, walking=False):
 
         self.walking = walking
         self.facing = facing
