@@ -1,5 +1,6 @@
 BACKGROUND default
 DOOR bottom room01
+DOOR left room03
 
 ITEM HPUP 1 4
 ITEM DMGUP 3 4
