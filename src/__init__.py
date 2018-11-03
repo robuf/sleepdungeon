@@ -30,6 +30,7 @@ class GameJam20(object):
         pygame.init()
 
         self.render_context = RenderContext((800, 450))
+
         self.game = Game(self.render_context)
 
     def main(self):
