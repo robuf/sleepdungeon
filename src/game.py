@@ -43,7 +43,7 @@ class Game(object):
             sprite.update(self.context)
 
     def render(self):
-        self.render_context.screen.fill((255, 255, 255))
+        self.render_context.screen.fill((200, 200, 100))
         for sprite in self.context.sprites.by_z_index:
             self.render_context.screen.blit(sprite.image, sprite.rect)
 

@@ -25,7 +25,7 @@ class Player(LivingObject):
         self.animation_length = 4
         self.animation_i = 0
         self.miliseconds_per_frame = 0
-        self.move_cooldown = 100
+        self.move_cooldown = 200
 
     def update(self, context):
         super().update(context)
