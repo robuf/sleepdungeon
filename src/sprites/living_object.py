@@ -5,8 +5,10 @@ from ..base.sprite import Sprite
 from ..base.context import Context
 from ..base.sprites import Sprites
 from ..base.game_constants import ZIndex, Facing, WeaponType
+from ..base.position import Position
 from .weapons import Weapon, Sword, Bow
 
+import pygame
 
 # Kümmert sich um die Funktionen des Players
 
@@ -17,65 +19,66 @@ from .weapons import Weapon, Sword, Bow
 class LivingObject(Sprite):
 
     # initialisieren
-    def __init__(self, pos_x, pos_y, width: float, height: float, init_weapon: Weapon):
-        super().__init__(ZIndex.PLAYGROUND, width, height)
+    def __init__(self, size, init_weapon: Weapon):
+        super().__init__()
+        self.z_index = ZIndex.PLAYGROUND
+        self.width, self.height = size
 
-        self.position.x = pos_x
-        self.position.y = pos_y
         self.facing: Facing = Facing.FACING_UP
         self.walking = False
 
         self.weapon = init_weapon
 
-    def move(self, facing: 'Facing', walking=False):
+    def move(self, facing: Facing, walking=False):
 
         self.walking = walking
         self.facing = facing
+        self.weapon.facing = self.facing
 
-        if facing == Facing.FACING_UP:
+        if self.facing == Facing.FACING_UP:
             if self.walking:
-                self.lo_rect.move(0, -1)
+                pass
 
         # facing right
-        elif facing == Facing.FACING_RIGHT:
+        elif self.facing == Facing.FACING_RIGHT:
             if self.walking:
-                self.lo_rect.move(1, 0)
-
+                pass
         # facing down
-        elif facing == Facing.FACING_DOWN:
+        elif self.facing == Facing.FACING_DOWN:
             if self.walking:
-                self.lo_rect.move(0, 1)
+                pass
 
         # facing left
-        elif facing == Facing.FACING_LEFT:
+        elif self.facing == Facing.FACING_LEFT:
             if self.walking:
-                self.lo_rect.move(1, 0)
+                pass
 
     def update(self, context: Context):
         super().update(context)
 
-    def attack(self):
-
-        spritecount: int = Sprites.get_sprites_in_room()
+    def attack(self, context: Context):
 
         # Sword
         if self.weapon.weapon_type == WeaponType.SWORD:
 
             # Animation einfügen Schwert
 
-            for i in range(0, spritecount):
-                if Sprites.checkForSprite(i, self.facing, Sword.attack_range):
-                    pass
+            collided = pygame.Rect.collidelist(self.weapon.bounding_box, context.sprites)
+
+            if collided >= 0:
+                Sword.attack(self.weapon, context.sprites[collided])
 
         # Bow
-        elif self.weapon.weapon_type == WeaponType.SWORD:
+        if self.weapon.weapon_type == WeaponType.Bow:
 
             # Animation einfügen Bogen
             # Animation einfügen Pfeil
 
-            for i in range(0, spritecount):
-                if Sprites.checkForSprite(i, self.facing, Bow.attack_range):
-                    pass
+            collided = pygame.Rect.collidelist(self.weapon.bounding_box, context.sprites)
+
+            if collided >= 0:
+                Bow.attack(self.weapon, context.sprites[collided])
+
 
     @property
     def bounding_box(self) -> pygame.Rect:
