@@ -3,6 +3,7 @@ from .inputs import InputEvent
 from .sprites import Sprites
 from ..render_context import RenderContext
 
+
 class Context:
 
     def __init__(self):

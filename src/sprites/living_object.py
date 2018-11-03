@@ -1,14 +1,10 @@
-from typing import Tuple
-import pygame
-
 from ..base.sprite import Sprite
 from ..base.context import Context
-from ..base.sprites import Sprites
 from ..base.game_constants import ZIndex, Facing, WeaponType
-from ..base.position import Position
 from .weapons import Weapon, Sword, Bow
 
 import pygame
+
 
 # Kümmert sich um die Funktionen des Players
 
@@ -63,50 +59,44 @@ class LivingObject(Sprite):
 
             # Animation einfügen Schwert
 
-            if self.facing == Facing.FACING_UP:
-                for model in context.sprites:
-                    if self.position.y - Weapon.attack_range == model.position.y:
+            for model in context.sprites:
+                if self.facing == Facing.FACING_UP:
+                    if self.position.y - self.weapon.attack_range == model.position.y:
                         Sword.attack(self.weapon, model)
 
-            if self.facing == Facing.FACING_RIGHT:
-                for model in context.sprites:
-                    if self.position.x + Weapon.attack_range == model.position.y:
-                        Sword.attack(self.weapon, model)
+                if self.facing == Facing.FACING_RIGHT:
+                        if self.position.x + self.weapon.attack_range == model.position.y:
+                            Sword.attack(self.weapon, model)
 
-            if self.facing == Facing.FACING_LEFT:
-                for model in context.sprites:
-                    if self.position.x - Weapon.attack_range == model.position.y:
-                        Sword.attack(self.weapon, model)
+                if self.facing == Facing.FACING_LEFT:
+                        if self.position.x - self.weapon.attack_range == model.position.y:
+                            Sword.attack(self.weapon, model)
 
-            if self.facing == Facing.FACING_DOWN:
-                for model in context.sprites:
-                    if self.position.y + Weapon.attack_range == model.position.y:
-                        Sword.attack(self.weapon, model)
+                if self.facing == Facing.FACING_DOWN:
+                        if self.position.y + self.weapon.attack_range == model.position.y:
+                            Sword.attack(self.weapon, model)
 
         # Bow
         if self.weapon.weapon_type == WeaponType.BOW:
 
             # Animation einfügen Bogen, Pfeil
 
-            if self.facing == Facing.FACING_UP:
-                for model in context.sprites:
-                    if self.position.y - Weapon.attack_range == model.position.y:
+            for model in context.sprites:
+                if self.facing == Facing.FACING_UP:
+                    if self.position.y - self.weapon.attack_range == model.position.y:
                         Bow.attack(self.weapon, model)
 
-            if self.facing == Facing.FACING_RIGHT:
-                for model in context.sprites:
-                    if self.position.x + Weapon.attack_range == model.position.y:
-                        Bow.attack(self.weapon, model)
+                if self.facing == Facing.FACING_RIGHT:
+                        if self.position.x + self.weapon.attack_range == model.position.y:
+                            Bow.attack(self.weapon, model)
 
-            if self.facing == Facing.FACING_LEFT:
-                for model in context.sprites:
-                    if self.position.x - Weapon.attack_range == model.position.y:
-                        Bow.attack(self.weapon, model)
+                if self.facing == Facing.FACING_LEFT:
+                        if self.position.x - self.weapon.attack_range == model.position.y:
+                            Bow.attack(self.weapon, model)
 
-            if self.facing == Facing.FACING_DOWN:
-                for model in context.sprites:
-                    if self.position.y + Weapon.attack_range == model.position.y:
-                        Bow.attack(self.weapon, model)
+                if self.facing == Facing.FACING_DOWN:
+                        if self.position.y + self.weapon.attack_range == model.position.y:
+                            Bow.attack(self.weapon, model)
 
     @property
     def bounding_box(self) -> pygame.Rect:

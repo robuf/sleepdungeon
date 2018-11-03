@@ -1,5 +1,4 @@
 from . import res
-from .base.floor import Floor
 from typing import List
 import os
 import sys
@@ -10,7 +9,8 @@ from .base.room import Room
 class LevelLoader(object):
     FLOOR_FILE_EXTENSION = "floor"
 
-    def _load_floor(self, floor_dir) -> Floor:
+    @staticmethod
+    def _load_floor(floor_dir) -> Floor:
         level_files = []
         with os.scandir(floor_dir.path) as it:
             for level_file in it:
@@ -38,7 +38,7 @@ class LevelLoader(object):
             print("Found no levels")
             sys.exit(1)
 
-        for floor_dir in sorted(floor_dirs, key=lambda x:x.name):
+        for floor_dir in sorted(floor_dirs, key=lambda x: x.name):
             floors.append(self._load_floor(floor_dir))
 
         return floors
