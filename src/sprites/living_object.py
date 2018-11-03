@@ -32,23 +32,24 @@ class LivingObject(Sprite):
 
         self.walking = walking
         self.facing = facing
+        self.weapon.facing = self.facing
 
-        if facing == Facing.FACING_UP:
+        if self.facing == Facing.FACING_UP:
             if self.walking:
                 self.lo_rect.move(0, -1)
 
         # facing right
-        elif facing == Facing.FACING_RIGHT:
+        elif self.facing == Facing.FACING_RIGHT:
             if self.walking:
                 self.lo_rect.move(1, 0)
 
         # facing down
-        elif facing == Facing.FACING_DOWN:
+        elif self.facing == Facing.FACING_DOWN:
             if self.walking:
                 self.lo_rect.move(0, 1)
 
         # facing left
-        elif facing == Facing.FACING_LEFT:
+        elif self.facing == Facing.FACING_LEFT:
             if self.walking:
                 self.lo_rect.move(1, 0)
 
@@ -62,7 +63,7 @@ class LivingObject(Sprite):
 
             # Animation einfügen Schwert
 
-            collided = pygame.Rect.collidelist(self.weapon.rect, context.sprites)
+            collided = pygame.Rect.collidelist(self.weapon.bounding_box, context.sprites)
 
             if collided >= 0:
                 Sword.attack(self.weapon, context.sprites[collided])
@@ -70,12 +71,13 @@ class LivingObject(Sprite):
         # Bow
         if self.weapon.weapon_type == WeaponType.Bow:
 
-            # Animation einfügen Schwert
+            # Animation einfügen Bogen
+            # Animation einfügen Pfeil
 
-            collided = pygame.Rect.collidelist(self.weapon.rect, context.sprites)
+            collided = pygame.Rect.collidelist(self.weapon.bounding_box, context.sprites)
 
             if collided >= 0:
-                Sword.attack(self.weapon, context.sprites[collided])
+                Bow.attack(self.weapon, context.sprites[collided])
 
 
     @property
