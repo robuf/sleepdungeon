@@ -18,11 +18,14 @@ class Game(object):
         self.current_room: Room = None
         self.floors: List[Floor] = []
         self.context = Context()
+        self.context.render_context = self.render_context
 
     def load(self):
         self.floors = LevelLoader().load_levels()
         self.current_floor = self.floors[0]
         self.current_room = self.current_floor.rooms[0]
+        for sprite in self.current_room.sprites:
+            sprite._update_render_context(self.render_context)
 
     def update(self):
         events = pygame.event.get()

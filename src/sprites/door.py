@@ -22,7 +22,7 @@ class Door(Sprite):
             self.center = 6, 0
         elif side == "bottom":
             rect = pygame.Rect(0, 100, 300, 100)
-            self.position = 5, 8
+            self.position = 6, 8
             self.width = 3
             self.height = 1
             self.center = 6, 8
@@ -43,9 +43,20 @@ class Door(Sprite):
         self.__image = surface.subsurface(rect)
 
     def update(self, context: Context):
-        player: List[Player] = context.sprites.find_sprites_by_type(SpriteType.PLAYER, self.center)
+        player: List[Player] = context.sprites.find_sprites_by_type(
+            SpriteType.PLAYER,
+            self.center
+        )
         if len(player) == 1:
             pass
+
+    def update_render_context(self, render_context):
+        self.render_context = render_context
+        self.__image = pygame.transform.scale(
+            self.__image,
+            (self.width * self.tile_size, self.height * self.tile_size)
+        )
+
 
     @property
     def image(self) -> pygame.Surface:
@@ -53,4 +64,4 @@ class Door(Sprite):
 
     @property
     def sprite_type(self) -> SpriteType:
-        return SpriteType.STATIC
+        return SpriteType.GHOST

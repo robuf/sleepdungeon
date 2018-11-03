@@ -1,6 +1,6 @@
 import pygame
 
-from base.context import Context
+from ..base.context import Context
 from ..base.sprite import SpriteType, Sprite
 from ..res import IMG_DIR
 
@@ -16,10 +16,18 @@ class Background(Sprite):
     def update(self, context: Context):
         pass
 
+    def update_render_context(self, render_context):
+        self.render_context = render_context
+        self.tile_size = render_context.tile_size
+        self.surface = pygame.transform.scale(
+            self.surface,
+            render_context.resolution
+        )
+
     @property
     def image(self) -> pygame.Surface:
         return self.surface
 
     @property
     def sprite_type(self) -> SpriteType:
-        return SpriteType.STATIC
+        return SpriteType.GHOST

@@ -42,8 +42,6 @@ class Sword(Weapon):
 
     def attack(self, in_front):
 
-        #Animation einfügen Schwert
-
         in_front.life -= self.attack_damage
 
 class Bow(Weapon):
@@ -51,8 +49,5 @@ class Bow(Weapon):
         super().__init__(WeaponType.SWORD)
 
     def attack(self, on_line):
-
-        # Animation einfügen Bogen
-        # Animation einfügen Pfeil
 
         on_line.life -= self.attack_damage

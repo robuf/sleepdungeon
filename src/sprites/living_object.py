@@ -1,4 +1,5 @@
 from typing import Tuple
+import pygame
 
 from ..base.sprite import Sprite
 from ..base.context import Context
@@ -16,15 +17,14 @@ from .weapons import Weapon, Sword, Bow
 class LivingObject(Sprite):
 
     # initialisieren
-    def __init__(self, pos_x, pos_y, width: float, height: float, init_weapon):
+    def __init__(self, pos_x, pos_y, width: float, height: float, init_weapon: Weapon):
         super().__init__(ZIndex.PLAYGROUND, width, height)
 
-        self.pos_x = pos_x
-        self.pos_y = pos_y
+        self.position.x = pos_x
+        self.position.y = pos_y
         self.facing: Facing = Facing.FACING_UP
         self.walking = False
 
-        #init_weapon: entweder Schwert oder Bogen
         self.weapon = init_weapon
 
     def move(self, facing: 'Facing', walking=False):
@@ -60,15 +60,30 @@ class LivingObject(Sprite):
 
         # Sword
         if self.weapon.weapon_type == WeaponType.SWORD:
-            for i in range(0, spritecount):
-                if Sprites.check_for_sprite(i, self.facing, self.weapon.attack_range):
-                    Sword.attack(self.weapon, Sprites.get_sprite_in_front(i))
 
-        elif self.weapon.weapon_type == WeaponType.Bow:
+            # Animation einfügen Schwert
+
             for i in range(0, spritecount):
-                if Sprites.check_for_sprite(i, self.facing, self.weapon.attack_range):
-                    Bow.attack(self.weapon, Sprites.get_sprite_in_front(i))
+                if Sprites.checkForSprite(i, self.facing, Sword.attack_range):
+                    pass
+
+        # Bow
+        elif self.weapon.weapon_type == WeaponType.SWORD:
+
+            # Animation einfügen Bogen
+            # Animation einfügen Pfeil
+
+            for i in range(0, spritecount):
+                if Sprites.checkForSprite(i, self.facing, Bow.attack_range):
+                    pass
 
     @property
-    def position(self) -> Tuple[int, int]:
-        return self.pos_x, self.pos_y
+    def bounding_box(self) -> pygame.Rect:
+        (x, y) = self.position
+        tile = self.tile_size
+        return pygame.Rect(
+            self.sidebar_width + x * tile,
+            y * tile,
+            self.width * tile,
+            self.height * tile
+        )

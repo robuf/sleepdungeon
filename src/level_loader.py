@@ -12,18 +12,14 @@ class LevelLoader(object):
 
     def _load_floor(self, floor_dir) -> Floor:
         level_files = []
-        floor_path = ""
         with os.scandir(floor_dir.path) as it:
             for level_file in it:
-                if level_file.name.endswith(LevelLoader.FLOOR_FILE_EXTENSION):
-                    floor_path = level_file.path
-                    continue
                 level_files.append(level_file)
         if len(level_files) == 0:
             print("Found no level files")
             sys.exit(1)
 
-        floor = Floor(floor_path)
+        floor = Floor()
         for level_file in level_files:
             floor.rooms.append(Room(level_file.path))
 

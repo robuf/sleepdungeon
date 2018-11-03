@@ -4,12 +4,13 @@ from ..sprites.door import Door
 from ..sprites.background import Background
 from ..sprites.stone import Stone
 from ..base.sprite import Sprite
+from ..base.sprites import Sprites
 
 
 
 class Room(object):
     def __init__(self, path):
-        self.sprites = list()
+        self.sprites = Sprites()
         with open(path, 'r') as f:
             for line in f.readlines():
                 line = line.split(" ")
@@ -20,9 +21,11 @@ class Room(object):
     @staticmethod
     def parse(token: List[str]) -> Optional[Sprite]:
         if token[0] == "BACKGROUND":
-            name = token[1]
-
-            return Background(name)
+            name = token[1].strip()
+            bg = Background(name)
+            bg.position.x = 0
+            bg.position.y = 0
+            return bg
 
         elif token[0] == "DOOR":
             side = token[1]
