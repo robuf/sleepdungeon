@@ -8,6 +8,7 @@ from .base.floor import Floor
 from .base.room import Room
 from .level_loader import LevelLoader
 
+
 class Game(object):
     def __init__(self, render_context: RenderContext):
         self.running = True
@@ -25,7 +26,6 @@ class Game(object):
         self.current_floor = self.floors[0]
         self.current_room = self.current_floor.initial_room
         for sprite in self.current_room.sprites:
-            print(sprite)
             sprite._update_render_context(self.render_context)
 
     def update(self):

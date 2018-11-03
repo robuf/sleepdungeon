@@ -1,7 +1,10 @@
+from typing import Tuple
+
 import pygame
 
+
 class RenderContext(object):
-    def __init__(self, resolution: list):
+    def __init__(self, resolution: Tuple[int, int]):
         self.resolution = resolution
         self.screen = pygame.display.set_mode(resolution)
         pygame.display.set_caption("GameJam2 - Dungeon")

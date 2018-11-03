@@ -88,7 +88,6 @@ class Player(LivingObject):
         return SpriteType.PLAYER
 
     def update_render_context(self, render_context):
-        print("Scale player")
         self.render_context = render_context
         self.__image_up = pygame.transform.scale(
             self.__image_up,

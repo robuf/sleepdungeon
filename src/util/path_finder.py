@@ -1,4 +1,4 @@
-from typing import Tuple, List, Set, Optional, Dict
+from typing import Tuple, List, Optional, Dict
 from enum import Enum
 
 Point = Tuple[int, int]
