@@ -11,6 +11,7 @@ from ..sprites.key import Key, KeyType
 from ..sprites.spdup import Spdup
 from ..sprites.dmgup import Dmgup
 from ..sprites.hpup import Hpup
+from ..sprites.enemy import Enemy
 from .position import Position
 
 import os
@@ -56,8 +57,9 @@ class Room(object):
             x = int(token[2])
             y = int(token[3])
 
-            if t == "":
-                pass
+            en = Enemy()
+            en.position = Position(x, y)
+            return en
 
         elif token[0] == "ITEM":
             t = token[1]

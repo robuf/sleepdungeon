@@ -4,6 +4,8 @@ from ..base.position import Position
 from ..base.game_constants import ZIndex, Facing, WeaponType, SpriteType
 from .weapons import Weapon, Sword, Bow
 
+from typing import Optional
+
 import pygame
 
 
@@ -16,7 +18,7 @@ import pygame
 class LivingObject(Sprite):
 
     # initialisieren
-    def __init__(self, size, init_weapon: Weapon):
+    def __init__(self, size, init_weapon: Optional[Weapon]):
         super().__init__()
         self.z_index = ZIndex.PLAYGROUND
         self.width, self.height = size
@@ -25,7 +27,6 @@ class LivingObject(Sprite):
         self.move_cooldown_current = 0
         self.move_cooldown = 150
 
-
         self.weapon = init_weapon
 
     def move(self, facing: Facing, context: Context):
@@ -33,7 +34,7 @@ class LivingObject(Sprite):
             return
 
         self.facing = facing
-        #self.weapon.facing = self.facing
+        # self.weapon.facing = self.facing
         try:
             if self.facing == Facing.FACING_UP:
                 new_pos = Position(self.position.x, self.position.y - 1)
@@ -65,13 +66,10 @@ class LivingObject(Sprite):
         self.position = new_pos
         self.move_cooldown_current = self.move_cooldown
 
-
     def update(self, context: Context):
         super().update(context)
         if self.move_cooldown_current > 0:
             self.move_cooldown_current -= context.delta_t
-
-
 
     def attack(self, context: Context):
 
@@ -86,16 +84,16 @@ class LivingObject(Sprite):
                         Sword.attack(self.weapon, model)
 
                 if self.facing == Facing.FACING_RIGHT:
-                        if self.position.x + self.weapon.attack_range == model.position.y:
-                            Sword.attack(self.weapon, model)
+                    if self.position.x + self.weapon.attack_range == model.position.y:
+                        Sword.attack(self.weapon, model)
 
                 if self.facing == Facing.FACING_LEFT:
-                        if self.position.x - self.weapon.attack_range == model.position.y:
-                            Sword.attack(self.weapon, model)
+                    if self.position.x - self.weapon.attack_range == model.position.y:
+                        Sword.attack(self.weapon, model)
 
                 if self.facing == Facing.FACING_DOWN:
-                        if self.position.y + self.weapon.attack_range == model.position.y:
-                            Sword.attack(self.weapon, model)
+                    if self.position.y + self.weapon.attack_range == model.position.y:
+                        Sword.attack(self.weapon, model)
 
         # Bow
         if self.weapon.weapon_type == WeaponType.BOW:
@@ -108,16 +106,16 @@ class LivingObject(Sprite):
                         Bow.attack(self.weapon, model)
 
                 if self.facing == Facing.FACING_RIGHT:
-                        if self.position.x + self.weapon.attack_range == model.position.y:
-                            Bow.attack(self.weapon, model)
+                    if self.position.x + self.weapon.attack_range == model.position.y:
+                        Bow.attack(self.weapon, model)
 
                 if self.facing == Facing.FACING_LEFT:
-                        if self.position.x - self.weapon.attack_range == model.position.y:
-                            Bow.attack(self.weapon, model)
+                    if self.position.x - self.weapon.attack_range == model.position.y:
+                        Bow.attack(self.weapon, model)
 
                 if self.facing == Facing.FACING_DOWN:
-                        if self.position.y + self.weapon.attack_range == model.position.y:
-                            Bow.attack(self.weapon, model)
+                    if self.position.y + self.weapon.attack_range == model.position.y:
+                        Bow.attack(self.weapon, model)
 
     @property
     def bounding_box(self) -> pygame.Rect:

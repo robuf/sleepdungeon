@@ -1,22 +1,21 @@
-from typing import Tuple
 from .living_object import LivingObject
 from ..base.game_constants import SpriteType
-from ..base.position import Position
 from ..base.inputs import InputEvent
 from .. import res
 from ..base.game_constants import Facing
 
 import pygame
 
-#Kümmert sich um die Funktionen des Players
 
-#Bewegung
-#Angriffe (Schwert, Bogen)
-#Leben, Items
+# Kümmert sich um die Funktionen des Players
+
+# Bewegung
+# Angriffe (Schwert, Bogen)
+# Leben, Items
 
 class Player(LivingObject):
     def __init__(self):
-        super().__init__([1,1], None)
+        super().__init__([1, 1], None)
         self.__image_up = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert()
         self.__image_down = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert()
         self.__image_left = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert()
