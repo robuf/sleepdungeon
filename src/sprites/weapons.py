@@ -14,12 +14,20 @@ class Weapon(object):
     @staticmethod
     def get_field(start: Position, facing: Facing, steps: int) -> Position:
         if facing == Facing.FACING_UP:
+            if start.y - steps < 0:
+                return
             return Position(start.x, start.y - steps)
         elif facing == Facing.FACING_RIGHT:
+            if start.x + steps > 12:
+                return
             return Position(start.x + steps, start.y)
         elif facing == Facing.FACING_DOWN:
+            if start.y + steps > 8:
+                return
             return Position(start.x, start.y + steps)
         elif facing == Facing.FACING_LEFT:
+            if start.x - steps < 0:
+                return
             return Position(start.x - steps, start.y)
 
         return None
@@ -33,14 +41,13 @@ class Weapon(object):
     def find_target(self, context: Context, sprite_type: SpriteType, position: Position, facing: Facing) -> Optional[
         object]:
         for i in range(0, self.attack_range):
-            try:
-                pos = Weapon.get_field(position, facing, i + 1)
-                sprite_list = context.sprites.find_by_type_and_pos(sprite_type, pos)
+            pos = Weapon.get_field(position, facing, i + 1)
+            if not pos:
+                continue
+            sprite_list = context.sprites.find_by_type_and_pos(sprite_type, pos)
 
-                for sprite in sprite_list:
-                    return sprite
-            except:
-                pass
+            for sprite in sprite_list:
+                return sprite
         return None
 
     def can_attack(self, context: Context, sprite_type: SpriteType, position: Position, facing: Facing) -> bool:
