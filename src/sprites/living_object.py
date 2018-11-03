@@ -37,22 +37,21 @@ class LivingObject(Sprite):
 
         if self.facing == Facing.FACING_UP:
             if self.walking:
-                self.lo_rect.move(0, -1)
+                pass
 
         # facing right
         elif self.facing == Facing.FACING_RIGHT:
             if self.walking:
-                self.lo_rect.move(1, 0)
-
+                pass
         # facing down
         elif self.facing == Facing.FACING_DOWN:
             if self.walking:
-                self.lo_rect.move(0, 1)
+                pass
 
         # facing left
         elif self.facing == Facing.FACING_LEFT:
             if self.walking:
-                self.lo_rect.move(1, 0)
+                pass
 
     def update(self, context: Context):
         super().update(context)

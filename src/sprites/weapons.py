@@ -43,13 +43,13 @@ class Weapon(Sprite):
                 self.sidebar_width + x * tile,
                 (y-1) * tile,
                 self.width * tile,
-                self.height * tile
+                self.height * self.attack_range * tile
             )
         elif self.facing == Facing.FACING_RIGHT:
             return pygame.Rect(
                 self.sidebar_width + (x+1) * tile,
                 y * tile,
-                self.width * tile,
+                self.width * self.attack_range * tile,
                 self.height * tile
             )
         elif self.facing == Facing.FACING_DOWN:
@@ -57,13 +57,13 @@ class Weapon(Sprite):
                 self.sidebar_width + x * tile,
                 (y+1) * tile,
                 self.width * tile,
-                self.height * tile
+                self.height * self.attack_range * tile
             )
         elif self.facing == Facing.FACING_LEFT:
             return pygame.Rect(
                 self.sidebar_width + (x-1) * tile,
                 y * tile,
-                self.width * tile,
+                self.width * self.attack_range * tile,
                 self.height * tile
             )
 
