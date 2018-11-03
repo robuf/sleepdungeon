@@ -1,4 +1,4 @@
-from util.scale import scale
+from ..util.scale import scale
 from .living_object import LivingObject
 from ..base.game_constants import SpriteType
 from ..base.inputs import InputEvent

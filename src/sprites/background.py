@@ -1,6 +1,6 @@
 import pygame
 
-from util.scale import scale
+from ..util.scale import scale
 from ..base.context import Context
 from ..base.sprite import SpriteType, Sprite
 from ..res import IMG_DIR

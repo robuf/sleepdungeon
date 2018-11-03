@@ -7,7 +7,7 @@ from ..util.path_finder import get_border_with_obstacles, find_path, ActionType
 import pygame
 
 
-class Enemy(LivingObject):
+class EnemyArcher(LivingObject):
     def __init__(self):
         super().__init__([1, 1], None)
         self.__image_up = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
@@ -37,7 +37,7 @@ class Enemy(LivingObject):
         obstacles = [(sprite.position.x, sprite.position.y) for sprite in context.sprites if
                      sprite != self and sprite != player]
 
-        path = find_path(source, target, get_border_with_obstacles(obstacles), 0)
+        path = find_path(source, target, get_border_with_obstacles(obstacles), 3)
 
         if path is not None:
             facing = self.facing

@@ -7,7 +7,7 @@ from ..util.path_finder import get_border_with_obstacles, find_path, ActionType
 import pygame
 
 
-class Enemy(LivingObject):
+class EnemyShielder(LivingObject):
     def __init__(self):
         super().__init__([1, 1], None)
         self.__image_up = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()

@@ -1,6 +1,6 @@
 from typing import List
 
-from util.scale import scale
+from ..util.scale import scale
 from ..base.context import Context
 from ..base.sprite import Sprite, SpriteType
 from ..base.position import Position
