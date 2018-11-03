@@ -65,22 +65,22 @@ class LivingObject(Sprite):
 
             if self.facing == Facing.FACING_UP:
                 for model in context.sprites:
-                    if self.position.y - Weapon.attack_range == model.position.y:
+                    if self.position.y - self.weapon.attack_range == model.position.y:
                         Sword.attack(self.weapon, model)
 
             if self.facing == Facing.FACING_RIGHT:
                 for model in context.sprites:
-                    if self.position.x + Weapon.attack_range == model.position.y:
+                    if self.position.x + self.weapon.attack_range == model.position.y:
                         Sword.attack(self.weapon, model)
 
             if self.facing == Facing.FACING_LEFT:
                 for model in context.sprites:
-                    if self.position.x - Weapon.attack_range == model.position.y:
+                    if self.position.x - self.weapon.attack_range == model.position.y:
                         Sword.attack(self.weapon, model)
 
             if self.facing == Facing.FACING_DOWN:
                 for model in context.sprites:
-                    if self.position.y + Weapon.attack_range == model.position.y:
+                    if self.position.y + self.weapon.attack_range == model.position.y:
                         Sword.attack(self.weapon, model)
 
         # Bow
@@ -90,22 +90,22 @@ class LivingObject(Sprite):
 
             if self.facing == Facing.FACING_UP:
                 for model in context.sprites:
-                    if self.position.y - Weapon.attack_range == model.position.y:
+                    if self.position.y - self.weapon.attack_range == model.position.y:
                         Bow.attack(self.weapon, model)
 
             if self.facing == Facing.FACING_RIGHT:
                 for model in context.sprites:
-                    if self.position.x + Weapon.attack_range == model.position.y:
+                    if self.position.x + self.weapon.attack_range == model.position.y:
                         Bow.attack(self.weapon, model)
 
             if self.facing == Facing.FACING_LEFT:
                 for model in context.sprites:
-                    if self.position.x - Weapon.attack_range == model.position.y:
+                    if self.position.x - self.weapon.attack_range == model.position.y:
                         Bow.attack(self.weapon, model)
 
             if self.facing == Facing.FACING_DOWN:
                 for model in context.sprites:
-                    if self.position.y + Weapon.attack_range == model.position.y:
+                    if self.position.y + self.weapon.attack_range == model.position.y:
                         Bow.attack(self.weapon, model)
 
     @property
