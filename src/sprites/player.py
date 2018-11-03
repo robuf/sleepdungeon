@@ -1,6 +1,7 @@
 from typing import Tuple
 from .living_object import LivingObject
 from ..base.game_constants import SpriteType
+from ..base.position import Position
 from ..base.inputs import InputEvent
 from .. import res
 from ..base.game_constants import Facing
@@ -42,18 +43,40 @@ class Player(LivingObject):
         for i in context.input_events:
             if i == InputEvent.MOVE_UP:
                 self.facing = Facing.FACING_UP
-                self.move(0, -1)
+                self.move(0, -1, context)
             if i == InputEvent.MOVE_DOWN:
                 self.facing = Facing.FACING_DOWN
-                self.move(0, 1)
+                self.move(0, 1, context)
             if i == InputEvent.MOVE_LEFT:
                 self.facing = Facing.FACING_LEFT
-                self.move(-1, 0)
+                self.move(-1, 0, context)
             if i == InputEvent.MOVE_RIGHT:
                 self.facing = Facing.FACING_RIGHT
-                self.move(1, 0)
+                self.move(1, 0, context)
 
-    def move(self, x, y):
+    def move(self, x, y, context):
+        sprites = context.sprites
+
+        try:
+            new_pos = Position(self.position.x + x, self.position.y + y)
+        except:
+            return
+
+        if sprites.find_by_type_and_pos(SpriteType.STATIC, new_pos):
+            return
+
+        if sprites.find_by_type_and_pos(SpriteType.ENEMY, new_pos):
+            return
+
+        if new_pos.x in [0, 12] or new_pos.y in [0, 8]:
+            for door in sprites.find_by_type(SpriteType.DOOR):
+                if door.position.x + 1 == new_pos.x and door.position.y == new_pos.y:
+                    break
+            else:
+                return
+
+
+
         if self.move_cooldown > 0:
             return
         try:
