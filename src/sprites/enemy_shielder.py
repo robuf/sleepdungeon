@@ -7,9 +7,9 @@ from ..util.path_finder import get_border_with_obstacles, find_path, ActionType
 import pygame
 
 
-class Enemy(LivingObject):
+class EnemyShielder(LivingObject):
     def __init__(self):
-        super().__init__([1, 1], None)
+        super().__init__([1, 1])
         self.__image_up = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
         self.__image_down = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
         self.__image_left = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
@@ -19,6 +19,9 @@ class Enemy(LivingObject):
         self.animation_i = 0
         self.miliseconds_per_frame = 0
         self.move_cooldown = 400
+
+        self.lifes = 4
+        self.max_lifes = 4
 
     def update(self, context):
         super().update(context)

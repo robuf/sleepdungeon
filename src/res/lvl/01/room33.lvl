@@ -1,0 +1,8 @@
+BACKGROUND default
+DOOR bottom room43
+
+PLAYER 6 4
+
+ENEMY saber 1 1
+ENEMY archer 11 1
+ENEMY shielder 1 7
