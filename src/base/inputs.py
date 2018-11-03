@@ -46,13 +46,13 @@ class InputManager:
                 if event.key == pygame.K_ESCAPE:
                     event_set.add(InputEvent.QUIT)
 
-            if event.type == pygame.JOYBUTTONDOWN:
+            elif event.type == pygame.JOYBUTTONDOWN:
                 if event.button == 0:
                     event_set.add(InputEvent.ATTACK)
                 if event.button == 1:
                     event_set.add(InputEvent.SWAP)
 
-            if event.type == pygame.QUIT:
+            elif event.type == pygame.QUIT:
                 event_set.add(InputEvent.QUIT)
 
         if self.joystick is not None:

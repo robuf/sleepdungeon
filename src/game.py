@@ -6,7 +6,7 @@ from .base.inputs import InputEvent, InputManager
 from .base.context import Context
 from .base.floor import Floor
 from .base.room import Room
-from .base.sprite import SpriteType, Sprite
+from .base.sprite import Sprite
 from .level_loader import LevelLoader
 from .sprites.sidebar import SideBar
 
@@ -41,6 +41,11 @@ class Game(object):
         for event in event_set:
             if event == InputEvent.QUIT:
                 self.running = False
+
+        for event in events:
+            if event.type == pygame.VIDEORESIZE:
+                self.render_context.resize(event.dict['size'])
+                Sprite._update_render_context(self.render_context)
 
         if self.context.change_room is not None:
             player = self.current_room.remove_player()
