@@ -13,12 +13,20 @@ class Weapon(object):
     @staticmethod
     def get_field(start: Position, facing: Facing, steps: int) -> Position:
         if facing == Facing.FACING_UP:
+            if start.y - steps < 0:
+                return
             return Position(start.x, start.y - steps)
         elif facing == Facing.FACING_RIGHT:
+            if start.x + steps > 12:
+                return
             return Position(start.x + steps, start.y)
         elif facing == Facing.FACING_DOWN:
+            if start.y + steps > 8:
+                return
             return Position(start.x, start.y + steps)
         elif facing == Facing.FACING_LEFT:
+            if start.x - steps < 0:
+                return
             return Position(start.x - steps, start.y)
 
         return None
@@ -28,6 +36,8 @@ class Weapon(object):
 
         for i in range(0, self.attack_range):
             pos = Weapon.get_field(player.position, player.facing, i + 1)
+            if not pos:
+                continue
             enemies = context.sprites.find_by_type_and_pos(SpriteType.ENEMY, pos)
 
             if len(enemies) > 0:
