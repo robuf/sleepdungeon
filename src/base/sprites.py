@@ -13,5 +13,22 @@ class Sprites(list):
     def get_sprites_in_room(self) -> int:
         return len(self)
 
-    def find_sprites_by_type(self, sprite_type: Optional[object], position: Optional[Tuple[int, int]] = None):
-        return []
+    def find_by_type(self, sprite_type):
+        return sorted(
+            [sprite for sprite in self if sprite.type == sprite_type],
+            key=lambda x:x.z_index
+        )
+
+    def find_by_pos(self, pos: Position):
+        return sorted(
+            [sprite for sprite in self if sprite.position == pos],
+            key=lambda x:x.z_index
+        )
+
+    def find_by_type_and_pos(self, sprite_type, pos: Position):
+        return sorted(
+            [sprite for sprite in self
+                if sprite.position == pos and sprite.type == sprite_type
+            ],
+            key=lambda x:x.z_index
+        )

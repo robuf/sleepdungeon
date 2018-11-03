@@ -43,7 +43,7 @@ class Door(Sprite):
         self.__image = surface.subsurface(rect)
 
     def update(self, context: Context):
-        player: List[Player] = context.sprites.find_sprites_by_type(
+        player: List[Player] = context.sprites.find_by_type_and_pos(
             SpriteType.PLAYER,
             self.center
         )
