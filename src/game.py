@@ -6,6 +6,7 @@ from .base.inputs import InputEvent, InputManager
 from .base.context import Context
 from .base.floor import Floor
 from .base.room import Room
+from .base.sprite import SpriteType
 from .level_loader import LevelLoader
 
 
@@ -35,6 +36,18 @@ class Game(object):
         for event in event_set:
             if event == InputEvent.QUIT:
                 self.running = False
+
+        if self.context.change_room is not None:
+            player = self.current_room.remove_player()
+
+            self.current_room = self.current_floor.get_room(self.context.change_room)
+
+            self.context.change_room = None
+            self.context.block_doors = True
+            for sprite in self.current_room.sprites:
+                sprite._update_render_context(self.render_context)
+
+            self.current_room.add_player(player)
 
         self.context.input_events = event_set
         self.context.sprites = self.current_room.sprites

@@ -12,3 +12,10 @@ class Floor(object):
             if room.sprites.find_by_type(SpriteType.PLAYER):
                 return room
         raise Exception("No room has a player")
+
+    def get_room(self, name: str) -> Room:
+        for room in self.rooms:
+            if room.name == name:
+                return room
+        print("not found")
+        return self.initial_room

@@ -1,4 +1,4 @@
-from typing import Set
+from typing import Set, Optional
 from .inputs import InputEvent
 from .sprites import Sprites
 from ..render_context import RenderContext
@@ -12,3 +12,4 @@ class Context:
         self.mixer = None
         self.delta_t = 0
         self.render_context: RenderContext = None
+        self.change_room: Optional[str] = None

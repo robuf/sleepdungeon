@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+from .game_constants import SpriteType
 from ..sprites.door import Door
 from ..sprites.background import Background
 from ..sprites.player import Player
@@ -12,12 +13,17 @@ from ..sprites.dmgup import Dmgup
 from ..sprites.hpup import Hpup
 from .position import Position
 
+import os
+
+
 class Room(object):
     def __init__(self, path):
+        self.name = os.path.split(path)[1].split(".")[0]
+
         self.sprites = Sprites()
         with open(path, 'r') as f:
             for line in f.readlines():
-                line = line.split(" ")
+                line = line.strip().split(" ")
                 x = Room.parse(line)
                 if x is not None:
                     self.sprites.append(x)
@@ -34,7 +40,6 @@ class Room(object):
         elif token[0] == "DOOR":
             side = token[1]
             next_room = token[2]
-
             return Door(side, next_room)
 
         elif token[0] == "PLAYER":
@@ -86,3 +91,20 @@ class Room(object):
             if t == "":
                 pass
         return None
+
+    def remove_player(self) -> Player:
+        player = self.sprites.find_by_type(SpriteType.PLAYER)[0]
+        self.sprites.remove(player)
+        return player
+
+    def add_player(self, player: Player):
+        if player.position.x == 0:
+            player.position.x = 12
+        elif player.position.x == 12:
+            player.position.x = 0
+        elif player.position.y == 0:
+            player.position.y = 8
+        elif player.position.y == 8:
+            player.position.y = 0
+
+        self.sprites.append(player)
