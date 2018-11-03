@@ -33,19 +33,6 @@ class Door(Sprite):
 
     def __init__(self, side: str, next_room: str, key_count: int):
         super().__init__()
-        if not Door.__BASE_UP_SURFACE:
-            base = pygame.image.load(IMG_DIR + "room/doors.png").convert_alpha()
-            Door.__BASE_UP_SURFACE = base.subsurface(pygame.Rect(0, 0, 300, 100))
-            Door.__BASE_DOWN_SURFACE = base.subsurface(pygame.Rect(0, 100, 300, 100))
-            Door.__BASE_LEFT_SURFACE = base.subsurface(pygame.Rect(100, 200, 100, 300))
-            Door.__BASE_RIGHT_SURFACE = base.subsurface(pygame.Rect(0, 200, 100, 300))
-
-            base = pygame.image.load(IMG_DIR + "room/doors_locked.png").convert_alpha()
-            Door.__BASE_UP_SURFACE_LOCKED = base.subsurface(pygame.Rect(0, 0, 300, 100))
-            Door.__BASE_DOWN_SURFACE_LOCKED = base.subsurface(pygame.Rect(0, 100, 300, 100))
-            Door.__BASE_LEFT_SURFACE_LOCKED = base.subsurface(pygame.Rect(100, 200, 100, 300))
-            Door.__BASE_RIGHT_SURFACE_LOCKED = base.subsurface(pygame.Rect(0, 200, 100, 300))
-
         self.center: Position = Position(0, 0)
         self.facing = None
         if side == "TOP":
@@ -93,6 +80,18 @@ class Door(Sprite):
 
     @classmethod
     def update_render_context(cls, render_context):
+        if not cls.__BASE_UP_SURFACE:
+            base = pygame.image.load(IMG_DIR + "room/doors.png").convert_alpha()
+            cls.__BASE_UP_SURFACE = base.subsurface(pygame.Rect(0, 0, 300, 100))
+            cls.__BASE_DOWN_SURFACE = base.subsurface(pygame.Rect(0, 100, 300, 100))
+            cls.__BASE_LEFT_SURFACE = base.subsurface(pygame.Rect(100, 200, 100, 300))
+            cls.__BASE_RIGHT_SURFACE = base.subsurface(pygame.Rect(0, 200, 100, 300))
+
+            base = pygame.image.load(IMG_DIR + "room/doors_locked.png").convert_alpha()
+            cls.__BASE_UP_SURFACE_LOCKED = base.subsurface(pygame.Rect(0, 0, 300, 100))
+            cls.__BASE_DOWN_SURFACE_LOCKED = base.subsurface(pygame.Rect(0, 100, 300, 100))
+            cls.__BASE_LEFT_SURFACE_LOCKED = base.subsurface(pygame.Rect(100, 200, 100, 300))
+            cls.__BASE_RIGHT_SURFACE_LOCKED = base.subsurface(pygame.Rect(0, 200, 100, 300))
         cls.__SURFACE_UP = pygame.transform.smoothscale(
             cls.__BASE_UP_SURFACE,
             (
