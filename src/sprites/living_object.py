@@ -110,6 +110,9 @@ class LivingObject(Sprite):
     def damage(self, context: Context, damage: int):
         self.lifes -= damage
         # print(str(type(self)) + " has " + str(self.lifes) + " left")
+        self.die(context)
+
+    def die(self, context: Context):
         if self.lifes <= 0:
             context.sprites.remove(self)
 
