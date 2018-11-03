@@ -24,7 +24,7 @@ class Stone(Sprite):
 
     @property
     def sprite_type(self) -> SpriteType:
-        return SpriteType.ENTITY
+        return SpriteType.STATIC
 
     def update_render_context(self, render_context: RenderContext):
         self.render_context = render_context
