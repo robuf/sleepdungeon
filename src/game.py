@@ -8,7 +8,7 @@ from .base.floor import Floor
 from .base.room import Room
 from .base.sprite import SpriteType
 from .level_loader import LevelLoader
-
+from .sprites.sidebar import SideBar
 
 class Game(object):
     def __init__(self, render_context: RenderContext):
@@ -21,13 +21,17 @@ class Game(object):
         self.floors: List[Floor] = []
         self.context = Context()
         self.context.render_context = self.render_context
+        self.sidebar: SideBar = None
 
     def load(self):
         self.floors = LevelLoader().load_levels()
         self.current_floor = self.floors[0]
         self.current_room = self.current_floor.initial_room
+        self.sidebar = SideBar()
+
         for sprite in self.current_room.sprites:
             sprite._update_render_context(self.render_context)
+            self.sidebar._update_render_context(self.render_context)
 
     def update(self):
         events = pygame.event.get()
@@ -46,6 +50,7 @@ class Game(object):
             self.context.block_doors = True
             for sprite in self.current_room.sprites:
                 sprite._update_render_context(self.render_context)
+                self.sidebar._update_render_context(self.render_context)
 
             self.current_room.add_player(player)
 
