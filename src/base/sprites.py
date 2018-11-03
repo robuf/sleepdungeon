@@ -15,7 +15,7 @@ class Sprites(list):
 
     def find_by_type(self, sprite_type):
         return sorted(
-            [sprite for sprite in self if sprite.type == sprite_type],
+            [sprite for sprite in self if sprite.sprite_type == sprite_type],
             key=lambda x:x.z_index
         )
 
@@ -28,7 +28,7 @@ class Sprites(list):
     def find_by_type_and_pos(self, sprite_type, pos: Position):
         return sorted(
             [sprite for sprite in self
-                if sprite.position == pos and sprite.type == sprite_type
+                if sprite.position == pos and sprite.sprite_type == sprite_type
             ],
             key=lambda x:x.z_index
         )

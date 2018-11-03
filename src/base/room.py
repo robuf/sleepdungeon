@@ -2,9 +2,11 @@ from typing import List, Optional
 
 from ..sprites.door import Door
 from ..sprites.background import Background
+from ..sprites.player import Player
 from ..sprites.stone import Stone
-from ..base.sprite import Sprite
-from ..base.sprites import Sprites
+from .sprite import Sprite
+from .sprites import Sprites
+from .position import Position
 
 
 
@@ -37,26 +39,31 @@ class Room(object):
             x = int(token[1])
             y = int(token[2])
 
+            pl = Player()
+            pl.position = Position(x, y)
+
+            return pl
+
         elif token[0] == "ENEMY":
             t = token[1]
             x = int(token[2])
             y = int(token[3])
-        
+
             if t == "":
                 pass
-                
+
         elif token[0] == "ITEM":
             t = token[1]
             x = int(token[2])
             y = int(token[3])
-        
+
             if t == "":
-                pass                
+                pass
         elif token[0] == "ENTITY":
             t = token[1]
             x = int(token[2])
             y = int(token[3])
-        
+
             if t == "STONE":
                 return Stone(x, y)
                 pass
@@ -64,8 +71,7 @@ class Room(object):
             t = token[1]
             x = int(token[2])
             y = int(token[3])
-        
+
             if t == "":
                 pass
         return None
-

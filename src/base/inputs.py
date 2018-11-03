@@ -32,7 +32,7 @@ class InputManager:
             event_set.add(InputEvent.MOVE_UP)
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             event_set.add(InputEvent.MOVE_RIGHT)
-        if keys[pygame.K_s] or keys[pygame.K_DOLLAR]:
+        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
             event_set.add(InputEvent.MOVE_DOWN)
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             event_set.add(InputEvent.MOVE_LEFT)

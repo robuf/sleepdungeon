@@ -23,7 +23,7 @@ class Position(list):
 
     @y.setter
     def y(self, value):
-        if 0 <= value <= 12:
+        if 0 <= value <= 8:
             self[1] = value
             return
         raise Exception("Position out of bounds")
