@@ -1,6 +1,7 @@
 import pygame
 
 from src import RenderContext
+from util.scale import scale
 from ..base.context import Context
 from ..base.game_constants import SpriteType
 from ..base.sprite import Sprite
@@ -29,5 +30,5 @@ class Item(Sprite):
 
     def update_render_context(self, render_context: RenderContext):
         self.render_context = render_context
-        self.surface = pygame.transform.scale(
+        self.surface = scale(
             self.surface, (self.width * self.tile_size, self.height * self.tile_size))

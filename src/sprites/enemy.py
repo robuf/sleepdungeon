@@ -1,3 +1,4 @@
+from util.scale import scale
 from .living_object import LivingObject
 from ..base.game_constants import SpriteType
 from .. import res
@@ -76,19 +77,19 @@ class Enemy(LivingObject):
 
     def update_render_context(self, render_context):
         self.render_context = render_context
-        self.__image_up = pygame.transform.scale(
+        self.__image_up = scale(
             self.__image_up,
             (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
         )
-        self.__image_down = pygame.transform.scale(
+        self.__image_down = scale(
             self.__image_down,
             (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
         )
-        self.__image_left = pygame.transform.scale(
+        self.__image_left = scale(
             self.__image_left,
             (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
         )
-        self.__image_right = pygame.transform.scale(
+        self.__image_right = scale(
             self.__image_right,
             (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
         )

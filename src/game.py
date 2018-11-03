@@ -6,9 +6,9 @@ from .base.inputs import InputEvent, InputManager
 from .base.context import Context
 from .base.floor import Floor
 from .base.room import Room
-from .base.sprite import SpriteType
 from .level_loader import LevelLoader
 from .sprites.sidebar import SideBar
+
 
 class Game(object):
     def __init__(self, render_context: RenderContext):
@@ -22,6 +22,8 @@ class Game(object):
         self.context = Context()
         self.context.render_context = self.render_context
         self.sidebar: SideBar = None
+
+        print(pygame.transform.get_smoothscale_backend())
 
     def load(self):
         self.floors = LevelLoader().load_levels()
