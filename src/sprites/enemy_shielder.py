@@ -27,13 +27,6 @@ class EnemyShielder(Enemy):
 
     def __init__(self):
         super().__init__([1, 1])
-        if not EnemyShielder.__BASE_UP_SURFACE:
-            EnemyShielder.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "enemy/shielder/walk/up.png").convert_alpha()
-            EnemyShielder.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "enemy/shielder/walk/down.png").convert_alpha()
-            EnemyShielder.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
-            EnemyShielder.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
-
-
         self.animation_i = 0
         self.frame_cooldown = 0
 
@@ -67,6 +60,12 @@ class EnemyShielder(Enemy):
 
     @classmethod
     def update_render_context(cls, render_context):
+        if not cls.__BASE_UP_SURFACE:
+            cls.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "enemy/shielder/walk/up.png").convert_alpha()
+            cls.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "enemy/shielder/walk/down.png").convert_alpha()
+            cls.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
+            cls.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
+
         cls.__SURFACE_UP = pygame.transform.smoothscale(
             cls.__BASE_UP_SURFACE,
             (

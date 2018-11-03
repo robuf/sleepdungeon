@@ -14,8 +14,6 @@ class Stone(Sprite):
 
     def __init__(self, x: int, y: int):
         super().__init__()
-        if not Stone.__BASE_SURFACE:
-            Stone.__BASE_SURFACE = pygame.image.load(IMG_DIR + "room/stone/stone.png")
         self.width = 1
         self.height = 1
         self.position = Position(x, y)
@@ -33,8 +31,10 @@ class Stone(Sprite):
 
     @classmethod
     def update_render_context(cls, render_context: RenderContext):
-        Stone.__SURFACE = pygame.transform.smoothscale(
-            Stone.__BASE_SURFACE,
+        if not cls.__BASE_SURFACE:
+            cls.__BASE_SURFACE = pygame.image.load(IMG_DIR + "room/stone/stone.png")
+        cls.__SURFACE = pygame.transform.smoothscale(
+            cls.__BASE_SURFACE,
             (
                 cls.tile_size,
                 cls.tile_size
