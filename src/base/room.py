@@ -26,7 +26,11 @@ class Room(object):
         self.sprites = Sprites()
         with open(path, 'r') as f:
             for line in f.readlines():
-                line = line.strip().split(" ")
+                line = line.strip()
+                if line.startswith("#"):
+                    continue
+
+                line = line.split(" ")
                 x = Room.parse(line)
                 if x is not None:
                     self.sprites.append(x)
@@ -43,7 +47,11 @@ class Room(object):
         elif token[0] == "DOOR":
             side = token[1]
             next_room = token[2]
-            return Door(side, next_room)
+
+            key_count = 0
+            if len(token) > 3:
+                key_count = int(token[3])
+            return Door(side, next_room, key_count)
 
         elif token[0] == "PLAYER":
             x = int(token[1])
@@ -117,7 +125,5 @@ class Room(object):
             player.position.y = 8
         elif player.position.y == 8:
             player.position.y = 0
-
-        player.move_cooldown_current = player.move_cooldown
 
         self.sprites.append(player)

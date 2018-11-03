@@ -1,66 +1,58 @@
-from ..util.scale import scale
-from .living_object import LivingObject
+from .enemy import Enemy
+from .weapons import Sword
 from ..base.game_constants import SpriteType
+from ..base.context import Context
 from .. import res
 from ..base.game_constants import Facing
 from ..util.path_finder import get_border_with_obstacles, find_path, ActionType
 import pygame
 
 
-class EnemySaber(LivingObject):
+class EnemySaber(Enemy):
+    __BASE_UP_SURFACE: pygame.Surface = None
+    __BASE_DOWN_SURFACE: pygame.Surface = None
+    __BASE_LEFT_SURFACE: pygame.Surface = None
+    __BASE_RIGHT_SURFACE: pygame.Surface = None
+
+    __SURFACE_UP: pygame.Surface = None
+    __SURFACE_DOWN: pygame.Surface = None
+    __SURFACE_LEFT: pygame.Surface = None
+    __SURFACE_RIGHT: pygame.Surface = None
+
+    _WIDTH = 1
+    _HEIGHT = 1
+    _ANIMATION_LENGTH = 4
+    _MILISECONDS_PER_FRAME = 200
+    _MOVE_COOLDOWN = 400
+
     def __init__(self):
-        super().__init__([1, 1], None)
-        self.__image_up = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
-        self.__image_down = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
-        self.__image_left = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
-        self.__image_right = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
+        super().__init__([1, 1])
+        if not EnemySaber.__BASE_UP_SURFACE:
+            EnemySaber.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
+            EnemySaber.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
+            EnemySaber.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
+            EnemySaber.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
 
-        self.animation_length = 4
         self.animation_i = 0
-        self.miliseconds_per_frame = 0
-        self.move_cooldown = 400
+        self.frame_cooldown = 0
 
-    def update(self, context):
-        super().update(context)
+        self.lifes = 3
+        self.max_lifes = 3
 
-        if self.miliseconds_per_frame > 200:
-            self.miliseconds_per_frame = 0
-            self.animation_i += 1
-            if self.animation_i == self.animation_length:
-                self.animation_i = 0
-        self.miliseconds_per_frame += context.delta_t
-
-        player = context.sprites.find_by_type(SpriteType.PLAYER)[0]
-
-        source = self.position.x, self.position.y, self.facing.value
-        target = player.position.x, player.position.y
-        obstacles = [(sprite.position.x, sprite.position.y) for sprite in context.sprites if
-                     sprite != self and sprite != player]
-
-        path = find_path(source, target, get_border_with_obstacles(obstacles), 0)
-
-        if path is not None:
-            facing = self.facing
-            while len(path) > 0:
-                step = path.pop(0)
-                if step.type == ActionType.TURN:
-                    facing = Facing(step.direction)
-
-                elif step.type == ActionType.MOVE:
-                    self.move(facing, context)
-                    break
+        self.selected_weapon = Sword()
+        self.weapon_list = [self.selected_weapon]
 
     @property
     def image(self):
         img = None
         if self.facing == Facing.FACING_UP:
-            img = self.__image_up
+            img = EnemySaber.__SURFACE_UP
         elif self.facing == Facing.FACING_DOWN:
-            img = self.__image_down
+            img = EnemySaber.__SURFACE_DOWN
         if self.facing == Facing.FACING_LEFT:
-            img = self.__image_left
+            img = EnemySaber.__SURFACE_LEFT
         elif self.facing == Facing.FACING_RIGHT:
-            img = self.__image_right
+            img = EnemySaber.__SURFACE_RIGHT
 
         return img.subsurface(
             pygame.Rect(
@@ -75,21 +67,33 @@ class EnemySaber(LivingObject):
     def sprite_type(self) -> SpriteType:
         return SpriteType.ENEMY
 
-    def update_render_context(self, render_context):
-        self.render_context = render_context
-        self.__image_up = scale(
-            self.__image_up,
-            (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
+    @classmethod
+    def update_render_context(cls, render_context):
+        cls.__SURFACE_UP = pygame.transform.smoothscale(
+            cls.__BASE_UP_SURFACE,
+            (
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
+            )
         )
-        self.__image_down = scale(
-            self.__image_down,
-            (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
+        cls.__SURFACE_DOWN = pygame.transform.smoothscale(
+            cls.__BASE_DOWN_SURFACE,
+            (
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
+            )
         )
-        self.__image_left = scale(
-            self.__image_left,
-            (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
+        cls.__SURFACE_LEFT = pygame.transform.smoothscale(
+            cls.__BASE_LEFT_SURFACE,
+            (
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
+            )
         )
-        self.__image_right = scale(
-            self.__image_right,
-            (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
+        cls.__SURFACE_RIGHT = pygame.transform.smoothscale(
+            cls.__BASE_RIGHT_SURFACE,
+            (
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
+            )
         )

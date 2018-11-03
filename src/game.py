@@ -6,6 +6,7 @@ from .base.inputs import InputEvent, InputManager
 from .base.context import Context
 from .base.floor import Floor
 from .base.room import Room
+from .base.sprite import SpriteType, Sprite
 from .level_loader import LevelLoader
 from .sprites.sidebar import SideBar
 
@@ -23,7 +24,7 @@ class Game(object):
         self.context.render_context = self.render_context
         self.sidebar: SideBar = None
 
-        print(pygame.transform.get_smoothscale_backend())
+        # print("Scale acceleration: " + pygame.transform.get_smoothscale_backend())
 
     def load(self):
         self.floors = LevelLoader().load_levels()
@@ -31,9 +32,7 @@ class Game(object):
         self.current_room = self.current_floor.initial_room
         self.sidebar = SideBar()
 
-        for sprite in self.current_room.sprites:
-            sprite._update_render_context(self.render_context)
-            self.sidebar._update_render_context(self.render_context)
+        Sprite._update_render_context(self.render_context)
 
     def update(self):
         events = pygame.event.get()
@@ -50,10 +49,7 @@ class Game(object):
 
             self.context.change_room = None
             self.context.block_doors = True
-            for sprite in self.current_room.sprites:
-                sprite._update_render_context(self.render_context)
-                self.sidebar._update_render_context(self.render_context)
-
+            Sprite._update_render_context(self.render_context)
             self.current_room.add_player(player)
 
         self.context.input_events = event_set
