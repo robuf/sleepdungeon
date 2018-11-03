@@ -6,6 +6,7 @@ from ..base.sprites import Sprites
 from ..base.game_constants import ZIndex, Facing, WeaponType
 from .weapons import Weapon, Sword, Bow
 
+import pygame
 
 # Kümmert sich um die Funktionen des Players
 
@@ -53,28 +54,28 @@ class LivingObject(Sprite):
     def update(self, context: Context):
         super().update(context)
 
-    def attack(self):
-
-        spritecount: int = Sprites.get_sprites_in_room()
+    def attack(self, context: Context):
 
         # Sword
         if self.weapon.weapon_type == WeaponType.SWORD:
 
             # Animation einfügen Schwert
 
-            for i in range(0, spritecount):
-                if Sprites.checkForSprite(i, self.facing, Sword.attack_range):
-                    pass
+            collided = pygame.Rect.collidelist(self.weapon.rect, context.sprites)
+
+            if collided >= 0:
+                Sword.attack(self.weapon, context.sprites[collided])
 
         # Bow
-        elif self.weapon.weapon_type == WeaponType.SWORD:
+        if self.weapon.weapon_type == WeaponType.Bow:
 
-            # Animation einfügen Bogen
-            # Animation einfügen Pfeil
+            # Animation einfügen Schwert
 
-            for i in range(0, spritecount):
-                if Sprites.checkForSprite(i, self.facing, Bow.attack_range):
-                    pass
+            collided = pygame.Rect.collidelist(self.weapon.rect, context.sprites)
+
+            if collided >= 0:
+                Sword.attack(self.weapon, context.sprites[collided])
+
 
     @property
     def position(self) -> Tuple[int, int]:

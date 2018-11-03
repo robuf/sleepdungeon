@@ -14,7 +14,7 @@ class Weapon(Sprite):
         self.weapon_type = weapon_type
 
         self.attack_damage = atk_damage
-        self.attack_range  = atk_range
+        self.attack_range = atk_range
 
     def update(self, context: Context):
         pass
@@ -40,7 +40,7 @@ class Sword(Weapon):
     def __init__(self, z_index: int, width: float, height: float):
         super().__init__(WeaponType.SWORD)
 
-    def attack(self, in_front):
+    def attack(self: Weapon, in_front):
 
         in_front.life -= self.attack_damage
 
@@ -48,6 +48,6 @@ class Bow(Weapon):
     def __init__(self, z_index: int, width: float, height: float):
         super().__init__(WeaponType.SWORD)
 
-    def attack(self, on_line):
+    def attack(self: Weapon, on_line):
 
         on_line.life -= self.attack_damage
