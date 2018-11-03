@@ -2,19 +2,21 @@ from typing import Tuple
 
 import pygame
 
-from ..base.game_constants import ZIndex, WeaponType, SpriteType
+from ..base.game_constants import ZIndex, WeaponType, SpriteType, Facing
 from ..base.context import Context
 from ..base.sprite import Sprite
 
 
 class Weapon(Sprite):
-    def __init__(self, weapon_type: WeaponType, atk_damage: int, atk_range: int):
+    def __init__(self, weapon_type: WeaponType, player_facing, atk_damage: int, atk_range: int):
         super().__init__(ZIndex.PLAYGROUND, 1, 1)
 
         self.weapon_type = weapon_type
 
         self.attack_damage = atk_damage
         self.attack_range = atk_range
+
+        self.facing = player_facing
 
     def update(self, context: Context):
         pass
@@ -32,6 +34,10 @@ class Weapon(Sprite):
         pass
 
     @property
+    def bounding_box(self) -> pygame.Rect:
+        pass
+
+    @property
     def sprite_type(self) -> SpriteType:
         pass
 
@@ -43,6 +49,7 @@ class Sword(Weapon):
     def attack(self: Weapon, in_front):
 
         in_front.life -= self.attack_damage
+
 
 class Bow(Weapon):
     def __init__(self, z_index: int, width: float, height: float):

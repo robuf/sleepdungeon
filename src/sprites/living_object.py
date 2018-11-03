@@ -33,25 +33,25 @@ class LivingObject(Sprite):
 
         self.walking = walking
         self.facing = facing
+        self.weapon.facing = self.facing
 
-        if facing == Facing.FACING_UP:
+        if self.facing == Facing.FACING_UP:
             if self.walking:
-                self.lo_rect.move(0, -1)
+                pass
 
         # facing right
-        elif facing == Facing.FACING_RIGHT:
+        elif self.facing == Facing.FACING_RIGHT:
             if self.walking:
-                self.lo_rect.move(1, 0)
-
+                pass
         # facing down
-        elif facing == Facing.FACING_DOWN:
+        elif self.facing == Facing.FACING_DOWN:
             if self.walking:
-                self.lo_rect.move(0, 1)
+                pass
 
         # facing left
-        elif facing == Facing.FACING_LEFT:
+        elif self.facing == Facing.FACING_LEFT:
             if self.walking:
-                self.lo_rect.move(1, 0)
+                pass
 
     def update(self, context: Context):
         super().update(context)
@@ -63,21 +63,50 @@ class LivingObject(Sprite):
 
             # Animation einfügen Schwert
 
-            collided = pygame.Rect.collidelist(self.weapon.rect, context.sprites)
+            if self.facing == Facing.FACING_UP:
+                for model in context.sprites:
+                    if self.position.y - Weapon.attack_range == model.position.y:
+                        Sword.attack(self.weapon, model)
 
-            if collided >= 0:
-                Sword.attack(self.weapon, context.sprites[collided])
+            if self.facing == Facing.FACING_RIGHT:
+                for model in context.sprites:
+                    if self.position.x + Weapon.attack_range == model.position.y:
+                        Sword.attack(self.weapon, model)
+
+            if self.facing == Facing.FACING_LEFT:
+                for model in context.sprites:
+                    if self.position.x - Weapon.attack_range == model.position.y:
+                        Sword.attack(self.weapon, model)
+
+            if self.facing == Facing.FACING_DOWN:
+                for model in context.sprites:
+                    if self.position.y + Weapon.attack_range == model.position.y:
+                        Sword.attack(self.weapon, model)
 
         # Bow
-        if self.weapon.weapon_type == WeaponType.Bow:
+        if self.weapon.weapon_type == WeaponType.BOW:
 
-            # Animation einfügen Schwert
+            # Animation einfügen Bogen, Pfeil
 
-            collided = pygame.Rect.collidelist(self.weapon.rect, context.sprites)
+            if self.facing == Facing.FACING_UP:
+                for model in context.sprites:
+                    if self.position.y - Weapon.attack_range == model.position.y:
+                        Bow.attack(self.weapon, model)
 
-            if collided >= 0:
-                Sword.attack(self.weapon, context.sprites[collided])
+            if self.facing == Facing.FACING_RIGHT:
+                for model in context.sprites:
+                    if self.position.x + Weapon.attack_range == model.position.y:
+                        Bow.attack(self.weapon, model)
 
+            if self.facing == Facing.FACING_LEFT:
+                for model in context.sprites:
+                    if self.position.x - Weapon.attack_range == model.position.y:
+                        Bow.attack(self.weapon, model)
+
+            if self.facing == Facing.FACING_DOWN:
+                for model in context.sprites:
+                    if self.position.y + Weapon.attack_range == model.position.y:
+                        Bow.attack(self.weapon, model)
 
     @property
     def bounding_box(self) -> pygame.Rect:
