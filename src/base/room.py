@@ -30,6 +30,3 @@ class Room(object):
                 self.sprites.append(entity)
             if line[2] == TYPE_GHOST:
                 self.sprites.append(ghost)
-
-
-
