@@ -7,7 +7,7 @@ class Sprites(list):
 
     @property
     def by_z_index(self):
-        return []
+        return sorted(self, key=lambda x:x.z_index)
 
     def get_sprites_in_room(self):
         pass
