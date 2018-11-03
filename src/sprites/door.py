@@ -1,5 +1,6 @@
 from typing import List
 
+from ..util.scale import scale
 from ..base.context import Context
 from ..base.sprite import Sprite, SpriteType
 from ..base.position import Position
@@ -32,14 +33,14 @@ class Door(Sprite):
             self.center = Position(6, 8)
             self.facing = Facing.FACING_DOWN
         elif side == "left":
-            rect = pygame.Rect(0, 200, 100, 300)
+            rect = pygame.Rect(100, 200, 100, 300)
             self.position = Position(0, 3)
             self.width = 1
             self.height = 3
             self.center = Position(0, 4)
             self.facing = Facing.FACING_LEFT
         elif side == "right":
-            rect = pygame.Rect(100, 200, 100, 300)
+            rect = pygame.Rect(0, 200, 100, 300)
             self.position = Position(12, 3)
             self.width = 1
             self.height = 3
@@ -60,7 +61,7 @@ class Door(Sprite):
 
     def update_render_context(self, render_context):
         self.render_context = render_context
-        self.__image = pygame.transform.scale(
+        self.__image = scale(
             self.__image,
             (self.width * self.tile_size, self.height * self.tile_size)
         )

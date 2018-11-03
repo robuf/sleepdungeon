@@ -20,6 +20,8 @@ def get_border_with_obstacles(obstacles: List[Point]) -> List[Point]:
         copy.append((0, y))
         copy.append((12, y))
 
+    # print(copy)
+
     return copy
 
 
@@ -33,21 +35,27 @@ def find_path(source: Entity, target: Point, obstacles: List[Point], distance: i
     while not found and change:
         change = False
         keys = list(parent.keys())
-        new = list()
+        new = []
+
+        if len(keys) == 1:
+            new.append(keys[0])
+
         for p in keys:
             for n in __find_next_points(p):
-                if n not in parent and n not in obstacles:
+                if n not in parent and n not in obstacles and n not in new:
                     change = True
                     parent[n] = p
-                    new.append(p)
+                    new.append(n)
 
-            for n in new:
-                if n[0] == target[0] and abs(n[1] - target[1]) == distance:
-                    target = n
-                    found = True
-                if n[1] == target[1] and abs(n[0] - target[0]) == distance:
-                    target = n
-                    found = True
+        for n in new:
+            if n[0] == target[0] and abs(n[1] - target[1]) == distance:
+                target = n
+                found = True
+                break
+            elif n[1] == target[1] and abs(n[0] - target[0]) == distance:
+                target = n
+                found = True
+                break
 
     if not found:
         return None
@@ -99,10 +107,10 @@ class ActionType(Enum):
 
 if __name__ == "__main__":
     source = 1, 1, 0
-    target = 4, 5
+    target = 5, 1
 
-    obstacles = [(3, y) for y in range(1, 8)]
-    path = find_path(source, target, get_border_with_obstacles(obstacles), 0)
+    with_border = get_border_with_obstacles([])
+    path = find_path(source, target, with_border, 3)
 
     print("----------")
 

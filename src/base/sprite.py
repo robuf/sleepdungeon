@@ -22,7 +22,7 @@ class Sprite(ABC):
 
     def _update_render_context(self, render_context: RenderContext):
         self.sidebar_width = render_context.sidebar_width
-        self.tile_size =  render_context.tile_size
+        self.tile_size = render_context.tile_size
         self.update_render_context(render_context)
 
     @abstractmethod
