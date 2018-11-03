@@ -1,9 +1,9 @@
 from ..sprites.player import Player
-
+from .sprites import Sprites
 
 class Room(object):
     def __init__(self, path):
-        self.sprites = list()
+        self.sprites = Sprites()
         self.room = list()
         with open(path, 'r') as f:
              for line in f.readlines():
