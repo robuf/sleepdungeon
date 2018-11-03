@@ -1,6 +1,7 @@
 from typing import Set
 from .inputs import InputEvent
 from .sprites import Sprites
+from ..render_context import RenderContext
 
 class Context:
 
@@ -9,3 +10,4 @@ class Context:
         self.sprites = Sprites()
         self.mixer = None
         self.delta_t = 0
+        self.render_context: RenderContext = None

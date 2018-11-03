@@ -1,4 +1,5 @@
 from typing import Tuple
+import pygame
 
 from ..base.sprite import Sprite
 from ..base.context import Context
@@ -21,7 +22,7 @@ class LivingObject(Sprite):
         super().__init__(ZIndex.PLAYGROUND, width, height)
 
         self.position.x = pos_x
-        self.position_y = pos_y
+        self.position.y = pos_y
         self.facing: Facing = Facing.FACING_UP
         self.walking = False
 
@@ -78,5 +79,12 @@ class LivingObject(Sprite):
 
 
     @property
-    def position(self) -> Tuple[int, int]:
-        return self.pos_x, self.pos_y
+    def bounding_box(self) -> pygame.Rect:
+        (x, y) = self.position
+        tile = self.tile_size
+        return pygame.Rect(
+            self.sidebar_width + x * tile,
+            y * tile,
+            self.width * tile,
+            self.height * tile
+        )
