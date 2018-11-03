@@ -1,16 +1,19 @@
-from typing import Optional, Tuple
-from .sprite import Sprite
-
-
 class Sprites(list):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, l=[]):
+        super().__init__(l)
 
-    def getSpritesInRoom(self) -> Sprite:
+    @property
+    def by_z_index(self):
+        return sorted(self, key=lambda x: x.z_index)
+
+    def get_sprites_in_room(self):
         pass
 
-    def checkForSprite(self) -> Sprite:
+    def check_for_sprite(self):
+        pass
+
+    def get_sprite_in_front(self):
         pass
 
     def find_sprites_by_type(self, sprite_type: Optional[object], position: Optional[Tuple[int, int]] = None):

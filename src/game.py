@@ -1,10 +1,12 @@
 import pygame
+from typing import List
 
 from .render_context import RenderContext
 from .base.inputs import InputEvent, InputManager
 from .base.context import Context
 from .base.floor import Floor
 from .base.room import Room
+from .level_loader import LevelLoader
 
 class Game(object):
     def __init__(self, render_context: RenderContext):
@@ -14,6 +16,13 @@ class Game(object):
         self.clock = pygame.time.Clock()
         self.current_floor: Floor = None
         self.current_room: Room = None
+        self.floors: List[Floor] = []
+        self.context = Context()
+
+    def load(self):
+        self.floors = LevelLoader().load_levels()
+        self.current_floor = self.floors[0]
+        self.current_room = self.current_floor.rooms[0]
 
     def update(self):
         events = pygame.event.get()
@@ -23,18 +32,23 @@ class Game(object):
             if event == InputEvent.QUIT:
                 self.running = False
 
-        context = Context()
-        context.input_events = event_set
-        #context.sprites = self.current_room.sprites()
+        self.context.input_events = event_set
+        self.context.sprites = self.current_room.sprites
 
+        for sprite in self.context.sprites:
+            sprite.update(self.context)
 
     def render(self):
         self.render_context.screen.fill((255, 255, 255))
+        for sprite in self.context.sprites.by_z_index:
+            self.render_context.screen.blit(sprite.image, sprite.rect)
 
     def game(self):
+        self.load()
+
         while self.running:
             self.update()
             self.render()
 
-            delta_t = self.clock.tick(60)
+            self.context.delta_t = self.clock.tick(60)
             pygame.display.update()

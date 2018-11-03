@@ -33,20 +33,3 @@ class Room(object):
             y = int(token[2])
 
         return None
-
-    """
-    def create_type(self):
-        for line in self.room:
-            if line[2] == TYPE_PLAYER:
-                self.sprites.append(Player())
-            if line[2] == TYPE_ENEMY:
-                self.sprites.append(enemy)
-            if line[2] == TYPE_ITEM:
-                self.sprites.append(item)
-            if line[2] == TYPE_STATIC:
-                self.sprites.append(static)
-            if line[2] == TYPE_ENTITY:
-                self.sprites.append(entity)
-            if line[2] == TYPE_GHOST:
-                self.sprites.append(ghost)
-    """
