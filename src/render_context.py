@@ -23,10 +23,10 @@ class RenderContext(object):
         else:
             self.resolution = width_size
 
-        print(size)
-        print(width_size)
-        print(height_size)
-        print(self.resolution)
+        #print(size)
+        #print(width_size)
+        #print(height_size)
+        #print(self.resolution)
 
         self.screen = pygame.display.set_mode(self.resolution, pygame.RESIZABLE | pygame.HWSURFACE | pygame.DOUBLEBUF)
         self.tile_size = self.resolution[1] // 9
