@@ -14,3 +14,6 @@ class Sprites(list):
 
     def checkForSprite(self):
         pass
+
+    def get_sprite_in_front(self):
+        pass
