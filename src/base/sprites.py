@@ -1,15 +1,18 @@
-from .sprite import Sprite
 
 
 class Sprites(list):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, l=[]):
+        super().__init__(l)
 
-    def get_sprites_in_room(self) -> int:
-        return len(self)
+    @property
+    def by_z_index(self):
+        return []
 
-    def check_for_sprite(self) -> Sprite:
+    def getSpritesInRoom(self):
+        pass
+
+    def checkForSprite(self):
         pass
 
     def get_sprite_in_front(self):

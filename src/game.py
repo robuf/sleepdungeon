@@ -17,6 +17,7 @@ class Game(object):
         self.current_floor: Floor = None
         self.current_room: Room = None
         self.floors: List[Floor] = []
+        self.context = Context()
 
     def load(self):
         self.floors = LevelLoader().load_levels()
@@ -31,13 +32,16 @@ class Game(object):
             if event == InputEvent.QUIT:
                 self.running = False
 
-        context = Context()
-        context.input_events = event_set
-        #context.sprites = self.current_room.sprites()
+        self.context.input_events = event_set
+        self.context.sprites = self.current_room.sprites
 
+        for sprite in self.context.sprites:
+            sprite.update(self.context)
 
     def render(self):
         self.render_context.screen.fill((255, 255, 255))
+        for sprite in self.context.sprites.by_z_index:
+            self.render_context.screen.blit(sprite.image, sprite.rect)
 
     def game(self):
         self.load()
@@ -46,5 +50,5 @@ class Game(object):
             self.update()
             self.render()
 
-            delta_t = self.clock.tick(60)
+            self.context.delta_t = self.clock.tick(60)
             pygame.display.update()
