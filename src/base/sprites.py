@@ -9,10 +9,10 @@ class Sprites(list):
     def by_z_index(self):
         return []
 
-    def getSpritesInRoom(self):
+    def get_sprites_in_room(self):
         pass
 
-    def checkForSprite(self):
+    def check_for_sprite(self):
         pass
 
     def get_sprite_in_front(self):
