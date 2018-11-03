@@ -3,6 +3,11 @@ from ..base.game_constants import SpriteType
 from ..base.inputs import InputEvent
 from .. import res
 from ..base.game_constants import Facing
+from .key import Key
+from .hpup import Hpup
+from .dmgup import Dmgup
+from .spdup import Spdup
+from .weapons import Sword, Bow
 
 import pygame
 
@@ -28,9 +33,12 @@ class Player(LivingObject):
 
         self.lifes = 0
         self.max_lifes = 6
+        self.key = 0
 
     def update(self, context):
         super().update(context)
+
+        self.find_item(context)
 
         if self.miliseconds_per_frame > 200:
             self.miliseconds_per_frame = 0
@@ -91,3 +99,31 @@ class Player(LivingObject):
             self.__image_right,
             (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
         )
+
+    def find_item(self, context):
+        item_list = context.sprites.find_by_type_and_pos(SpriteType.ITEM, self.position)
+
+        for item in item_list:
+            if isinstance(item, Key):
+                context.sprites.remove(item)
+                self.key += 1
+
+            elif isinstance(item, Hpup):
+                context.sprites.remove(item)
+
+                if self.lifes + 1 <= self.max_lifes:
+                    self.lifes += 1
+                else:
+                    self.lifes = self.max_lifes
+
+            elif isinstance(item, Dmgup):
+                context.sprites.remove(item)
+                #self.weapon.attack_damage += 1
+                #increment damage
+
+            elif isinstance(item, Spdup):
+                context.sprites.remove(item)
+                #increment speed
+
+
+
