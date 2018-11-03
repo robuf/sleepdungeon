@@ -33,13 +33,12 @@ class Enemy(LivingObject):
 
         source = self.position.x, self.position.y, self.facing.value
         target = player.position.x, player.position.y
-        obstacles = [sprite for sprite in context.sprites if sprite != self and sprite != player]
+        obstacles = [(sprite.position.x, sprite.position.y) for sprite in context.sprites if
+                     sprite != self and sprite != player]
 
         path = find_path(source, target, get_border_with_obstacles(obstacles))
 
-        if path is None:
-            pass
-        else:
+        if path is not None:
             facing = self.facing
             while len(path) > 0:
                 step = path.pop(0)
