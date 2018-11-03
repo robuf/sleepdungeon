@@ -15,11 +15,11 @@ import pygame
 
 class Player(LivingObject):
     def __init__(self):
-        super().__init__([1, 1], None)
-        self.__image_up = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert()
-        self.__image_down = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert()
-        self.__image_left = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert()
-        self.__image_right = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert()
+        super().__init__([1,1], None)
+        self.__image_up = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
+        self.__image_down = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
+        self.__image_left = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
+        self.__image_right = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
 
         self.animation_length = 4
         self.animation_i = 0

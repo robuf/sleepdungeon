@@ -4,6 +4,7 @@ from src import RenderContext
 from ..base.context import Context
 from ..base.game_constants import SpriteType
 from ..base.sprite import Sprite
+from ..base.position import Position
 from ..res import IMG_DIR
 
 
@@ -13,7 +14,7 @@ class Item(Sprite):
         self.surface = pygame.image.load(IMG_DIR + "items" + name + ".png")
         self.width = 1
         self.height = 1
-        self.position = (x, y)
+        self.position = Position(x, y)
 
     def update(self, context: Context):
         pass

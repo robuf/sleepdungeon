@@ -4,6 +4,7 @@ from src import RenderContext
 from ..base.context import Context
 from ..base.game_constants import SpriteType
 from ..base.sprite import Sprite
+from ..base.position import Position
 from ..res import IMG_DIR
 
 
@@ -13,7 +14,7 @@ class Stone(Sprite):
         self.surface = pygame.image.load(IMG_DIR + "room/stone/stone.png")
         self.width = 1
         self.height = 1
-        self.position = (x, y)
+        self.position = Position(x, y)
 
     def update(self, context: Context):
         pass
@@ -24,7 +25,7 @@ class Stone(Sprite):
 
     @property
     def sprite_type(self) -> SpriteType:
-        return SpriteType.ENTITY
+        return SpriteType.STATIC
 
     def update_render_context(self, render_context: RenderContext):
         self.render_context = render_context

@@ -32,14 +32,14 @@ class Door(Sprite):
             self.center = Position(6, 8)
             self.facing = Facing.FACING_DOWN
         elif side == "left":
-            rect = pygame.Rect(0, 200, 100, 300)
+            rect = pygame.Rect(100, 200, 100, 300)
             self.position = Position(0, 3)
             self.width = 1
             self.height = 3
             self.center = Position(0, 4)
             self.facing = Facing.FACING_LEFT
         elif side == "right":
-            rect = pygame.Rect(100, 200, 100, 300)
+            rect = pygame.Rect(0, 200, 100, 300)
             self.position = Position(12, 3)
             self.width = 1
             self.height = 3
