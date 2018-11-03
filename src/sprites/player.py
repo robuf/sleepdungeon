@@ -8,4 +8,5 @@ from .living_object import LivingObject
 #Leben, Items
 
 class Player(LivingObject):
-    pass
+    def __init__(self):
+        super().__init__([1,1])
