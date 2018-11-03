@@ -60,3 +60,7 @@ class Sprite(ABC):
     @abstractmethod
     def sprite_type(self) -> SpriteType:
         pass
+
+    @staticmethod
+    def add_sprite_class(cls):
+        Sprite.__sprites.add(cls)

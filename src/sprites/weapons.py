@@ -1,6 +1,7 @@
 from ..base.game_constants import WeaponType, SpriteType, Facing
 from ..base.context import Context
 from ..base.position import Position
+from .arrow import Arrow
 from typing import Optional
 
 
@@ -61,4 +62,12 @@ class Sword(Weapon):
 
 class Bow(Weapon):
     def __init__(self):
-        super().__init__(WeaponType.BOW, 1, 4)
+        super().__init__(WeaponType.BOW, 1, 0)
+
+    def attack(self, context: Context, sprite_type: SpriteType, position: Position, facing: Facing):
+        super().attack(context, sprite_type, position, facing)
+        arrow = Arrow(position, facing, 4)
+        context.sprites.append(
+            arrow
+        )
+        arrow.update(context)

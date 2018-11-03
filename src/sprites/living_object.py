@@ -115,7 +115,7 @@ class LivingObject(Sprite):
             self.die(context)
 
     def die(self, context: Context):
-        context.sprites.remove(self)
+        context.remove_sprite(self)
 
     @property
     def bounding_box(self) -> pygame.Rect:

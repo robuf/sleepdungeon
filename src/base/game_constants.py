@@ -10,7 +10,6 @@ class SpriteType(Enum):
     GHOST = 5
     DOOR = 6
 
-
 class WeaponType(Enum):
     SWORD = 0
     BOW = 1
