@@ -20,25 +20,25 @@ class Door(Sprite):
             self.position = Position(5, 0)
             self.width = 3
             self.height = 1
-            self.center = 6, 0
+            self.center = Position(6, 0)
         elif side == "bottom":
             rect = pygame.Rect(0, 100, 300, 100)
             self.position = Position(6, 8)
             self.width = 3
             self.height = 1
-            self.center = 6, 8
+            self.center = Position(6, 8)
         elif side == "left":
             rect = pygame.Rect(0, 200, 100, 300)
             self.position = Position(0, 3)
             self.width = 1
             self.height = 3
-            self.center = 0, 4
+            self.center = position(0, 4)
         elif side == "right":
             rect = pygame.Rect(100, 200, 100, 300)
             self.position = Position(12, 3)
             self.width = 1
             self.height = 3
-            self.center = 12, 4
+            self.center = Position(12, 4)
 
         surface = pygame.image.load(IMG_DIR + "room/doors.png")
         self.__image = surface.subsurface(rect)

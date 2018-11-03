@@ -30,61 +30,22 @@ class Player(LivingObject):
     def update(self, context):
         super().update(context)
 
-        if self.miliseconds_per_frame > 500:
+        if self.miliseconds_per_frame > 200:
             self.miliseconds_per_frame = 0
             self.animation_i += 1
             if self.animation_i == self.animation_length:
                 self.animation_i = 0
         self.miliseconds_per_frame += context.delta_t
 
-        if self.move_cooldown > 0:
-            self.move_cooldown -= context.delta_t
-
         for i in context.input_events:
             if i == InputEvent.MOVE_UP:
-                self.facing = Facing.FACING_UP
-                self.move(0, -1, context)
+                self.move(Facing.FACING_UP, context)
             if i == InputEvent.MOVE_DOWN:
-                self.facing = Facing.FACING_DOWN
-                self.move(0, 1, context)
+                self.move(Facing.FACING_DOWN, context)
             if i == InputEvent.MOVE_LEFT:
-                self.facing = Facing.FACING_LEFT
-                self.move(-1, 0, context)
+                self.move(Facing.FACING_LEFT, context)
             if i == InputEvent.MOVE_RIGHT:
-                self.facing = Facing.FACING_RIGHT
-                self.move(1, 0, context)
-
-    def move(self, x, y, context):
-        sprites = context.sprites
-
-        try:
-            new_pos = Position(self.position.x + x, self.position.y + y)
-        except:
-            return
-
-        if sprites.find_by_type_and_pos(SpriteType.STATIC, new_pos):
-            return
-
-        if sprites.find_by_type_and_pos(SpriteType.ENEMY, new_pos):
-            return
-
-        if new_pos.x in [0, 12] or new_pos.y in [0, 8]:
-            for door in sprites.find_by_type(SpriteType.DOOR):
-                if door.position.x + 1 == new_pos.x and door.position.y == new_pos.y:
-                    break
-            else:
-                return
-
-
-
-        if self.move_cooldown > 0:
-            return
-        try:
-            self.position.x += x
-            self.position.y += y
-            self.move_cooldown = 50
-        except:
-            pass
+                self.move(Facing.FACING_RIGHT, context)
 
     @property
     def image(self):

@@ -1,6 +1,7 @@
 from ..base.sprite import Sprite
 from ..base.context import Context
-from ..base.game_constants import ZIndex, Facing, WeaponType
+from ..base.position import Position
+from ..base.game_constants import ZIndex, Facing, WeaponType, SpriteType
 from .weapons import Weapon, Sword, Bow
 
 import pygame
@@ -21,36 +22,55 @@ class LivingObject(Sprite):
         self.width, self.height = size
 
         self.facing: Facing = Facing.FACING_UP
-        self.walking = False
+        self.move_cooldown_current = 0
+        self.move_cooldown = 150
+
 
         self.weapon = init_weapon
 
-    def move(self, facing: Facing, walking=False):
+    def move(self, facing: Facing, context: Context):
+        if self.move_cooldown_current > 0:
+            return
 
-        self.walking = walking
         self.facing = facing
-        self.weapon.facing = self.facing
+        #self.weapon.facing = self.facing
+        try:
+            if self.facing == Facing.FACING_UP:
+                new_pos = Position(self.position.x, self.position.y - 1)
+            elif self.facing == Facing.FACING_RIGHT:
+                new_pos = Position(self.position.x + 1, self.position.y)
+            elif self.facing == Facing.FACING_DOWN:
+                new_pos = Position(self.position.x, self.position.y + 1)
+            elif self.facing == Facing.FACING_LEFT:
+                new_pos = Position(self.position.x - 1, self.position.y)
+        except:
+            return
 
-        if self.facing == Facing.FACING_UP:
-            if self.walking:
-                pass
+        if context.sprites.find_by_type_and_pos(SpriteType.STATIC, new_pos):
+            return
 
-        # facing right
-        elif self.facing == Facing.FACING_RIGHT:
-            if self.walking:
-                pass
-        # facing down
-        elif self.facing == Facing.FACING_DOWN:
-            if self.walking:
-                pass
+        if context.sprites.find_by_type_and_pos(SpriteType.ENEMY, new_pos):
+            return
 
-        # facing left
-        elif self.facing == Facing.FACING_LEFT:
-            if self.walking:
-                pass
+        if context.sprites.find_by_type_and_pos(SpriteType.PLAYER, new_pos):
+            return
+
+        if new_pos.x in [0, 12] or new_pos.y in [0, 8]:
+            for door in context.sprites.find_by_type(SpriteType.DOOR):
+                if door.center == new_pos:
+                    break
+            else:
+                return
+
+        self.position = new_pos
+
 
     def update(self, context: Context):
         super().update(context)
+        if self.move_cooldown_current > 0:
+            self.move_cooldown_current -= context.delta_t
+
+
 
     def attack(self, context: Context):
 
