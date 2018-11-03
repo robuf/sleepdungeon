@@ -8,14 +8,28 @@ import pygame
 
 
 class EnemySaber(LivingObject):
+    __BASE_UP_SURFACE: pygame.Surface = None
+    __BASE_DOWN_SURFACE: pygame.Surface = None
+    __BASE_LEFT_SURFACE: pygame.Surface = None
+    __BASE_RIGHT_SURFACE: pygame.Surface = None
+
+    __SURFACE_UP: pygame.Surface = None
+    __SURFACE_DOWN: pygame.Surface = None
+    __SURFACE_LEFT: pygame.Surface = None
+    __SURFACE_RIGHT: pygame.Surface = None
+
+    _WIDTH = 1
+    _HEIGHT = 1
+    _ANIMATION_LENGTH = 4
+
     def __init__(self):
         super().__init__([1, 1])
-        self.__image_up = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
-        self.__image_down = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
-        self.__image_left = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
-        self.__image_right = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
+        if not EnemySaber.__BASE_UP_SURFACE:
+            EnemySaber.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
+            EnemySaber.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
+            EnemySaber.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
+            EnemySaber.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
 
-        self.animation_length = 4
         self.animation_i = 0
         self.miliseconds_per_frame = 0
         self.move_cooldown = 400
@@ -26,7 +40,7 @@ class EnemySaber(LivingObject):
         if self.miliseconds_per_frame > 200:
             self.miliseconds_per_frame = 0
             self.animation_i += 1
-            if self.animation_i == self.animation_length:
+            if self.animation_i == EnemySaber._ANIMATION_LENGTH:
                 self.animation_i = 0
         self.miliseconds_per_frame += context.delta_t
 
@@ -54,13 +68,13 @@ class EnemySaber(LivingObject):
     def image(self):
         img = None
         if self.facing == Facing.FACING_UP:
-            img = self.__image_up
+            img = EnemySaber.__SURFACE_UP
         elif self.facing == Facing.FACING_DOWN:
-            img = self.__image_down
+            img = EnemySaber.__SURFACE_DOWN
         if self.facing == Facing.FACING_LEFT:
-            img = self.__image_left
+            img = EnemySaber.__SURFACE_LEFT
         elif self.facing == Facing.FACING_RIGHT:
-            img = self.__image_right
+            img = EnemySaber.__SURFACE_RIGHT
 
         return img.subsurface(
             pygame.Rect(
@@ -75,21 +89,33 @@ class EnemySaber(LivingObject):
     def sprite_type(self) -> SpriteType:
         return SpriteType.ENEMY
 
-    def update_render_context(self, render_context):
-        self.render_context = render_context
-        self.__image_up = scale(
-            self.__image_up,
-            (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
+    @classmethod
+    def update_render_context(cls, render_context):
+        cls.__SURFACE_UP = pygame.transform.smoothscale(
+            cls.__BASE_UP_SURFACE,
+            (
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
+            )
         )
-        self.__image_down = scale(
-            self.__image_down,
-            (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
+        cls.__SURFACE_DOWN = pygame.transform.smoothscale(
+            cls.__BASE_DOWN_SURFACE,
+            (
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
+            )
         )
-        self.__image_left = scale(
-            self.__image_left,
-            (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
+        cls.__SURFACE_LEFT = pygame.transform.smoothscale(
+            cls.__BASE_LEFT_SURFACE,
+            (
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
+            )
         )
-        self.__image_right = scale(
-            self.__image_right,
-            (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
+        cls.__SURFACE_RIGHT = pygame.transform.smoothscale(
+            cls.__BASE_RIGHT_SURFACE,
+            (
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
+            )
         )
