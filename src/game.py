@@ -1,10 +1,12 @@
 import pygame
+from typing import List
 
 from .render_context import RenderContext
 from .base.inputs import InputEvent, InputManager
 from .base.context import Context
 from .base.floor import Floor
 from .base.room import Room
+from .level_loader import LevelLoader
 
 class Game(object):
     def __init__(self, render_context: RenderContext):
@@ -14,6 +16,12 @@ class Game(object):
         self.clock = pygame.time.Clock()
         self.current_floor: Floor = None
         self.current_room: Room = None
+        self.floors: List[Floor] = []
+
+    def load(self):
+        self.floors = LevelLoader().load_levels()
+        self.current_floor = self.floors[0]
+        self.current_room = self.current_floor.rooms[0]
 
     def update(self):
         events = pygame.event.get()
@@ -32,6 +40,8 @@ class Game(object):
         self.render_context.screen.fill((255, 255, 255))
 
     def game(self):
+        self.load()
+
         while self.running:
             self.update()
             self.render()
