@@ -4,6 +4,7 @@ import pygame
 from .context import Context
 from .position import Position
 from .game_constants import SpriteType
+from ..render_context import RenderContext
 
 
 class Sprite(ABC):
@@ -14,9 +15,19 @@ class Sprite(ABC):
         self.tile_size = 32
         self.width = 0
         self.height = 0
+        self.sidebar_width = 0
 
     @abstractmethod
     def update(self, context: Context):
+        pass
+
+    def _update_render_context(self, render_context: RenderContext):
+        self.sidebar_width = render_context.sidebar_width
+        self.tile_size =  render_context.tile_size
+        self.update_render_context(render_context)
+
+    @abstractmethod
+    def update_render_context(self, render_context: RenderContext):
         pass
 
     @property
@@ -26,15 +37,18 @@ class Sprite(ABC):
 
     @property
     def rect(self) -> pygame.Rect:
-        (x, y) = self.position
-        tile = self.tile_size
-        return pygame.Rect(x * tile, y * tile, self.width * tile, self.height * tile)
+        return self.bounding_box
 
     @property
     def bounding_box(self) -> pygame.Rect:
         (x, y) = self.position
         tile = self.tile_size
-        return pygame.Rect(x * tile, y * tile, self.width * tile, self.height * tile)
+        return pygame.Rect(
+            x * tile,
+            y * tile,
+            self.width * tile,
+            self.height * tile
+        )
 
     @property
     @abstractmethod

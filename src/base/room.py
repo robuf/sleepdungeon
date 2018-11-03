@@ -20,8 +20,10 @@ class Room(object):
     def parse(token: List[str]) -> Optional[Sprite]:
         if token[0] == "BACKGROUND":
             name = token[1].strip()
-
-            return Background(name)
+            bg = Background(name)
+            bg.position.x = 0
+            bg.position.y = 0
+            return bg
 
         elif token[0] == "DOOR":
             side = token[1]
