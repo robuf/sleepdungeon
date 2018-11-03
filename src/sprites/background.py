@@ -1,5 +1,6 @@
 import pygame
 
+from ..util.scale import scale
 from ..base.context import Context
 from ..base.sprite import SpriteType, Sprite
 from ..res import IMG_DIR
@@ -19,12 +20,12 @@ class Background(Sprite):
     def update_render_context(self, render_context):
         self.render_context = render_context
         self.tile_size = render_context.tile_size
-        self.surface = pygame.transform.scale(
+        self.surface = scale(
             self.surface,
-            [
+            (
                 render_context.resolution[0] - self.sidebar_width,
                 render_context.resolution[1]
-            ]
+            )
         )
 
     @property

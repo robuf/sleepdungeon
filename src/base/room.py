@@ -11,7 +11,9 @@ from ..sprites.key import Key, KeyType
 from ..sprites.spdup import Spdup
 from ..sprites.dmgup import Dmgup
 from ..sprites.hpup import Hpup
-from ..sprites.enemy import Enemy
+from ..sprites.enemy_saber import EnemySaber
+from ..sprites.enemy_archer import EnemyArcher
+from ..sprites.enemy_shielder import EnemyShielder
 from .position import Position
 
 import os
@@ -57,7 +59,14 @@ class Room(object):
             x = int(token[2])
             y = int(token[3])
 
-            en = Enemy()
+            en = None
+            if t == "saber":
+                en = EnemySaber()
+            elif t == "archer":
+                en = EnemyArcher()
+            elif t == "shielder":
+                en = EnemyShielder()
+
             en.position = Position(x, y)
             return en
 

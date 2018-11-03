@@ -1,25 +1,13 @@
 from ..util.scale import scale
 from .living_object import LivingObject
 from ..base.game_constants import SpriteType
-from ..base.inputs import InputEvent
 from .. import res
 from ..base.game_constants import Facing
-from .key import Key
-from .hpup import Hpup
-from .dmgup import Dmgup
-from .spdup import Spdup
-from .weapons import Sword, Bow
-
+from ..util.path_finder import get_border_with_obstacles, find_path, ActionType
 import pygame
 
 
-# Kümmert sich um die Funktionen des Players
-
-# Bewegung
-# Angriffe (Schwert, Bogen)
-# Leben, Items
-
-class Player(LivingObject):
+class EnemyArcher(LivingObject):
     def __init__(self):
         super().__init__([1, 1], None)
         self.__image_up = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
@@ -30,16 +18,10 @@ class Player(LivingObject):
         self.animation_length = 4
         self.animation_i = 0
         self.miliseconds_per_frame = 0
-        self.move_cooldown = 200
-
-        self.lifes = 0
-        self.max_lifes = 6
-        self.key = 0
+        self.move_cooldown = 400
 
     def update(self, context):
         super().update(context)
-
-        self.find_item(context)
 
         if self.miliseconds_per_frame > 200:
             self.miliseconds_per_frame = 0
@@ -48,18 +30,29 @@ class Player(LivingObject):
                 self.animation_i = 0
         self.miliseconds_per_frame += context.delta_t
 
-        for i in context.input_events:
-            if i == InputEvent.MOVE_UP:
-                self.move(Facing.FACING_UP, context)
-            if i == InputEvent.MOVE_DOWN:
-                self.move(Facing.FACING_DOWN, context)
-            if i == InputEvent.MOVE_LEFT:
-                self.move(Facing.FACING_LEFT, context)
-            if i == InputEvent.MOVE_RIGHT:
-                self.move(Facing.FACING_RIGHT, context)
+        player = context.sprites.find_by_type(SpriteType.PLAYER)[0]
+
+        source = self.position.x, self.position.y, self.facing.value
+        target = player.position.x, player.position.y
+        obstacles = [(sprite.position.x, sprite.position.y) for sprite in context.sprites if
+                     sprite != self and sprite != player]
+
+        path = find_path(source, target, get_border_with_obstacles(obstacles), 3)
+
+        if path is not None:
+            facing = self.facing
+            while len(path) > 0:
+                step = path.pop(0)
+                if step.type == ActionType.TURN:
+                    facing = Facing(step.direction)
+
+                elif step.type == ActionType.MOVE:
+                    self.move(facing, context)
+                    break
 
     @property
     def image(self):
+        img = None
         if self.facing == Facing.FACING_UP:
             img = self.__image_up
         elif self.facing == Facing.FACING_DOWN:
@@ -80,7 +73,7 @@ class Player(LivingObject):
 
     @property
     def sprite_type(self) -> SpriteType:
-        return SpriteType.PLAYER
+        return SpriteType.ENEMY
 
     def update_render_context(self, render_context):
         self.render_context = render_context
@@ -100,31 +93,3 @@ class Player(LivingObject):
             self.__image_right,
             (self.width * self.tile_size * self.animation_length, self.height * self.tile_size)
         )
-
-    def find_item(self, context):
-        item_list = context.sprites.find_by_type_and_pos(SpriteType.ITEM, self.position)
-
-        for item in item_list:
-            if isinstance(item, Key):
-                context.sprites.remove(item)
-                self.key += 1
-
-            elif isinstance(item, Hpup):
-                context.sprites.remove(item)
-
-                if self.lifes + 1 <= self.max_lifes:
-                    self.lifes += 1
-                else:
-                    self.lifes = self.max_lifes
-
-            elif isinstance(item, Dmgup):
-                context.sprites.remove(item)
-                #self.weapon.attack_damage += 1
-                #increment damage
-
-            elif isinstance(item, Spdup):
-                context.sprites.remove(item)
-                #increment speed
-
-
-

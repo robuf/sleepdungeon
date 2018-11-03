@@ -36,6 +36,10 @@ def find_path(source: Entity, target: Point, obstacles: List[Point], distance: i
         change = False
         keys = list(parent.keys())
         new = []
+
+        if len(keys) == 1:
+            new.append(keys[0])
+
         for p in keys:
             for n in __find_next_points(p):
                 if n not in parent and n not in obstacles and n not in new:
@@ -103,10 +107,10 @@ class ActionType(Enum):
 
 if __name__ == "__main__":
     source = 1, 1, 0
-    target = 10, 7
+    target = 5, 1
 
     with_border = get_border_with_obstacles([])
-    path = find_path(source, target, with_border, 0)
+    path = find_path(source, target, with_border, 3)
 
     print("----------")
 
