@@ -61,12 +61,12 @@ class LivingObject(Sprite):
         # Sword
         if self.weapon.weapon_type == WeaponType.SWORD:
             for i in range(0, spritecount):
-                if Sprites.checkForSprite(i, self.facing, self.weapon.attack_range):
+                if Sprites.check_for_sprite(i, self.facing, self.weapon.attack_range):
                     Sword.attack(self.weapon, Sprites.get_sprite_in_front(i))
 
         elif self.weapon.weapon_type == WeaponType.Bow:
             for i in range(0, spritecount):
-                if Sprites.checkForSprite(i, self.facing, self.weapon.attack_range):
+                if Sprites.check_for_sprite(i, self.facing, self.weapon.attack_range):
                     Bow.attack(self.weapon, Sprites.get_sprite_in_front(i))
 
     @property
