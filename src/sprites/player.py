@@ -26,6 +26,9 @@ class Player(LivingObject):
         self.miliseconds_per_frame = 0
         self.move_cooldown = 200
 
+        self.lifes = 0
+        self.max_lifes = 6
+
     def update(self, context):
         super().update(context)
 
