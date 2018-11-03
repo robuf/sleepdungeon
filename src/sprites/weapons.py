@@ -35,37 +35,7 @@ class Weapon(Sprite):
 
     @property
     def bounding_box(self) -> pygame.Rect:
-        (x, y) = self.position
-        tile = self.tile_size
-
-        if self.facing == Facing.FACING_UP:
-            return pygame.Rect(
-                self.sidebar_width + x * tile,
-                (y-1) * tile,
-                self.width * tile,
-                self.height * self.attack_range * tile
-            )
-        elif self.facing == Facing.FACING_RIGHT:
-            return pygame.Rect(
-                self.sidebar_width + (x+1) * tile,
-                y * tile,
-                self.width * self.attack_range * tile,
-                self.height * tile
-            )
-        elif self.facing == Facing.FACING_DOWN:
-            return pygame.Rect(
-                self.sidebar_width + x * tile,
-                (y+1) * tile,
-                self.width * tile,
-                self.height * self.attack_range * tile
-            )
-        elif self.facing == Facing.FACING_LEFT:
-            return pygame.Rect(
-                self.sidebar_width + (x-1) * tile,
-                y * tile,
-                self.width * self.attack_range * tile,
-                self.height * tile
-            )
+        pass
 
     @property
     def sprite_type(self) -> SpriteType:
@@ -79,6 +49,7 @@ class Sword(Weapon):
     def attack(self: Weapon, in_front):
 
         in_front.life -= self.attack_damage
+
 
 class Bow(Weapon):
     def __init__(self, z_index: int, width: float, height: float):
