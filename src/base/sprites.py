@@ -1,5 +1,5 @@
 from typing import Optional, Tuple
-from sprites.living_object import LivingObject
+from .position import Position
 
 class Sprites(list):
 
