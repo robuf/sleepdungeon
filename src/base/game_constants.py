@@ -9,6 +9,19 @@ class SpriteType(Enum):
     ENTITY = 4
     GHOST = 5
 
+
+class WeaponType(Enum):
+    SWORD = 0
+    BOW = 1
+
+
+class Facing(Enum):
+    FACING_UP = 0
+    FACING_RIGHT = 1
+    FACING_DOWN = 2
+    FACING_LEFT = 3
+
+
 class ZIndex(object):
     BACKGROUND = -128
     GROUND = -64
