@@ -1,12 +1,13 @@
 from .sprite import Sprite
 
+
 class Sprites(list):
 
     def __init__(self):
         super().__init__()
 
-    def getSpritesInRoom(self) -> Sprite:
+    def get_sprites_in_room(self) -> Sprite:
         pass
 
-    def checkForSprite(self) -> Sprite:
+    def check_for_sprite(self) -> Sprite:
         pass
