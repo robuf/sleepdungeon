@@ -1,7 +1,7 @@
 from ..base.game_constants import WeaponType, SpriteType, Facing
 from ..base.context import Context
 from ..base.position import Position
-from .arrow import Arrow
+from .arrow import Arrow, SpitArrow
 from typing import Optional
 
 
@@ -66,6 +66,18 @@ class Bow(Weapon):
 
     def attack(self, context: Context, sprite_type: SpriteType, position: Position, facing: Facing):
         arrow = Arrow(position, facing, 4, self.attack_damage)
+        context.sprites.append(
+            arrow
+        )
+        arrow.update(context)
+
+
+class SpitBow(Weapon):
+    def __init__(self):
+        super().__init__(WeaponType.BOW, 1, 4)
+
+    def attack(self, context: Context, sprite_type: SpriteType, position: Position, facing: Facing):
+        arrow = SpitArrow(position, facing, 4, self.attack_damage)
         context.sprites.append(
             arrow
         )

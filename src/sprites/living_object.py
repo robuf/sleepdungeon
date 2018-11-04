@@ -142,8 +142,7 @@ class LivingObject(Sprite):
             return
 
         self.moving = False
-        if self.selected_weapon.weapon_type != WeaponType.BOW:
-            self.attack_phase = 1
+        self.attack_phase = 1
 
         self.move_cooldown_current = self._MOVE_COOLDOWN
         self.selected_weapon.attack(context, sprite_type, self.position, self.facing)
