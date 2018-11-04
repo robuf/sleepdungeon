@@ -11,7 +11,7 @@ class MusicManager(object):
             return
         cls._CURRENT_SOUND = music_name
         pygame.mixer.music.load(res.SOUND_DIR + music_name + ".ogg")
-        pygame.mixer.music.play()
+        pygame.mixer.music.play(-1)
 
 
 
