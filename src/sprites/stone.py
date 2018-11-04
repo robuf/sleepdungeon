@@ -130,6 +130,13 @@ class MovableStone(Sprite):
         if context.sprites.find_by_pos(new_pos):
             return False
 
+        if new_pos.x in [0, 12] or new_pos.y in [0, 8]:
+            for door in context.sprites.find_by_type(SpriteType.DOOR):
+                if door.center == new_pos:
+                    break
+            else:
+                return False
+
         self.position = new_pos
         self.facing = facing
         self.move_cooldown_current = self._MOVE_COOLDOWN
