@@ -46,7 +46,6 @@ class EnemySaber(Enemy):
         self.selected_weapon = Sword()
         self.weapon_list = [self.selected_weapon]
 
-
     def _image(self) -> pygame.Surface:
         if self.attack_phase == 0:
             if self.facing == Facing.FACING_UP:
@@ -79,7 +78,7 @@ class EnemySaber(Enemy):
         else:
             factor = 1.5
             if self.facing == Facing.FACING_UP or self.facing == Facing.FACING_DOWN:
-                factor = 1-0
+                factor = 1 - 0
             return img.subsurface(
                 pygame.Rect(
                     self.tile_size * factor * (self.attack_phase - 1),
@@ -89,22 +88,15 @@ class EnemySaber(Enemy):
                 )
             )
 
-
     @property
     def rect(self) -> pygame.Rect:
-        (x, y) = self.position
-        tile = self.tile_size
-        factor = 1.0
-        substract = 0
+        rect = super().rect
+
         if self.attack_phase > 0 and self.facing == Facing.FACING_LEFT:
-            factor = 1.5
-            substract = tile // 2
-        return pygame.Rect(
-            Sprite.sidebar_width + x * tile - substract,
-            y * tile,
-            self.width * tile * factor,
-            self.height * tile
-        )
+            rect.inflate_ip(self.width * self.tile_size // 2, 0)
+            rect.move_ip(-self.tile_size // 4, 0)
+
+        return rect
 
     @property
     def sprite_type(self) -> SpriteType:
@@ -121,14 +113,14 @@ class EnemySaber(Enemy):
             cls.__BASE_SWORD_RIGHT_SURFACE = pygame.image.load(
                 res.IMG_DIR + "enemy/saber/walk/right.png").convert_alpha()
 
-            cls.__BASE_SWORD_ATTACK_UP_SURFACE = pygame.image.load(res.IMG_DIR + "enemy/saber/attack/up.png").convert_alpha()
+            cls.__BASE_SWORD_ATTACK_UP_SURFACE = pygame.image.load(
+                res.IMG_DIR + "enemy/saber/attack/up.png").convert_alpha()
             cls.__BASE_SWORD_ATTACK_DOWN_SURFACE = pygame.image.load(
                 res.IMG_DIR + "enemy/saber/attack/down.png").convert_alpha()
             cls.__BASE_SWORD_ATTACK_LEFT_SURFACE = pygame.image.load(
                 res.IMG_DIR + "enemy/saber/attack/left.png").convert_alpha()
             cls.__BASE_SWORD_ATTACK_RIGHT_SURFACE = pygame.image.load(
                 res.IMG_DIR + "enemy/saber/attack/right.png").convert_alpha()
-
 
         cls.__SURFACE_SWORD_UP = pygame.transform.smoothscale(
             cls.__BASE_SWORD_UP_SURFACE,
