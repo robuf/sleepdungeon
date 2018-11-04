@@ -39,3 +39,6 @@ class GameJam20(object):
     def main(self):
         self.initialize()
         self.game.game()
+
+def run():
+    GameJam20().main()

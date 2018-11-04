@@ -1,1 +1,1 @@
-recursive-include sleepdungeon *.png *.ogg *.ttf
+recursive-include sleepdungeon *.png *.ogg *.ttf *.lvl
