@@ -31,8 +31,17 @@ class Room(object):
                 if line.startswith("#"):
                     continue
 
-                line = line.split(" ")
-                x = Room.parse(line)
+                line = line.split()
+
+                if len(line) <= 0:
+                    continue
+
+                x = None
+                try:
+                    x = Room.parse(line)
+                except:
+                    print("Cannot parse line: '" + str(line) + "'")
+
                 if x is not None:
                     self.sprites.append(x)
 
