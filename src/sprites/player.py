@@ -296,7 +296,7 @@ class Player(LivingObject):
 
             elif isinstance(item, Dmgup):
                 context.sprites.remove(item)
-                self.dmg_ups +=1
+                self.dmg_ups += 1
                 for weapon in self.weapon_list:
                     weapon.attack_damage += 1
 
@@ -308,7 +308,6 @@ class Player(LivingObject):
             elif isinstance(item, Bomb):
                 context.sprites.remove(item)
                 self.bomb_count += 1
-
 
     def die(self, context: Context):
         super().die(context)
