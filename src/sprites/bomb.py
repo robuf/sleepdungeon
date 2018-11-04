@@ -7,6 +7,7 @@ from ..base.game_constants import SpriteType, ZIndex
 from ..base.sprite import Sprite
 from ..base.position import Position
 from ..res import IMG_DIR
+from .explosion import Explosion
 
 
 class Bomb(Item):
@@ -88,4 +89,5 @@ class DetonatingBomb(Sprite):
                 elif isinstance(sprite, BreakableStone):
                     context.sprites.remove(sprite)
 
+        context.sprites.append(Explosion(self.position))
         context.sprites.remove(self)
