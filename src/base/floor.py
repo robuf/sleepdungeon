@@ -18,5 +18,4 @@ class Floor(object):
         for room in self.rooms:
             if room.name == name:
                 return room
-        print("not found")
-        return self.initial_room
+        print("Room {} not found".format(name))

@@ -1,36 +1,36 @@
         0               1           2               3           4               5           6
 	############# ############# #############               ############# #############
 	#K  SS S    # # ES      SS# #E         E#               #      S  S # #    SS    E#
-	#SS SE  S SH# #    S  S   # #           #               #  S        # # S S       #
+	#SS SE  SBS # #    S  S   # #           #               #  S        # # S S       #
 	# S S S   SS# # S         # #           #               #  E        # # S S SSS   #
-0	# S E S SS   L             O      G     #               #  E  H S   # # S S K S  S#
+0	# S E S SS   L             O      G     #               #  E  H S   # # SBSBK S  S#
 	# SS S  S  S# #S  E     S # #           #               #           # #SS  S ES   #
-	#  S SSSS S # #           # #           #               #   S       # #    SSSSS S#
+	#  SBSSSS S # #           # #           #               #   S       # #    SSSSS S#
 	#           # #  S   S  S # #E         E#               #        S  # # S         #
 	############# ###### ###### #############               ###### ###### ###### ######
-                       	    O                                         L             O
+                   	    O                                         L             O
 	              ###### ###### ############# ############# ###### ###### ###### ###### #############
-	              #           # #    SK   S # #           # #           # #S          # #G     E    #
-	              #  E      S # #  S SSSS  S# #           # #  E        # # S         # #SSSSSSSSSS #
-	              #   E    S  # #  S     S  # #           # #           # #  S        # # S   E   S #
-1	              #       S    O   SSS   ES # #   BOZZZ   # #   E   E    O    SSSSS    O   S SSSS S #
+	              #          B# #    SK   S # #           # #           # #S          # #G     E    #
+	              #  E      S # #  S SSSS  S# #           # #  E        # # S         # #SSSSSSSSS  #
+	              #   E    S  # #  S     S  # #           # #           # #  S        # # S   E   SV#
+1	              #       S    O   SSS   ES # #   BOZZZ   # #   E   E    O    SSSSS    O   SBSSSS S #
 	              #  E   S    # #    S S S  # #           # #           # #        S  # #  S    S SE#
-	              #     S     # # E  S S   S# #           # #           # #         S # #  SSSS S S #
+	              #     S     # # E  SBS   S# #           # #           # #         S # #  SSSS S S #
 	              #    S      # #      S S  # #           # #       E   # #          S# #       S   #
 	              ###### ###### ############# ###### ###### ###### ###### ###### ###### ###### ######
-                            O                           B             O             O             O
+                        O                           M             O             O             O
 	############# ###### ###### ############# ###### ###### ###### ###### ###### ###### ###### ######
 	#           # #    S      # #          E# # S       S # #           # #           # #           #
 	#   S    S  # #    SSS  E # #     E     # #  S     S  # #  E   SSS  # #   E       # #       E   #
-	#   S    S  # #      S    # #        SSS# #   S   S   # #     SSS   # #           # #   E       #
-2	#   S EE S   O      S      O         SP  O             O     SSS    # #            O            #
-	# SSSSSSSSSS# #  SSSE     # #        SSS# #           # #   SSS   E # #  E        # #           #
+	#   S    S  # #      V    # #        SSS# #   S   S   # #     SSS   # #           # #   E       #
+2	#   S EE S   O      S      O         VP  O             O     SSS    # #            O            #
+	# SSSSSSSSBS# #  SSSE     # #        SSS# #           # #   SSS   E # #  E        # #           #
 	#           # #    SS     # #   E       # #           # #  SSS      # #      E    # #     E     #
 	#           # #           # #           # #           # #           # #           # #           #
 	###### ###### ############# ############# ############# ###### ###### ###### ###### #############
-              O                                                       O             O
+          O                                                       O             O
 	###### ###### ############# ############# ############# ###### ###### ###### ######
-	#     E     # #  SS ES    # #  E     S  # #   SS SS   # #   S       # # E  S S    #
+	#     E     # #  SS ES    # #  E     S  # #   SS SS   # #   S       # # E  V S    #
 	#      E    # # S     S   # #           # #  S     S  # #    S      # #    SKS    #
 	#    SSSSSSS# #S   SS  SS # #      SS   # # S       S # #  S  S     # #    SSS    #
 3	#    S       O    S  S     O    S S     # #            O    ES S     O            #
@@ -38,13 +38,13 @@
 	#     SS    # #     E     # #           # #  S     S  # #    SE     # #           #
 	#           # #           # #           # #   SS SS   # #   S    SS # #           #
 	############# ############# ###### ###### ###### ###### ############# #############
-                                          O             O
+                                      O             O
 	############# ############# ###### ###### ###### ###### #############
-	#           # #           # #           # #           # #    K      #
+	#           # #           # #           # #           # #           #
 	#  SSSSSSS  # #  S   E    # #  SSSSSSS  # #  SSSSSSS  # #  SSSSSSS  #
-	#  S    E   # #  S        # #  SE       # #  SE       # #  S     S  #
+	#  S    E   # #  S        # #  SE       # #  SE       # #  S K   B  #
 4	#  SSSSSSS   L   S         L   SSSS      O   SSSSS     O   SSSSSSS  #
-	# B     ES  # #  S     E  # #  SE       # #  SE       # #  S        #
+	# M     ES  # #  S     E  # #  SE       # #  SE       # #  S        #
 	#  SSSSSSS  # #  SSSSSSS  # #  SSSSSSS  # #  SSSSSSS  # #  S   E    #
 	#  E        # #           # #           # #           # #          P#
 	############# ############# ############# ############# #############
