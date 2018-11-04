@@ -31,22 +31,10 @@ class Enemy(LivingObject):
             Enemy.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/sword/walk/left.png").convert_alpha()
             Enemy.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/sword/walk/right.png").convert_alpha()
 
-        self.animation_length = 4
-        self.animation_i = 0
-        self.miliseconds_per_frame = 0
-        self.move_cooldown = 400
-
         self.target_distance = 0
 
     def update(self, context):
         super().update(context)
-
-        if self.miliseconds_per_frame > 200:
-            self.miliseconds_per_frame = 0
-            self.animation_i += 1
-            if self.animation_i == Enemy._ANIMATION_LENGTH:
-                self.animation_i = 0
-        self.miliseconds_per_frame += context.delta_t
 
         if self.can_attack(context, SpriteType.PLAYER):
             self.attack(context, SpriteType.PLAYER)
