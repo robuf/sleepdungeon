@@ -31,11 +31,12 @@ class InputManager:
             # joystick
             if joystick.get_numhats() == 0:
                 continue
-            if joysitck.get_numbuttons() < 2:
+            elif joystick.get_numbuttons() < 4:
                 continue
 
             self.joystick = joystick
             self.joystick.init()
+            break
 
     def get_events(self, events: list) -> Set['InputEvent']:
         event_set: Set['InputEvent'] = set()
@@ -64,8 +65,10 @@ class InputManager:
             elif event.type == pygame.JOYBUTTONDOWN:
                 if event.button == 0:
                     event_set.add(InputEvent.ATTACK)
-                if event.button == 1:
+                if event.button == 1 or event.button == 2:
                     event_set.add(InputEvent.SWAP)
+                if event.button == 3:
+                    event_set.add(InputEvent.BOMB)
 
             elif event.type == pygame.QUIT:
                 event_set.add(InputEvent.QUIT)
