@@ -331,7 +331,7 @@ class SideBar(Sprite):
 
         self._image.blit(
             self.__FONT.render(
-                "{}".format(player.hp_ups),
+                "{}".format(player.spd_ups),
                 True,
                 self.__TEXT_COLOR
             ),
