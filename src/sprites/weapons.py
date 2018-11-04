@@ -57,12 +57,12 @@ class Weapon(object):
 
 class Sword(Weapon):
     def __init__(self):
-        super().__init__(WeaponType.SWORD, 1, 1)
+        super().__init__(WeaponType.SWORD, 2, 1)
 
 
 class Bow(Weapon):
     def __init__(self):
-        super().__init__(WeaponType.BOW, 0.5, 4)
+        super().__init__(WeaponType.BOW, 1, 4)
 
     def attack(self, context: Context, sprite_type: SpriteType, position: Position, facing: Facing):
         arrow = Arrow(position, facing, 4, self.attack_damage)

@@ -30,8 +30,8 @@ class EnemyShielder(Enemy):
         self.animation_i = 0
         self.frame_cooldown = 0
 
-        self.lifes = 4
-        self.max_lifes = 4
+        self.lifes = 5
+        self.max_lifes = 5
 
     def _image(self) -> pygame.Surface:
         img = None

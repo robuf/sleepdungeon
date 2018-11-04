@@ -58,7 +58,6 @@ class Game(object):
             Sprite._update_render_context(self.render_context)
             self.current_room.add_player(player)
             self.current_room.sprites.append(self.sidebar)
-            print("Added sidebar")
 
         self.context.input_events = event_set
         self.context.sprites = self.current_room.sprites
