@@ -31,6 +31,7 @@ class Game(object):
         self.current_floor = self.floors[0]
         self.current_room = self.current_floor.initial_room
         self.sidebar = SideBar()
+        self.current_room.sprites.append(self.sidebar)
 
         Sprite._update_render_context(self.render_context)
 
@@ -56,6 +57,8 @@ class Game(object):
             self.context.block_doors = True
             Sprite._update_render_context(self.render_context)
             self.current_room.add_player(player)
+            self.current_room.sprites.append(self.sidebar)
+            print("Added sidebar")
 
         self.context.input_events = event_set
         self.context.sprites = self.current_room.sprites
