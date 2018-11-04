@@ -61,7 +61,8 @@ class Bossdoor(Sprite):
             self.facing = Facing.FACING_RIGHT
 
         self.next_room = next_room
-        self.locked = 1
+        self.key_count = key_count
+        self.locked = self.key_count
 
     def update(self, context: Context):
         player: List[Player] = context.sprites.find_by_type_and_pos(
@@ -72,7 +73,7 @@ class Bossdoor(Sprite):
         if len(player) == 1:
             player: Player = player[0]
 
-            self.locked = player.boss_keys
+            self.locked = self.key_count - player.boss_keys
 
             if player.facing == self.facing and not self.locked:
                 context.change_room = self.next_room
@@ -80,13 +81,13 @@ class Bossdoor(Sprite):
     @classmethod
     def update_render_context(cls, render_context):
         if not cls.__BASE_UP_SURFACE:
-            base = pygame.image.load(IMG_DIR + "room/bossdoor.png").convert_alpha()
+            base = pygame.image.load(IMG_DIR + "room/doors.png").convert_alpha()
             cls.__BASE_UP_SURFACE = base.subsurface(pygame.Rect(0, 0, 300, 100))
             cls.__BASE_DOWN_SURFACE = base.subsurface(pygame.Rect(0, 100, 300, 100))
             cls.__BASE_LEFT_SURFACE = base.subsurface(pygame.Rect(100, 200, 100, 300))
             cls.__BASE_RIGHT_SURFACE = base.subsurface(pygame.Rect(0, 200, 100, 300))
 
-            base = pygame.image.load(IMG_DIR + "room/bossdoor_locked.png").convert_alpha()
+            base = pygame.image.load(IMG_DIR + "room/boss_door_locked.png").convert_alpha()
             cls.__BASE_UP_SURFACE_LOCKED = base.subsurface(pygame.Rect(0, 0, 300, 100))
             cls.__BASE_DOWN_SURFACE_LOCKED = base.subsurface(pygame.Rect(0, 100, 300, 100))
             cls.__BASE_LEFT_SURFACE_LOCKED = base.subsurface(pygame.Rect(100, 200, 100, 300))
