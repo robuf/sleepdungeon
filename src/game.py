@@ -10,6 +10,8 @@ from .base.room import Room
 from .base.sprite import Sprite
 from .level_loader import LevelLoader
 from .sprites.sidebar import SideBar
+from .base.music_manager import MusicManager
+
 
 
 class Game(object):
