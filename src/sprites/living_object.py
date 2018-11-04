@@ -3,10 +3,14 @@ from ..base.context import Context
 from ..base.position import Position
 from ..base.game_constants import ZIndex, Facing, SpriteType
 from .weapons import Weapon
+from .spdup import Spdup
+from .dmgup import Dmgup
+from .hpup import Hpup
 
 from typing import List, Optional
 
 import pygame
+import random
 
 
 # Kümmert sich um die Funktionen des Players
@@ -115,7 +119,28 @@ class LivingObject(Sprite):
             self.die(context)
 
     def die(self, context: Context):
+        #Nach enemy filtern
+        if self.max_lifes < 6:
+            self.drop(context, 30, 4, 2)
         context.remove_sprite(self)
+
+    def drop(self, context: Context, heart_chance, power_up_chance, num_power_ups):
+        rnd_num = random.randint(1, 101)
+        heart_range = 1 + heart_chance
+        power_up_range = [0]
+        for i in range (0, num_power_ups):
+            power_up_range.append(i)
+        if rnd_num < heart_range:
+            context.sprites.append(Hpup(self.position.x, self.position.y))
+        for i in power_up_range:
+            set_range = heart_range + (i * power_up_chance)
+            if rnd_num < set_range:
+                if i == 0:
+                    context.sprites.append(Spdup(self.position.x, self.position.y))
+                elif i == 1:
+                    context.sprites.append(Dmgup(self.position.x, self.position.y))
+                else:
+                    pass
 
     @property
     def bounding_box(self) -> pygame.Rect:
@@ -127,3 +152,4 @@ class LivingObject(Sprite):
             self.width * tile,
             self.height * tile
         )
+
