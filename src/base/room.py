@@ -17,7 +17,7 @@ from ..sprites.enemy_saber import EnemySaber
 from ..sprites.enemy_archer import EnemyArcher
 from ..sprites.enemy_shielder import EnemyShielder
 from .position import Position
-
+from ..sprites.bossdoor import Bossdoor
 import os
 
 
@@ -60,6 +60,15 @@ class Room(object):
             if len(token) > 3:
                 key_count = int(token[3])
             return Door(side, next_room, key_count)
+
+        elif token[0] == "BOSSDOOR":
+            side = token[1]
+            next_room = token[2]
+
+            key_count = 0
+            if len(token) > 3:
+                key_count = int(token[3])
+            return Bossdoor(side, next_room, key_count)
 
         elif token[0] == "STAIR":
             x = int(token[1])

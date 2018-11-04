@@ -6,6 +6,7 @@ from ..base.sprite import Sprite
 class Key(Item):
     def __init__(self, key_type: 'KeyType', x: int, y: int):
         name = ""
+        self.keyType = key_type
         if key_type == KeyType.NORMAL:
             name = "/key/key"
 
