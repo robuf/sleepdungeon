@@ -224,14 +224,14 @@ class LivingObject(Sprite):
 
         if self.damage_current > 0:
             image = image.copy()
-            overlay = pygame.Surface((self.width * self.tile_size, self.height * self.tile_size))
+            overlay = pygame.Surface((self.width * 1.5 * self.tile_size, self.height * self.tile_size))
             overlay.fill(pygame.Color(255, 50, 50, 1))
 
             image.blit(overlay, (0, 0), special_flags=pygame.BLEND_MULT)
 
         if self.heal_current > 0:
             image = image.copy()
-            overlay = pygame.Surface((self.width * self.tile_size, self.height * self.tile_size))
+            overlay = pygame.Surface((self.width * 1.5 * self.tile_size, self.height * self.tile_size))
             overlay.fill(pygame.Color(150, 255, 120, 1))
 
             image.blit(overlay, (0, 0), special_flags=pygame.BLEND_MULT)
