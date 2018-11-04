@@ -3,7 +3,7 @@ from .living_object import LivingObject
 from ..base.game_constants import SpriteType
 from ..base.inputs import InputEvent
 from .. import res
-from ..base.game_constants import Facing
+from ..base.game_constants import Facing, WeaponType
 from .key import Key
 from .hpup import Hpup
 from .dmgup import Dmgup
@@ -30,6 +30,16 @@ class Player(LivingObject):
     __SURFACE_LEFT: pygame.Surface = None
     __SURFACE_RIGHT: pygame.Surface = None
 
+    __BASE_BOW_UP_SURFACE: pygame.Surface = None
+    __BASE_BOW_DOWN_SURFACE: pygame.Surface = None
+    __BASE_BOW_LEFT_SURFACE: pygame.Surface = None
+    __BASE_BOW_RIGHT_SURFACE: pygame.Surface = None
+
+    __SURFACE_BOW_UP: pygame.Surface = None
+    __SURFACE_BOW_DOWN: pygame.Surface = None
+    __SURFACE_BOW_LEFT: pygame.Surface = None
+    __SURFACE_BOW_RIGHT: pygame.Surface = None
+
     _WIDTH = 1
     _HEIGHT = 1
     _ANIMATION_LENGTH = 4
@@ -44,6 +54,7 @@ class Player(LivingObject):
 
         self.max_lifes = 6
         self.key = 0
+        self.facing = Facing.FACING_DOWN
 
         self.selected_weapon = Sword()
         self.weapon_list = [self.selected_weapon, Bow()]
@@ -68,16 +79,26 @@ class Player(LivingObject):
             if i == InputEvent.MOVE_RIGHT:
                 self.move(Facing.FACING_RIGHT, context)
 
-    @property
-    def image(self):
-        if self.facing == Facing.FACING_UP:
-            img = Player.__SURFACE_UP
-        elif self.facing == Facing.FACING_DOWN:
-            img = Player.__SURFACE_DOWN
-        if self.facing == Facing.FACING_LEFT:
-            img = Player.__SURFACE_LEFT
-        elif self.facing == Facing.FACING_RIGHT:
-            img = Player.__SURFACE_RIGHT
+    def _image(self) -> pygame.Surface:
+        if self.selected_weapon.weapon_type == WeaponType.SWORD:
+            if self.facing == Facing.FACING_UP:
+                img = Player.__SURFACE_UP
+            elif self.facing == Facing.FACING_DOWN:
+                img = Player.__SURFACE_DOWN
+            if self.facing == Facing.FACING_LEFT:
+                img = Player.__SURFACE_LEFT
+            elif self.facing == Facing.FACING_RIGHT:
+                img = Player.__SURFACE_RIGHT
+
+        elif self.selected_weapon.weapon_type == WeaponType.BOW:
+            if self.facing == Facing.FACING_UP:
+                img = Player.__SURFACE_BOW_UP
+            elif self.facing == Facing.FACING_DOWN:
+                img = Player.__SURFACE_BOW_DOWN
+            if self.facing == Facing.FACING_LEFT:
+                img = Player.__SURFACE_BOW_LEFT
+            elif self.facing == Facing.FACING_RIGHT:
+                img = Player.__SURFACE_BOW_RIGHT
 
         return img.subsurface(
             pygame.Rect(
@@ -99,6 +120,10 @@ class Player(LivingObject):
             cls.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/sword/walk/down.png").convert_alpha()
             cls.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/sword/walk/left.png").convert_alpha()
             cls.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/sword/walk/right.png").convert_alpha()
+            cls.__BASE_BOW_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/bow/walk/up.png").convert_alpha()
+            cls.__BASE_BOW_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/bow/walk/down.png").convert_alpha()
+            cls.__BASE_BOW_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/bow/walk/left.png").convert_alpha()
+            cls.__BASE_BOW_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/bow/walk/right.png").convert_alpha()
 
         cls.__SURFACE_UP = pygame.transform.smoothscale(
             cls.__BASE_UP_SURFACE,
@@ -123,6 +148,35 @@ class Player(LivingObject):
         )
         cls.__SURFACE_RIGHT = pygame.transform.smoothscale(
             cls.__BASE_RIGHT_SURFACE,
+            (
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
+            )
+        )
+
+        cls.__SURFACE_BOW_UP = pygame.transform.smoothscale(
+            cls.__BASE_BOW_UP_SURFACE,
+            (
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
+            )
+        )
+        cls.__SURFACE_BOW_DOWN = pygame.transform.smoothscale(
+            cls.__BASE_BOW_DOWN_SURFACE,
+            (
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
+            )
+        )
+        cls.__SURFACE_BOW_LEFT = pygame.transform.smoothscale(
+            cls.__BASE_BOW_LEFT_SURFACE,
+            (
+                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
+                cls._HEIGHT * cls.tile_size
+            )
+        )
+        cls.__SURFACE_BOW_RIGHT = pygame.transform.smoothscale(
+            cls.__BASE_BOW_RIGHT_SURFACE,
             (
                 cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
                 cls._HEIGHT * cls.tile_size

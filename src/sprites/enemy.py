@@ -61,27 +61,6 @@ class Enemy(LivingObject):
                     break
 
     @property
-    def image(self):
-        img = None
-        if self.facing == Facing.FACING_UP:
-            img = Enemy.__SURFACE_UP
-        elif self.facing == Facing.FACING_DOWN:
-            img = Enemy.__SURFACE_DOWN
-        if self.facing == Facing.FACING_LEFT:
-            img = Enemy.__SURFACE_LEFT
-        elif self.facing == Facing.FACING_RIGHT:
-            img = Enemy.__SURFACE_RIGHT
-
-        return img.subsurface(
-            pygame.Rect(
-                self.tile_size * self.animation_i,
-                0,
-                self.tile_size,
-                self.tile_size
-            )
-        )
-
-    @property
     def sprite_type(self) -> SpriteType:
         return SpriteType.ENEMY
 

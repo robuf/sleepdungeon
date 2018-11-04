@@ -33,8 +33,7 @@ class EnemyShielder(Enemy):
         self.lifes = 4
         self.max_lifes = 4
 
-    @property
-    def image(self):
+    def _image(self) -> pygame.Surface:
         img = None
         if self.facing == Facing.FACING_UP:
             img = EnemyShielder.__SURFACE_UP
