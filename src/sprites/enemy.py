@@ -23,6 +23,8 @@ class Enemy(LivingObject):
     _MILISECONDS_PER_FRAME = 200
     _MOVE_COOLDOWN = 400
 
+    IGNORED_TYPES = [SpriteType.GHOST, SpriteType.PLAYER, SpriteType.ITEM]
+
     def __init__(self, size):
         super().__init__(size)
         if not Enemy.__BASE_UP_SURFACE:
@@ -45,7 +47,7 @@ class Enemy(LivingObject):
         source = self.position.x, self.position.y, self.facing.value
         target = player.position.x, player.position.y
         obstacles = [(sprite.position.x, sprite.position.y) for sprite in context.sprites if
-                     sprite != self and sprite != player]
+                     sprite != self and sprite.sprite_type not in Enemy.IGNORED_TYPES]
 
         path = find_path(source, target, get_border_with_obstacles(obstacles), self.target_distance)
 
