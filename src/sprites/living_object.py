@@ -155,17 +155,14 @@ class LivingObject(Sprite):
         for i in range (0, num_power_ups):
             power_up_range.append(i)
         if rnd_num < heart_range:
-            p_up = Hpup(self.position.x, self.position.y)
-            context.sprites.append(p_up)
+            context.sprites.append(Hpup(self.position.x, self.position.y))
         for i in power_up_range:
-            set_range = heart_range + (i * power_up_chance)
-            if rnd_num < set_range:
+            set_range = heart_range + ((i+1) * power_up_chance)
+            if rnd_num > heart_range and rnd_num < set_range:
                 if i == 0:
-                    p_up = Dmgup(self.position.x, self.position.y)
-                    context.sprites.append(p_up)
+                    context.sprites.append(Dmgup(self.position.x, self.position.y))
                 elif i == 1:
-                    p_up = Spdup(self.position.x, self.position.y)
-                    context.sprites.append(p_up)
+                    context.sprites.append(Spdup(self.position.x, self.position.y))
                 else:
                     pass
 
