@@ -54,7 +54,6 @@ class Game(object):
         self.current_room = self.current_floor.get_room(room_name)
         MusicManager.playmusic(self.current_room.music)
         self.context.block_doors = True
-        Sprite._update_render_context(self.render_context)
         self.current_room.sprites.append(self.sidebar)
 
     def update(self):
