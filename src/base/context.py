@@ -13,6 +13,7 @@ class Context:
         self.delta_t = 0
         self.render_context: RenderContext = None
         self.change_room: Optional[str] = None
+        self.change_level: Optional[str] = None
         self.lost = False
 
     def remove_sprite(self, sprite):

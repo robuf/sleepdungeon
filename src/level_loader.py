@@ -7,7 +7,6 @@ from .base.room import Room
 
 
 class LevelLoader(object):
-    FLOOR_FILE_EXTENSION = "floor"
 
     @staticmethod
     def _load_floor(floor_dir) -> Floor:
@@ -19,7 +18,7 @@ class LevelLoader(object):
             print("Found no level files")
             sys.exit(1)
 
-        floor = Floor()
+        floor = Floor(floor_dir.name)
         for level_file in level_files:
             floor.rooms.append(Room(level_file.path))
 
