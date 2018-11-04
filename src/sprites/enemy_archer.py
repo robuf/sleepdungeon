@@ -37,8 +37,7 @@ class EnemyArcher(Enemy):
 
         self.target_distance = 3
 
-    @property
-    def image(self):
+    def _image(self) -> pygame.Surface:
         img = None
         if self.facing == Facing.FACING_UP:
             img = EnemyArcher.__SURFACE_UP
@@ -65,10 +64,10 @@ class EnemyArcher(Enemy):
     @classmethod
     def update_render_context(cls, render_context):
         if not cls.__BASE_UP_SURFACE:
-            cls.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
-            cls.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
-            cls.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
-            cls.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
+            cls.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/bow/walk/up.png").convert_alpha()
+            cls.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/bow/walk/down.png").convert_alpha()
+            cls.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/bow/walk/left.png").convert_alpha()
+            cls.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/bow/walk/right.png").convert_alpha()
 
         cls.__SURFACE_UP = pygame.transform.smoothscale(
             cls.__BASE_UP_SURFACE,

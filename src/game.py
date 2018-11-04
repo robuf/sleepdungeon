@@ -57,6 +57,17 @@ class Game(object):
             Sprite._update_render_context(self.render_context)
             self.current_room.add_player(player)
 
+        if self.context.change_level is not None:
+
+            for floor in self.floors:
+                if floor.name == self.context.change_level:
+                    self.current_floor = floor
+
+            self.current_room = self.current_floor.initial_room
+
+            self.context.change_level = None
+            Sprite._update_render_context(self.render_context)
+
         self.context.input_events = event_set
         self.context.sprites = self.current_room.sprites
 

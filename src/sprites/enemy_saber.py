@@ -37,8 +37,7 @@ class EnemySaber(Enemy):
         self.selected_weapon = Sword()
         self.weapon_list = [self.selected_weapon]
 
-    @property
-    def image(self):
+    def _image(self) -> pygame.Surface:
         img = None
         if self.facing == Facing.FACING_UP:
             img = EnemySaber.__SURFACE_UP
@@ -65,10 +64,10 @@ class EnemySaber(Enemy):
     @classmethod
     def update_render_context(cls, render_context):
         if not cls.__BASE_UP_SURFACE:
-            cls.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
-            cls.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
-            cls.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
-            cls.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
+            cls.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/sword/walk/up.png").convert_alpha()
+            cls.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/sword/walk/down.png").convert_alpha()
+            cls.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/sword/walk/left.png").convert_alpha()
+            cls.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/sword/walk/right.png").convert_alpha()
         cls.__SURFACE_UP = pygame.transform.smoothscale(
             cls.__BASE_UP_SURFACE,
             (

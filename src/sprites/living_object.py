@@ -31,6 +31,9 @@ class LivingObject(Sprite):
         self.move_cooldown_current = 0
         self.animation_cooldown = 0
 
+        self.damage_current = 0
+        self.heal_current = 0
+
         self.weapon_list: List[Weapon] = []
         self.selected_weapon = None
 
@@ -97,6 +100,16 @@ class LivingObject(Sprite):
                 self.animation_i = 0
         self.animation_cooldown -= context.delta_t
 
+        if self.damage_current > 0:
+            self.damage_current -= context.delta_t
+            if self.damage_current < 0:
+                self.damage_current = 0
+
+        if self.heal_current > 0:
+            self.heal_current -= context.delta_t
+            if self.heal_current < 0:
+                self.heal_current = 0
+
         if self.move_cooldown_current > 0:
             self.move_cooldown_current -= context.delta_t
 
@@ -111,9 +124,20 @@ class LivingObject(Sprite):
         self.move_cooldown_current = self._MOVE_COOLDOWN
         self.selected_weapon.attack(context, sprite_type, self.position, self.facing)
 
+    def heal(self, heal: int):
+        if self.lifes + heal <= self.max_lifes:
+            self.lifes += heal
+        else:
+            self.lifes = self.max_lifes
+
+        if heal > 0:
+            self.heal_current = 300
+
     def damage(self, context: Context, damage: int):
         self.lifes -= damage
-        # print(str(type(self)) + " has " + str(self.lifes) + " left")
+
+        if damage > 0:
+            self.damage_current = 200
 
         if self.lifes <= 0:
             self.die(context)
@@ -141,6 +165,26 @@ class LivingObject(Sprite):
                     context.sprites.append(Dmgup(self.position.x, self.position.y))
                 else:
                     pass
+
+    @property
+    def image(self):
+        image = self._image()
+
+        if self.damage_current > 0:
+            image = image.copy()
+            overlay = pygame.Surface((self.width * self.tile_size, self.height * self.tile_size))
+            overlay.fill(pygame.Color(255, 50, 50, 1))
+
+            image.blit(overlay, (0, 0), special_flags=pygame.BLEND_MULT)
+
+        if self.heal_current > 0:
+            image = image.copy()
+            overlay = pygame.Surface((self.width * self.tile_size, self.height * self.tile_size))
+            overlay.fill(pygame.Color(150, 255, 120, 1))
+
+            image.blit(overlay, (0, 0), special_flags=pygame.BLEND_MULT)
+
+        return image
 
     @property
     def bounding_box(self) -> pygame.Rect:

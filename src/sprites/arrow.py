@@ -6,6 +6,7 @@ from ..base.context import Context
 from ..base.game_constants import Facing, SpriteType
 from ..res import IMG_DIR
 
+
 class Arrow(Sprite):
     __BASE_UP_SURFACE: pygame.Surface = None
     __BASE_DOWN_SURFACE: pygame.Surface = None
@@ -19,11 +20,12 @@ class Arrow(Sprite):
 
     _MILISECONDS_PER_TILE = 50
 
-    def __init__(self, pos: Position, facing: Facing, range: int):
+    def __init__(self, pos: Position, facing: Facing, range: int, damage: float):
         super().__init__()
         self.position = pos
         self.facing = facing
         self.range = range
+        self.damage = damage
 
         self.movement_cooldown = 0
 
@@ -52,10 +54,10 @@ class Arrow(Sprite):
         self.range -= 1
 
         for enemy in context.sprites.find_by_type_and_pos(SpriteType.ENEMY, new_pos):
-            enemy.damage(context, 1)
+            enemy.damage(context, self.damage)
             context.remove_sprite(self)
         for player in context.sprites.find_by_type_and_pos(SpriteType.PLAYER, new_pos):
-            player.damage(context, 1)
+            player.damage(context, self.damage)
             context.remove_sprite(self)
 
         self.position = new_pos
@@ -99,5 +101,6 @@ class Arrow(Sprite):
             cls.__BASE_RIGHT_SURFACE,
             (cls.tile_size, cls.tile_size)
         )
+
 
 Sprite.add_sprite_class(Arrow)

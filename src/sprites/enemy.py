@@ -23,30 +23,20 @@ class Enemy(LivingObject):
     _MILISECONDS_PER_FRAME = 200
     _MOVE_COOLDOWN = 400
 
+    IGNORED_TYPES = [SpriteType.GHOST, SpriteType.PLAYER, SpriteType.ITEM]
+
     def __init__(self, size):
         super().__init__(size)
         if not Enemy.__BASE_UP_SURFACE:
-            Enemy.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/up.png").convert_alpha()
-            Enemy.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/down.png").convert_alpha()
-            Enemy.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/left.png").convert_alpha()
-            Enemy.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/walk/right.png").convert_alpha()
-
-        self.animation_length = 4
-        self.animation_i = 0
-        self.miliseconds_per_frame = 0
-        self.move_cooldown = 400
+            Enemy.__BASE_UP_SURFACE = pygame.image.load(res.IMG_DIR + "player/sword/walk/up.png").convert_alpha()
+            Enemy.__BASE_DOWN_SURFACE = pygame.image.load(res.IMG_DIR + "player/sword/walk/down.png").convert_alpha()
+            Enemy.__BASE_LEFT_SURFACE = pygame.image.load(res.IMG_DIR + "player/sword/walk/left.png").convert_alpha()
+            Enemy.__BASE_RIGHT_SURFACE = pygame.image.load(res.IMG_DIR + "player/sword/walk/right.png").convert_alpha()
 
         self.target_distance = 0
 
     def update(self, context):
         super().update(context)
-
-        if self.miliseconds_per_frame > 200:
-            self.miliseconds_per_frame = 0
-            self.animation_i += 1
-            if self.animation_i == Enemy._ANIMATION_LENGTH:
-                self.animation_i = 0
-        self.miliseconds_per_frame += context.delta_t
 
         if self.can_attack(context, SpriteType.PLAYER):
             self.attack(context, SpriteType.PLAYER)
@@ -57,7 +47,7 @@ class Enemy(LivingObject):
         source = self.position.x, self.position.y, self.facing.value
         target = player.position.x, player.position.y
         obstacles = [(sprite.position.x, sprite.position.y) for sprite in context.sprites if
-                     sprite != self and sprite != player]
+                     sprite != self and sprite.sprite_type not in Enemy.IGNORED_TYPES]
 
         path = find_path(source, target, get_border_with_obstacles(obstacles), self.target_distance)
 
@@ -70,28 +60,8 @@ class Enemy(LivingObject):
 
                 elif step.type == ActionType.MOVE:
                     self.move(facing, context)
-                    break
-
-    @property
-    def image(self):
-        img = None
-        if self.facing == Facing.FACING_UP:
-            img = Enemy.__SURFACE_UP
-        elif self.facing == Facing.FACING_DOWN:
-            img = Enemy.__SURFACE_DOWN
-        if self.facing == Facing.FACING_LEFT:
-            img = Enemy.__SURFACE_LEFT
-        elif self.facing == Facing.FACING_RIGHT:
-            img = Enemy.__SURFACE_RIGHT
-
-        return img.subsurface(
-            pygame.Rect(
-                self.tile_size * self.animation_i,
-                0,
-                self.tile_size,
-                self.tile_size
-            )
-        )
+                    return
+            self.facing = facing
 
     @property
     def sprite_type(self) -> SpriteType:

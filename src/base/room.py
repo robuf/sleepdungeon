@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from .game_constants import SpriteType
 from ..sprites.door import Door
+from ..sprites.stair import Stair
 from ..sprites.background import Background
 from ..sprites.player import Player
 from ..sprites.stone import Stone
@@ -52,6 +53,13 @@ class Room(object):
             if len(token) > 3:
                 key_count = int(token[3])
             return Door(side, next_room, key_count)
+
+        elif token[0] == "STAIR":
+            x = int(token[1])
+            y = int(token[2])
+            next_level = token[3]
+
+            return Stair(x, y, next_level)
 
         elif token[0] == "PLAYER":
             x = int(token[1])
