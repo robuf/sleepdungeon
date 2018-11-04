@@ -8,7 +8,7 @@ from ..sprites.player import Player
 from ..sprites.stone import Stone, BreakableStone, MovableStone
 from .sprite import Sprite
 from .sprites import Sprites
-from ..sprites.key import Key, KeyType
+from ..sprites.key import Key, BossKey
 from ..sprites.spdup import Spdup
 from ..sprites.dmgup import Dmgup
 from ..sprites.hpup import Hpup
@@ -99,9 +99,9 @@ class Room(object):
             y = int(token[3])
 
             if t == "KEY":
-                return Key(KeyType.NORMAL, x, y)
+                return Key(x, y)
             elif t == "BOSSKEY":
-                return Key(KeyType.BOSS, x, y)
+                return BossKey(x, y)
             elif t == "HPUP":
                 return Hpup(x, y)
             elif t == "DMGUP":
