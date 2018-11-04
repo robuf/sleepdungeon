@@ -202,8 +202,7 @@ class LivingObject(Sprite):
         if rnd_num < heart_range:
             context.sprites.append(Hpup(self.position.x, self.position.y))
         elif rnd_num >= heart_range and rnd_num < bomb_range:
-            print("Got Bomb ")
-            #context.sprites.append(Bomb (self.position.x, self.position.y))
+            context.sprites.append(Bomb (self.position.x, self.position.y))
         elif rnd_num >= bomb_range and rnd_num < power_up_range:
             context.sprites.append(Dmgup(self.position.x, self.position.y))
         else:

@@ -12,6 +12,7 @@ from ..sprites.key import Key, KeyType
 from ..sprites.spdup import Spdup
 from ..sprites.dmgup import Dmgup
 from ..sprites.hpup import Hpup
+from ..sprites.bomb import Bomb
 from ..sprites.enemy_saber import EnemySaber
 from ..sprites.enemy_archer import EnemyArcher
 from ..sprites.enemy_shielder import EnemyShielder
@@ -107,6 +108,8 @@ class Room(object):
                 return Dmgup(x, y)
             elif t == "SPDUP":
                 return Spdup(x, y)
+            elif t == "BOMB":
+                return Bomb(x, y)
 
         elif token[0] == "ENTITY":
             t = token[1]

@@ -15,6 +15,8 @@ class InputEvent(Enum):
     ATTACK = 5
     SWAP = 6
 
+    BOMB = 7
+
 
 class InputManager:
 
@@ -54,6 +56,8 @@ class InputManager:
                     event_set.add(InputEvent.ATTACK)
                 elif event.key == pygame.K_e:
                     event_set.add(InputEvent.SWAP)
+                elif event.key == pygame.K_q:
+                    event_set.add(InputEvent.BOMB)
                 elif event.key == pygame.K_ESCAPE:
                     event_set.add(InputEvent.QUIT)
 

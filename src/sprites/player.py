@@ -10,6 +10,7 @@ from .hpup import Hpup
 from .dmgup import Dmgup
 from .spdup import Spdup
 from .weapons import Sword, Bow
+from .bomb import DetonatingBomb, Bomb
 
 import pygame
 
@@ -72,6 +73,7 @@ class Player(LivingObject):
         self.dmg_ups = 0
         self.hp_ups = 0
         self.spd_ups = 0
+        self.bomb_count = 0
         self.facing = Facing.FACING_DOWN
 
         self.selected_weapon = Sword()
@@ -87,6 +89,8 @@ class Player(LivingObject):
                 self.swap()
             if i == InputEvent.ATTACK:
                 self.attack(context, SpriteType.ENEMY)
+            if i == InputEvent.BOMB:
+                self.bomb(context)
 
             if i == InputEvent.MOVE_UP:
                 self.move(Facing.FACING_UP, context)
@@ -301,6 +305,22 @@ class Player(LivingObject):
                 self.spd_ups += 1
                 self._MOVE_COOLDOWN *= 0.9
 
+            elif isinstance(item, Bomb):
+                context.sprites.remove(item)
+                self.bomb_count += 1
+
+
     def die(self, context: Context):
         super().die(context)
         context.lost = True
+
+    def bomb(self, context: Context):
+        if self.move_cooldown_current > 0:
+            return
+
+        if self.bomb_count <= 0:
+            return
+
+        self.bomb_count -= 1
+        det_bomb = DetonatingBomb(self.position.x, self.position.y)
+        context.sprites.append(det_bomb)
