@@ -5,7 +5,7 @@ from ..base.sprite import Sprite
 from ..base.inputs import InputEvent
 from .. import res
 from ..base.game_constants import Facing, WeaponType
-from .key import Key, KeyType
+from .key import Key, BossKey
 from .hpup import Hpup
 from .dmgup import Dmgup
 from .spdup import Spdup
@@ -285,13 +285,13 @@ class Player(LivingObject):
 
         for item in item_list:
             if isinstance(item, Key):
-                print(item.keyType)
-                if item.keyType == KeyType.NORMAL:
-                    context.sprites.remove(item)
-                    self.keys += 1
-                else:
-                    context.sprites.remove(item)
-                    self.boss_keys += 1
+                context.sprites.remove(item)
+                self.keys += 1
+
+            elif isinstance(item, BossKey):
+                context.sprites.remove(item)
+                self.boss_keys += 1
+
             elif isinstance(item, Hpup):
                 context.sprites.remove(item)
                 self.hp_ups += 1
