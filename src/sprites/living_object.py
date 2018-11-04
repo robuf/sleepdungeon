@@ -1,7 +1,7 @@
 from ..base.sprite import Sprite
 from ..base.context import Context
 from ..base.position import Position
-from ..base.game_constants import ZIndex, Facing, SpriteType
+from ..base.game_constants import ZIndex, Facing, SpriteType, WeaponType
 from .weapons import Weapon
 
 from typing import List, Optional
@@ -29,6 +29,7 @@ class LivingObject(Sprite):
 
         self.damage_current = 0
         self.heal_current = 0
+        self.attack_phase = 0
 
         self.weapon_list: List[Weapon] = []
         self.selected_weapon = None
@@ -109,6 +110,23 @@ class LivingObject(Sprite):
         if self.move_cooldown_current > 0:
             self.move_cooldown_current -= context.delta_t
 
+            if self.attack_phase > 0:
+                if self.move_cooldown_current * 2 < self._MOVE_COOLDOWN:
+                    self.attack_phase = 2
+                else:
+                    if self.attack_phase == 2:
+                        self.attack_phase = 0
+                        self.animation_i = 0
+                        self.animation_cooldown = self._MILISECONDS_PER_FRAME
+                    else:
+                        self.attack_phase = 1
+
+        else:
+            if self.attack_phase != 0:
+                self.attack_phase = 0
+                self.animation_i = 0
+                self.animation_cooldown = self._MILISECONDS_PER_FRAME
+
     def can_attack(self, context: Context, sprite_type: SpriteType) -> bool:
         return self.selected_weapon is not None and self.selected_weapon.can_attack(context, sprite_type, self.position,
                                                                                     self.facing)
@@ -116,6 +134,9 @@ class LivingObject(Sprite):
     def attack(self, context: Context, sprite_type: SpriteType):
         if self.move_cooldown_current > 0:
             return
+
+        if self.selected_weapon.weapon_type != WeaponType.BOW:
+            self.attack_phase = 1
 
         self.move_cooldown_current = self._MOVE_COOLDOWN
         self.selected_weapon.attack(context, sprite_type, self.position, self.facing)
