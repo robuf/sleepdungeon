@@ -18,7 +18,7 @@ class Enemy(LivingObject):
     __SURFACE_RIGHT: pygame.Surface = None
 
     _WIDTH = 1
-    _HEIGHT = 1
+    _HEIGHT = 1.5
     _ANIMATION_LENGTH = 4
     _MILISECONDS_PER_FRAME = 200
     _MOVE_COOLDOWN = 400
@@ -72,28 +72,28 @@ class Enemy(LivingObject):
         Enemy.__SURFACE_UP = pygame.transform.smoothscale(
             Enemy.__BASE_UP_SURFACE,
             (
-                Enemy._WIDTH * cls.tile_size * Enemy._ANIMATION_LENGTH,
-                Enemy._HEIGHT * cls.tile_size
+                int(Enemy._WIDTH * cls.tile_size * Enemy._ANIMATION_LENGTH),
+                int(Enemy._HEIGHT * cls.tile_size)
             )
         )
         Enemy.__SURFACE_DOWN = pygame.transform.smoothscale(
             Enemy.__BASE_DOWN_SURFACE,
             (
-                Enemy._WIDTH * cls.tile_size * Enemy._ANIMATION_LENGTH,
-                Enemy._HEIGHT * cls.tile_size
+                int(Enemy._WIDTH * cls.tile_size * Enemy._ANIMATION_LENGTH),
+                int(Enemy._HEIGHT * cls.tile_size)
             )
         )
         Enemy.__SURFACE_LEFT = pygame.transform.smoothscale(
             Enemy.__BASE_LEFT_SURFACE,
             (
-                Enemy._WIDTH * cls.tile_size * Enemy._ANIMATION_LENGTH,
-                Enemy._HEIGHT * cls.tile_size
+                int(Enemy._WIDTH * cls.tile_size * Enemy._ANIMATION_LENGTH),
+                int(Enemy._HEIGHT * cls.tile_size)
             )
         )
         Enemy.__SURFACE_RIGHT = pygame.transform.smoothscale(
             Enemy.__BASE_RIGHT_SURFACE,
             (
-                Enemy._WIDTH * cls.tile_size * Enemy._ANIMATION_LENGTH,
-                Enemy._HEIGHT * cls.tile_size
+                int(Enemy._WIDTH * cls.tile_size * Enemy._ANIMATION_LENGTH),
+                int(Enemy._HEIGHT * cls.tile_size)
             )
         )
