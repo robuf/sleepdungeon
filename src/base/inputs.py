@@ -20,8 +20,19 @@ class InputManager:
 
     def __init__(self):
         self.joystick: Optional[pygame.joystick.Joystick] = None
-        if pygame.joystick.get_count() > 0:
-            self.joystick = pygame.joystick.Joystick(0)
+
+        for j_id in range(pygame.joystick.get_count()):
+            joystick = pygame.joystick.Joystick(j_id)
+            joystick.init()
+            # Perform some checks on the joystick.
+            # This prevents the game from trying to use a wacom tablet as
+            # joystick
+            if joystick.get_numhats() == 0:
+                continue
+            if joysitck.get_numbuttons() < 2:
+                continue
+
+            self.joystick = joystick
             self.joystick.init()
 
     def get_events(self, events: list) -> Set['InputEvent']:
