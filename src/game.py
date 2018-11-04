@@ -1,6 +1,7 @@
 import pygame
 from typing import List
 
+
 from .render_context import RenderContext
 from .base.inputs import InputEvent, InputManager
 from .base.context import Context
@@ -22,11 +23,12 @@ class Game(object):
         self.floors: List[Floor] = []
         self.context = Context()
         self.context.render_context = self.render_context
-        self.sidebar: SideBar = None
+        self.sidebar: SideBar = SideBar()
 
         # print("Scale acceleration: " + pygame.transform.get_smoothscale_backend())
 
     def load(self):
+        self.context = Context()
         self.floors = LevelLoader().load_levels()
         self.current_floor = self.floors[0]
         self.current_room = self.current_floor.initial_room
@@ -59,14 +61,24 @@ class Game(object):
             self.current_room.add_player(player)
             self.current_room.sprites.append(self.sidebar)
 
+        if self.context.change_level is not None:
+
+            for floor in self.floors:
+                if floor.name == self.context.change_level:
+                    self.current_floor = floor
+
+            self.current_room = self.current_floor.initial_room
+
+            self.context.change_level = None
+            Sprite._update_render_context(self.render_context)
+
         self.context.input_events = event_set
         self.context.sprites = self.current_room.sprites
 
         for sprite in self.context.sprites:
             sprite.update(self.context)
             if self.context.lost:
-                self.running = False
-                print("You lost!")
+                self.load()
                 return
 
     def render(self):

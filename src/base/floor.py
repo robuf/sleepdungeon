@@ -3,7 +3,8 @@ from .game_constants import SpriteType
 
 
 class Floor(object):
-    def __init__(self):
+    def __init__(self, name: str):
+        self.name = name
         self.rooms = []
 
     @property

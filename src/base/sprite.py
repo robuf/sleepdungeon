@@ -6,14 +6,16 @@ from .position import Position
 from .game_constants import SpriteType
 from ..render_context import RenderContext
 
-
 class Sprite(ABC):
     __sprites = set()
     tile_size = 32
     sidebar_width = 0
+    __RENDER_CONTEXT = None
 
     def __init__(self):
-        Sprite.__sprites.add(type(self))
+        if type(self) not in Sprite.__sprites:
+            Sprite.__sprites.add(type(self))
+            type(self).update_render_context(Sprite.__RENDER_CONTEXT)
         self.position: Position = Position(0, 0)
         self.z_index: int = 0
         self.width = 0
@@ -25,6 +27,7 @@ class Sprite(ABC):
 
     @staticmethod
     def _update_render_context(render_context: RenderContext):
+        Sprite.__RENDER_CONTEXT = render_context
         Sprite.sidebar_width = render_context.sidebar_width
         Sprite.tile_size =  render_context.tile_size
 
