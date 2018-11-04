@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from .enemy import Enemy
 from .weapons import Sword
 from ..base.game_constants import SpriteType

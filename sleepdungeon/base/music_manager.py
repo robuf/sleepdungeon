@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from .. import res
 import pygame
 
@@ -12,15 +15,3 @@ class MusicManager(object):
         cls._CURRENT_SOUND = music_name
         pygame.mixer.music.load(res.SOUND_DIR + music_name + ".ogg")
         pygame.mixer.music.play(-1)
-
-
-
-
-
-
-
-
-
-
-
-

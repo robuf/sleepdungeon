@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 class Position(list):
     def __init__(self, x: int, y: int):

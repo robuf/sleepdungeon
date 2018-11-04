@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from .living_object import LivingObject
 from ..base.game_constants import SpriteType
 from .. import res

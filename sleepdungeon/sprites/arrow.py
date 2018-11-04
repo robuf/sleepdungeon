@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import pygame
 
 from ..base.sprite import Sprite
@@ -197,5 +200,3 @@ class SpitArrow(Sprite):
             cls.__BASE_RIGHT_SURFACE,
             (cls.tile_size, cls.tile_size)
         )
-
-

@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from typing import Set, Optional
 from .inputs import InputEvent
 from .sprites import Sprites

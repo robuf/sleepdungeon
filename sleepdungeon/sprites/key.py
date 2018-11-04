@@ -1,5 +1,7 @@
-from .item import Item
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
 
+from .item import Item
 
 class Key(Item):
     def __init__(self, x: int, y: int):

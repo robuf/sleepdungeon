@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from ..base.context import Context
 from ..base.game_constants import SpriteType
 from .. import res

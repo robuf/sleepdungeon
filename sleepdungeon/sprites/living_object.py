@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from ..base.sprite import Sprite
 from ..base.context import Context
 from ..base.position import Position

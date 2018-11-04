@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from ..base.game_constants import WeaponType, SpriteType, Facing
 from ..base.context import Context
 from ..base.position import Position

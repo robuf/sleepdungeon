@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from .item import Item
 from .stone import BreakableStone
 import pygame

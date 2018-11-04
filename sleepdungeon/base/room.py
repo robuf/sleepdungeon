@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from typing import List, Optional
 
 from .game_constants import SpriteType
