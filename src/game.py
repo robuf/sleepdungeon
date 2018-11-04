@@ -44,7 +44,7 @@ class Game(object):
             if floor.name == floor_name:
                 self.current_floor = floor
 
-        self.set_room(floor.initial_room)
+        self.set_room(floor.initial_room.name)
 
     def set_room(self, room_name):
         self.current_room = self.current_floor.get_room(room_name)
@@ -68,7 +68,7 @@ class Game(object):
         if self.context.change_room is not None:
             player = self.current_room.remove_player()
             self.set_room(self.context.change_room)
-            self.current_room.add_player(player)    
+            self.current_room.add_player(player)
             self.context.change_room = None
 
         if self.context.change_level is not None:

@@ -18,5 +18,3 @@ class Key(Item):
 class KeyType(Enum):
     NORMAL = 0
     BOSS = 1
-
-Sprite.add_sprite_class(Key)

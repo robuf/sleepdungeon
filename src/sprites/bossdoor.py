@@ -10,7 +10,7 @@ from ..res import IMG_DIR
 import pygame
 
 
-class Door(Sprite):
+class Bossdoor(Sprite):
     __BASE_UP_SURFACE: pygame.Surface = None
     __BASE_DOWN_SURFACE: pygame.Surface = None
     __BASE_LEFT_SURFACE: pygame.Surface = None
@@ -61,8 +61,7 @@ class Door(Sprite):
             self.facing = Facing.FACING_RIGHT
 
         self.next_room = next_room
-        self.locked = key_count > 0
-        self.key_count = key_count
+        self.locked = 1
 
     def update(self, context: Context):
         player: List[Player] = context.sprites.find_by_type_and_pos(
@@ -73,21 +72,21 @@ class Door(Sprite):
         if len(player) == 1:
             player: Player = player[0]
 
+            self.locked = player.boss_keys
+
             if player.facing == self.facing and not self.locked:
                 context.change_room = self.next_room
-        else:
-            self.locked = context.sprites.find_by_type(SpriteType.PLAYER)[0].keys < self.key_count
 
     @classmethod
     def update_render_context(cls, render_context):
         if not cls.__BASE_UP_SURFACE:
-            base = pygame.image.load(IMG_DIR + "room/doors.png").convert_alpha()
+            base = pygame.image.load(IMG_DIR + "room/bossdoor.png").convert_alpha()
             cls.__BASE_UP_SURFACE = base.subsurface(pygame.Rect(0, 0, 300, 100))
             cls.__BASE_DOWN_SURFACE = base.subsurface(pygame.Rect(0, 100, 300, 100))
             cls.__BASE_LEFT_SURFACE = base.subsurface(pygame.Rect(100, 200, 100, 300))
             cls.__BASE_RIGHT_SURFACE = base.subsurface(pygame.Rect(0, 200, 100, 300))
 
-            base = pygame.image.load(IMG_DIR + "room/doors_locked.png").convert_alpha()
+            base = pygame.image.load(IMG_DIR + "room/bossdoor_locked.png").convert_alpha()
             cls.__BASE_UP_SURFACE_LOCKED = base.subsurface(pygame.Rect(0, 0, 300, 100))
             cls.__BASE_DOWN_SURFACE_LOCKED = base.subsurface(pygame.Rect(0, 100, 300, 100))
             cls.__BASE_LEFT_SURFACE_LOCKED = base.subsurface(pygame.Rect(100, 200, 100, 300))
@@ -154,22 +153,22 @@ class Door(Sprite):
     def image(self) -> pygame.Surface:
         if self.locked:
             if self.facing == Facing.FACING_UP:
-                return Door.__SURFACE_UP_LOCKED
+                return Bossdoor.__SURFACE_UP_LOCKED
             elif self.facing == Facing.FACING_DOWN:
-                return Door.__SURFACE_DOWN_LOCKED
+                return Bossdoor.__SURFACE_DOWN_LOCKED
             elif self.facing == Facing.FACING_LEFT:
-                return Door.__SURFACE_LEFT_LOCKED
+                return Bossdoor.__SURFACE_LEFT_LOCKED
             elif self.facing == Facing.FACING_RIGHT:
-                return Door.__SURFACE_RIGHT_LOCKED
+                return Bossdoor.__SURFACE_RIGHT_LOCKED
         else:
             if self.facing == Facing.FACING_UP:
-                return Door.__SURFACE_UP
+                return Bossdoor.__SURFACE_UP
             elif self.facing == Facing.FACING_DOWN:
-                return Door.__SURFACE_DOWN
+                return Bossdoor.__SURFACE_DOWN
             elif self.facing == Facing.FACING_LEFT:
-                return Door.__SURFACE_LEFT
+                return Bossdoor.__SURFACE_LEFT
             elif self.facing == Facing.FACING_RIGHT:
-                return Door.__SURFACE_RIGHT
+                return Bossdoor.__SURFACE_RIGHT
 
     @property
     def sprite_type(self) -> SpriteType:

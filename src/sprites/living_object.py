@@ -1,13 +1,14 @@
 from ..base.sprite import Sprite
 from ..base.context import Context
 from ..base.position import Position
-from ..base.game_constants import ZIndex, Facing, SpriteType, WeaponType
-from .weapons import Weapon
-from .spdup import Spdup
-from .dmgup import Dmgup
+from ..base.game_constants import ZIndex, Facing, SpriteType
+from .weapons import Weapon, Bow
 from .hpup import Hpup
+from .dmgup import Dmgup
+from .bomb import Bomb
+from .stone import MovableStone
 
-from typing import List, Optional
+from typing import List
 
 import pygame
 import random
@@ -61,7 +62,15 @@ class LivingObject(Sprite):
         except:
             return
 
-        if context.sprites.find_by_type_and_pos(SpriteType.STATIC, new_pos):
+        statics = context.sprites.find_by_type_and_pos(SpriteType.STATIC, new_pos)
+
+        for static in statics:
+            if isinstance(static, MovableStone):
+                if static.move(facing, context):
+                    self.moving = False
+                    self.move_cooldown_current = self._MOVE_COOLDOWN
+
+        if statics:
             return
 
         if context.sprites.find_by_type_and_pos(SpriteType.ENEMY, new_pos):
@@ -142,7 +151,9 @@ class LivingObject(Sprite):
             return
 
         self.moving = False
-        self.attack_phase = 1
+
+        if not isinstance(self.selected_weapon, Bow):
+            self.attack_phase = 1
 
         self.move_cooldown_current = self._MOVE_COOLDOWN
         self.selected_weapon.attack(context, sprite_type, self.position, self.facing)
@@ -190,29 +201,22 @@ class LivingObject(Sprite):
     def die(self, context: Context):
         # Nach enemy filtern
         if self.max_lifes < 6:
-            self.drop(context, 30, 4, 2)
+            self.drop(context, 30, 10, 2)
         context.remove_sprite(self)
 
-    def drop(self, context: Context, heart_chance, power_up_chance, num_power_ups):
+    def drop(self, context: Context, heart_chance, bomb_chance, power_up_chance):
         rnd_num = random.randint(1, 101)
         heart_range = 1 + heart_chance
-        power_up_range = [0]
-        for i in range(0, num_power_ups):
-            power_up_range.append(i)
+        bomb_range = heart_range + bomb_chance
+        power_up_range = bomb_range + power_up_chance
         if rnd_num < heart_range:
-            p_up = Hpup(self.position.x, self.position.y)
-            context.sprites.append(p_up)
-        for i in power_up_range:
-            set_range = heart_range + (i * power_up_chance)
-            if rnd_num < set_range:
-                if i == 0:
-                    p_up = Dmgup(self.position.x, self.position.y)
-                    context.sprites.append(p_up)
-                elif i == 1:
-                    p_up = Spdup(self.position.x, self.position.y)
-                    context.sprites.append(p_up)
-                else:
-                    pass
+            context.sprites.append(Hpup(self.position.x, self.position.y))
+        elif rnd_num >= heart_range and rnd_num < bomb_range:
+            context.sprites.append(Bomb(self.position.x, self.position.y))
+        elif rnd_num >= bomb_range and rnd_num < power_up_range:
+            context.sprites.append(Dmgup(self.position.x, self.position.y))
+        else:
+            pass
 
     @property
     def image(self):

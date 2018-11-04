@@ -5,13 +5,14 @@ from ..sprites.door import Door
 from ..sprites.stair import Stair
 from ..sprites.background import Background
 from ..sprites.player import Player
-from ..sprites.stone import Stone, BreakableStone
+from ..sprites.stone import Stone, BreakableStone, MovableStone
 from .sprite import Sprite
 from .sprites import Sprites
 from ..sprites.key import Key, KeyType
 from ..sprites.spdup import Spdup
 from ..sprites.dmgup import Dmgup
 from ..sprites.hpup import Hpup
+from ..sprites.bomb import Bomb
 from ..sprites.enemy_saber import EnemySaber
 from ..sprites.enemy_archer import EnemyArcher
 from ..sprites.enemy_shielder import EnemyShielder
@@ -117,6 +118,8 @@ class Room(object):
                 return Dmgup(x, y)
             elif t == "SPDUP":
                 return Spdup(x, y)
+            elif t == "BOMB":
+                return Bomb(x, y)
 
         elif token[0] == "ENTITY":
             t = token[1]
@@ -125,9 +128,10 @@ class Room(object):
 
             if t == "STONE":
                 return Stone(x, y)
-
             if t == "BREAKABLE":
                 return BreakableStone(x, y)
+            if t == "MOVEABLE":
+                return MovableStone(x, y)
 
         elif token[0] == "GHOST":
             t = token[1]
