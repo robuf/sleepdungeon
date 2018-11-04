@@ -1,5 +1,6 @@
 from .item import Item
 from enum import Enum
+from ..base.sprite import Sprite
 
 
 class Key(Item):
@@ -17,3 +18,5 @@ class Key(Item):
 class KeyType(Enum):
     NORMAL = 0
     BOSS = 1
+
+Sprite.add_sprite_class(Key)
