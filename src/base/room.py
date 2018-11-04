@@ -8,7 +8,7 @@ from ..sprites.player import Player
 from ..sprites.stone import Stone, BreakableStone, MovableStone
 from .sprite import Sprite
 from .sprites import Sprites
-from ..sprites.key import Key, KeyType
+from ..sprites.key import Key, BossKey
 from ..sprites.spdup import Spdup
 from ..sprites.dmgup import Dmgup
 from ..sprites.hpup import Hpup
@@ -24,7 +24,7 @@ import os
 class Room(object):
     def __init__(self, path):
         self.name = os.path.split(path)[1].split(".")[0]
-
+        self.music = "music1"
         self.sprites = Sprites()
         with open(path, 'r') as f:
             for line in f.readlines():
@@ -38,10 +38,19 @@ class Room(object):
                     continue
 
                 x = None
-                x = Room.parse(line)
+
+                try:
+                    x = Room.parse(line)
+                    if x is None:
+                        if line[0] == "MUSIC":
+                            self.music = line[1]
+
+                except:
+                    print("Cannot parse line: '" + str(line) + "'")
 
                 if x is not None:
                     self.sprites.append(x)
+
 
     @staticmethod
     def parse(token: List[str]) -> Optional[Sprite]:
@@ -50,6 +59,7 @@ class Room(object):
             bg = Background(name)
             bg.position.x = 0
             bg.position.y = 0
+
             return bg
 
         elif token[0] == "DOOR":
@@ -99,9 +109,9 @@ class Room(object):
             y = int(token[3])
 
             if t == "KEY":
-                return Key(KeyType.NORMAL, x, y)
+                return Key(x, y)
             elif t == "BOSSKEY":
-                return Key(KeyType.BOSS, x, y)
+                return BossKey(x, y)
             elif t == "HPUP":
                 return Hpup(x, y)
             elif t == "DMGUP":
