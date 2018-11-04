@@ -81,10 +81,10 @@ class Arrow(Sprite):
     def update_render_context(cls, render_context):
         if not cls.__BASE_UP_SURFACE:
             base = pygame.image.load(IMG_DIR + "weapon/arrow/arrows.png").convert_alpha()
-            cls.__BASE_UP_SURFACE = base.subsurface(pygame.Rect(128, 0, 128, 128))
-            cls.__BASE_DOWN_SURFACE = base.subsurface(pygame.Rect(384, 0, 128, 128))
-            cls.__BASE_LEFT_SURFACE = base.subsurface(pygame.Rect(0, 0, 128, 128))
-            cls.__BASE_RIGHT_SURFACE = base.subsurface(pygame.Rect(256, 0, 128, 128))
+            cls.__BASE_UP_SURFACE = base.subsurface(pygame.Rect(500, 0, 500, 500))
+            cls.__BASE_DOWN_SURFACE = base.subsurface(pygame.Rect(1500, 0, 500, 500))
+            cls.__BASE_LEFT_SURFACE = base.subsurface(pygame.Rect(0, 0, 500, 500))
+            cls.__BASE_RIGHT_SURFACE = base.subsurface(pygame.Rect(1000, 0, 500, 500))
         cls.__SURFACE_UP = pygame.transform.smoothscale(
             cls.__BASE_UP_SURFACE,
             (cls.tile_size, cls.tile_size)
