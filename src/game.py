@@ -22,15 +22,15 @@ class Game(object):
         self.floors: List[Floor] = []
         self.context = Context()
         self.context.render_context = self.render_context
-        self.sidebar: SideBar = None
+        self.sidebar: SideBar = SideBar()
 
         # print("Scale acceleration: " + pygame.transform.get_smoothscale_backend())
 
     def load(self):
+        self.context = Context()
         self.floors = LevelLoader().load_levels()
         self.current_floor = self.floors[0]
         self.current_room = self.current_floor.initial_room
-        self.sidebar = SideBar()
 
         Sprite._update_render_context(self.render_context)
 
@@ -74,8 +74,7 @@ class Game(object):
         for sprite in self.context.sprites:
             sprite.update(self.context)
             if self.context.lost:
-                self.running = False
-                print("You lost!")
+                self.load()
                 return
 
     def render(self):
