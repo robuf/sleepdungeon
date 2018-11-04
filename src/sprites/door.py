@@ -73,10 +73,10 @@ class Door(Sprite):
         if len(player) == 1:
             player: Player = player[0]
 
-            self.locked = player.keys < self.key_count
-
             if player.facing == self.facing and not self.locked:
                 context.change_room = self.next_room
+        else:
+            self.locked = context.sprites.find_by_type(SpriteType.PLAYER)[0].keys < self.key_count
 
     @classmethod
     def update_render_context(cls, render_context):
