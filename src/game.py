@@ -1,6 +1,7 @@
 import pygame
 from typing import List
 
+
 from .render_context import RenderContext
 from .base.inputs import InputEvent, InputManager
 from .base.context import Context
@@ -31,6 +32,7 @@ class Game(object):
         self.floors = LevelLoader().load_levels()
         self.current_floor = self.floors[0]
         self.current_room = self.current_floor.initial_room
+
 
         Sprite._update_render_context(self.render_context)
 

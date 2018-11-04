@@ -5,7 +5,7 @@ from ..base.game_constants import ZIndex, Facing, SpriteType
 from .weapons import Weapon
 from .spdup import Spdup
 from .dmgup import Dmgup
-from .heart import Heart
+from .hpup import Hpup
 
 from typing import List, Optional
 
@@ -155,14 +155,17 @@ class LivingObject(Sprite):
         for i in range (0, num_power_ups):
             power_up_range.append(i)
         if rnd_num < heart_range:
-            context.sprites.append(Heart(self.position.x, self.position.y))
+            p_up = Hpup(self.position.x, self.position.y)
+            context.sprites.append(p_up)
         for i in power_up_range:
             set_range = heart_range + (i * power_up_chance)
             if rnd_num < set_range:
                 if i == 0:
-                    context.sprites.append(Spdup(self.position.x, self.position.y))
+                    p_up = Dmgup(self.position.x, self.position.y)
+                    context.sprites.append(p_up)
                 elif i == 1:
-                    context.sprites.append(Dmgup(self.position.x, self.position.y))
+                    p_up = Spdup(self.position.x, self.position.y)
+                    context.sprites.append(p_up)
                 else:
                     pass
 

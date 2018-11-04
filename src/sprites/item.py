@@ -10,9 +10,9 @@ from ..res import IMG_DIR
 
 class Item(Sprite):
     def __init__(self, name: str, x: int, y: int):
-        super().__init__()
         if not hasattr(type(self), "_BASE_SURFACE"):
             type(self)._BASE_SURFACE = pygame.image.load(IMG_DIR + "items" + name + ".png")
+        super().__init__()
         self.width = 1
         self.height = 1
         self.z_index = ZIndex.GROUND
