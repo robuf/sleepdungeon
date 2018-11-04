@@ -9,16 +9,22 @@ def __find_next_points(point: Point) -> List[Point]:
     return [(point[0] + 1, point[1]), (point[0] - 1, point[1]), (point[0], point[1] + 1), (point[0], point[1] - 1)]
 
 
-def get_border_with_obstacles(obstacles: List[Point]) -> List[Point]:
+def get_border_with_obstacles(obstacles: List[Point], doors: List[Point] = []) -> List[Point]:
     copy = list(obstacles)
 
-    for x in range(0, 13):
-        copy.append((x, 0))
-        copy.append((x, 8))
+    for y in (0, 8):
+        for x in range(0, 13):
+            if (x, y) in doors:
+                continue
+            copy.append((x, y))
 
-    for y in range(0, 9):
-        copy.append((0, y))
-        copy.append((12, y))
+
+    for x in (0, 12):
+        for y in range(0, 9):
+            for door in doors:
+                if (x, y) in doors:
+                    continue
+                copy.append((x, y))
 
     # print(copy)
 
