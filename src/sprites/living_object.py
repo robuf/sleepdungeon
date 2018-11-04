@@ -1,14 +1,14 @@
 from ..base.sprite import Sprite
 from ..base.context import Context
 from ..base.position import Position
-from ..base.game_constants import ZIndex, Facing, SpriteType, WeaponType
-from .weapons import Weapon
+from ..base.game_constants import ZIndex, Facing, SpriteType
+from .weapons import Weapon, Bow
 from .hpup import Hpup
 from .dmgup import Dmgup
 from .bomb import Bomb
 from .stone import MovableStone
 
-from typing import List, Optional
+from typing import List
 
 import pygame
 import random
@@ -151,7 +151,9 @@ class LivingObject(Sprite):
             return
 
         self.moving = False
-        self.attack_phase = 1
+
+        if not isinstance(self.selected_weapon, Bow):
+            self.attack_phase = 1
 
         self.move_cooldown_current = self._MOVE_COOLDOWN
         self.selected_weapon.attack(context, sprite_type, self.position, self.facing)
