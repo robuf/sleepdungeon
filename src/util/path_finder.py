@@ -15,6 +15,12 @@ def get_border_with_obstacles(obstacles: List[Point], doors: List[Point] = []) -
     for y in (0, 8):
         for x in range(0, 13):
             if (x, y) in doors:
+                # These are additional obstacles behind the doors.
+                # They prevent enemies from leaving the room.
+                if y == 0:
+                    copy.append((x, -1))
+                else:
+                    copy.append((x, 9))
                 continue
             copy.append((x, y))
 
@@ -23,6 +29,12 @@ def get_border_with_obstacles(obstacles: List[Point], doors: List[Point] = []) -
         for y in range(0, 9):
             for door in doors:
                 if (x, y) in doors:
+                    # These are additional obstacles behind the doors.
+                    # They prevent enemies from leaving the room.
+                    if x == 0:
+                        copy.append((-1, y))
+                    else:
+                        copy.append((13, y))
                     continue
                 copy.append((x, y))
 
