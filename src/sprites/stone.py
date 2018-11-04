@@ -2,7 +2,7 @@ import pygame
 
 from src import RenderContext
 from ..base.context import Context
-from ..base.game_constants import SpriteType
+from ..base.game_constants import SpriteType, Facing
 from ..base.sprite import Sprite
 from ..base.position import Position
 from ..res import IMG_DIR
@@ -80,18 +80,23 @@ class MovableStone(Sprite):
     __BASE_SURFACE: pygame.Surface = None
     __SURFACE: pygame.Surface = None
 
+    _MOVE_COOLDOWN = 200
+
     def __init__(self, x: int, y: int):
         super().__init__()
         self.width = 1
         self.height = 1
         self.position = Position(x, y)
+        self.move_cooldown_current = 0
+        self.facing = None
 
     def update(self, context: Context):
-        pass
+        if self.move_cooldown_current > 0:
+            self.move_cooldown_current -= context.delta_t
 
     @property
     def image(self) -> pygame.Surface:
-        return Stone.__SURFACE
+        return MovableStone.__SURFACE
 
     @property
     def sprite_type(self) -> SpriteType:
@@ -108,3 +113,42 @@ class MovableStone(Sprite):
                 cls.tile_size
             )
         )
+
+    def move(self, facing: Facing, context: Context) -> bool:
+        try:
+            if facing == Facing.FACING_UP:
+                new_pos = Position(self.position.x, self.position.y - 1)
+            elif facing == Facing.FACING_RIGHT:
+                new_pos = Position(self.position.x + 1, self.position.y)
+            elif facing == Facing.FACING_DOWN:
+                new_pos = Position(self.position.x, self.position.y + 1)
+            elif facing == Facing.FACING_LEFT:
+                new_pos = Position(self.position.x - 1, self.position.y)
+        except:
+            return False
+
+        if context.sprites.find_by_pos(new_pos):
+            return False
+
+        self.position = new_pos
+        self.facing = facing
+        self.move_cooldown_current = self._MOVE_COOLDOWN
+
+        return True
+
+    @property
+    def rect(self) -> pygame.Rect:
+        rect = super().rect
+
+        if self.move_cooldown_current > 0:
+            progress = self.move_cooldown_current / self._MOVE_COOLDOWN
+            if self.facing == Facing.FACING_UP:
+                rect.move_ip(0, self.tile_size * progress)
+            elif self.facing == Facing.FACING_RIGHT:
+                rect.move_ip(-self.tile_size * progress, 0)
+            elif self.facing == Facing.FACING_DOWN:
+                rect.move_ip(0, -self.tile_size * progress)
+            elif self.facing == Facing.FACING_LEFT:
+                rect.move_ip(self.tile_size * progress, 0)
+
+        return rect

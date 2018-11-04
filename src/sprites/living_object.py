@@ -6,6 +6,7 @@ from .weapons import Weapon
 from .hpup import Hpup
 from .dmgup import Dmgup
 from .bomb import Bomb
+from .stone import MovableStone
 
 from typing import List, Optional
 
@@ -61,7 +62,15 @@ class LivingObject(Sprite):
         except:
             return
 
-        if context.sprites.find_by_type_and_pos(SpriteType.STATIC, new_pos):
+        statics = context.sprites.find_by_type_and_pos(SpriteType.STATIC, new_pos)
+
+        for static in statics:
+            if isinstance(static, MovableStone):
+                if static.move(facing, context):
+                    self.moving = False
+                    self.move_cooldown_current = self._MOVE_COOLDOWN
+
+        if statics:
             return
 
         if context.sprites.find_by_type_and_pos(SpriteType.ENEMY, new_pos):
@@ -201,7 +210,7 @@ class LivingObject(Sprite):
         if rnd_num < heart_range:
             context.sprites.append(Hpup(self.position.x, self.position.y))
         elif rnd_num >= heart_range and rnd_num < bomb_range:
-            context.sprites.append(Bomb (self.position.x, self.position.y))
+            context.sprites.append(Bomb(self.position.x, self.position.y))
         elif rnd_num >= bomb_range and rnd_num < power_up_range:
             context.sprites.append(Dmgup(self.position.x, self.position.y))
         else:
