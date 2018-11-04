@@ -1,7 +1,7 @@
 from ..base.sprite import Sprite
 from ..base.context import Context
 from ..base.position import Position
-from ..base.game_constants import ZIndex, Facing, SpriteType
+from ..base.game_constants import ZIndex, Facing, SpriteType, WeaponType
 from .weapons import Weapon
 from .spdup import Spdup
 from .dmgup import Dmgup
@@ -30,9 +30,11 @@ class LivingObject(Sprite):
         self.facing: Facing = Facing.FACING_UP
         self.move_cooldown_current = 0
         self.animation_cooldown = 0
+        self.moving = False
 
         self.damage_current = 0
         self.heal_current = 0
+        self.attack_phase = 0
 
         self.weapon_list: List[Weapon] = []
         self.selected_weapon = None
@@ -44,6 +46,7 @@ class LivingObject(Sprite):
         if self.move_cooldown_current > 0:
             return
 
+        self.attack_phase = 0
         self.facing = facing
         # self.weapon.facing = self.facing
         try:
@@ -76,6 +79,7 @@ class LivingObject(Sprite):
 
         self.position = new_pos
         self.move_cooldown_current = self._MOVE_COOLDOWN
+        self.moving = True
 
     def swap(self):
         if self.move_cooldown_current > 0:
@@ -113,6 +117,20 @@ class LivingObject(Sprite):
         if self.move_cooldown_current > 0:
             self.move_cooldown_current -= context.delta_t
 
+            if self.attack_phase > 0:
+                self.moving = False
+                if self.move_cooldown_current * 2 < self._MOVE_COOLDOWN:
+                    self.attack_phase = 2
+                else:
+                    self.attack_phase = 1
+
+        else:
+            self.moving = False
+            if self.attack_phase != 0:
+                self.attack_phase = 0
+                self.animation_i = 0
+                self.animation_cooldown = self._MILISECONDS_PER_FRAME
+
     def can_attack(self, context: Context, sprite_type: SpriteType) -> bool:
         return self.selected_weapon is not None and self.selected_weapon.can_attack(context, sprite_type, self.position,
                                                                                     self.facing)
@@ -120,6 +138,10 @@ class LivingObject(Sprite):
     def attack(self, context: Context, sprite_type: SpriteType):
         if self.move_cooldown_current > 0:
             return
+
+        self.moving = False
+        if self.selected_weapon.weapon_type != WeaponType.BOW:
+            self.attack_phase = 1
 
         self.move_cooldown_current = self._MOVE_COOLDOWN
         self.selected_weapon.attack(context, sprite_type, self.position, self.facing)
@@ -142,8 +164,29 @@ class LivingObject(Sprite):
         if self.lifes <= 0:
             self.die(context)
 
+    @staticmethod
+    def ease(t: float) -> float:
+        return t
+
+    @property
+    def rect(self) -> pygame.Rect:
+        rect = super().rect
+
+        if self.moving:
+            progress = LivingObject.ease(self.move_cooldown_current / self._MOVE_COOLDOWN)
+            if self.facing == Facing.FACING_UP:
+                rect.move_ip(0, self.tile_size * progress)
+            elif self.facing == Facing.FACING_RIGHT:
+                rect.move_ip(-self.tile_size * progress, 0)
+            elif self.facing == Facing.FACING_DOWN:
+                rect.move_ip(0, -self.tile_size * progress)
+            elif self.facing == Facing.FACING_LEFT:
+                rect.move_ip(self.tile_size * progress, 0)
+
+        return rect
+
     def die(self, context: Context):
-        #Nach enemy filtern
+        # Nach enemy filtern
         if self.max_lifes < 6:
             self.drop(context, 30, 4, 2)
         context.remove_sprite(self)
@@ -152,7 +195,7 @@ class LivingObject(Sprite):
         rnd_num = random.randint(1, 101)
         heart_range = 1 + heart_chance
         power_up_range = [0]
-        for i in range (0, num_power_ups):
+        for i in range(0, num_power_ups):
             power_up_range.append(i)
         if rnd_num < heart_range:
             context.sprites.append(Hpup(self.position.x, self.position.y))
@@ -196,4 +239,3 @@ class LivingObject(Sprite):
             self.width * tile,
             self.height * tile
         )
-

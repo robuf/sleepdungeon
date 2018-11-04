@@ -32,9 +32,23 @@ class Game(object):
         self.floors = LevelLoader().load_levels()
         self.current_floor = self.floors[0]
         self.current_room = self.current_floor.initial_room
-
+        self.sidebar = SideBar()
+        self.current_room.sprites.append(self.sidebar)
 
         Sprite._update_render_context(self.render_context)
+
+    def set_floor(self, floor_name):
+        for floor in self.floors:
+            if floor.name == floor_name:
+                self.current_floor = floor
+
+        self.set_room(floor.initial_room)
+
+    def set_room(self, room_name):
+        self.current_room = self.current_floor.get_room(room_name)
+        self.context.block_doors = True
+        Sprite._update_render_context(self.render_context)
+        self.current_room.sprites.append(self.sidebar)
 
     def update(self):
         events = pygame.event.get()
@@ -51,24 +65,13 @@ class Game(object):
 
         if self.context.change_room is not None:
             player = self.current_room.remove_player()
-
-            self.current_room = self.current_floor.get_room(self.context.change_room)
-
+            self.set_room(self.context.change_room)
+            self.current_room.add_player(player)    
             self.context.change_room = None
-            self.context.block_doors = True
-            Sprite._update_render_context(self.render_context)
-            self.current_room.add_player(player)
 
         if self.context.change_level is not None:
-
-            for floor in self.floors:
-                if floor.name == self.context.change_level:
-                    self.current_floor = floor
-
-            self.current_room = self.current_floor.initial_room
-
+            self.set_floor(self.context.change_level)
             self.context.change_level = None
-            Sprite._update_render_context(self.render_context)
 
         self.context.input_events = event_set
         self.context.sprites = self.current_room.sprites
