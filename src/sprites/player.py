@@ -194,10 +194,7 @@ class Player(LivingObject):
             elif isinstance(item, Hpup):
                 context.sprites.remove(item)
 
-                if self.lifes + 1 <= self.max_lifes:
-                    self.lifes += 1
-                else:
-                    self.lifes = self.max_lifes
+                self.heal(1)
 
             elif isinstance(item, Dmgup):
                 context.sprites.remove(item)
