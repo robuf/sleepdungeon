@@ -11,7 +11,7 @@ class SideBar(Sprite):
     __BASE_KEY_SURFACE: pygame.Surface = None
     __BASE_BOSS_KEY_SURFACE: pygame.Surface = None
     __BASE_DMG_UP_SURFACE: pygame.Surface = None
-    __BASE_HP_UP_SURFACE: pygame.Surface = None
+    __BASE_BOMB_SURFACE: pygame.Surface = None
     __BASE_SPD_UP_SURFACE: pygame.Surface = None
 
     __SURFACE: pygame.Surface = None
@@ -19,7 +19,7 @@ class SideBar(Sprite):
     __KEY_SURFACE: pygame.Surface = None
     __BOSS_KEY_SURFACE: pygame.Surface = None
     __DMG_UP_SURFACE: pygame.Surface = None
-    __HP_UP_SURFACE: pygame.Surface = None
+    __BOMB_SURFACE: pygame.Surface = None
     __SPD_UP_SURFACE: pygame.Surface = None
     __FONT: pygame.font.Font = None
     __TEXT_COLOR = (200, 200, 200)
@@ -43,7 +43,7 @@ class SideBar(Sprite):
             cls.__BASE_KEY_SURFACE= pygame.image.load(res.IMG_DIR + "items/key/key.png").convert_alpha()
             cls.__BASE_BOSS_KEY_SURFACE= pygame.image.load(res.IMG_DIR + "items/key/boss_key.png").convert_alpha()
             cls.__BASE_DMG_UP_SURFACE= pygame.image.load(res.IMG_DIR + "items/powerup/dmg_up.png").convert_alpha()
-            cls.__BASE_HP_UP_SURFACE= pygame.image.load(res.IMG_DIR + "items/powerup/hp_up.png").convert_alpha()
+            cls.__BASE_BOMB_SURFACE= pygame.image.load(res.IMG_DIR + "items/bomb/bomb.png").convert_alpha()
             cls.__BASE_SPD_UP_SURFACE= pygame.image.load(res.IMG_DIR + "items/powerup/spd_up.png").convert_alpha()
         cls.__FONT = pygame.font.Font(res.FONT_DIR + "Game_font.ttf", int(cls.tile_size * .75))
         cls.__SURFACE = pygame.transform.smoothscale(
@@ -69,8 +69,8 @@ class SideBar(Sprite):
             cls.__BASE_DMG_UP_SURFACE,
             (cls.tile_size, cls.tile_size)
         )
-        cls.__HP_UP_SURFACE = pygame.transform.smoothscale(
-            cls.__BASE_HP_UP_SURFACE,
+        cls.__BOMB_SURFACE = pygame.transform.smoothscale(
+            cls.__BASE_BOMB_SURFACE,
             (cls.tile_size, cls.tile_size)
         )
         cls.__SPD_UP_SURFACE = pygame.transform.smoothscale(
@@ -169,14 +169,14 @@ class SideBar(Sprite):
             0, 0
         )
 
-        hp_up = pygame.Rect(
+        bomb = pygame.Rect(
             int(.35 * self.tile_size),
             int(6.36 * self.tile_size),
             self.tile_size,
             self.tile_size
         )
 
-        hp_up_text = pygame.Rect(
+        bomb_text = pygame.Rect(
             int(1.80 * self.tile_size),
             int(6.51 * self.tile_size),
             0, 0
@@ -311,17 +311,17 @@ class SideBar(Sprite):
         )
 
         self._image.blit(
-            self.__HP_UP_SURFACE,
-            hp_up
+            self.__BOMB_SURFACE,
+            bomb
         )
 
         self._image.blit(
             self.__FONT.render(
-                "{}".format(player.hp_ups),
+                "{}".format(player.bomb_count),
                 True,
                 self.__TEXT_COLOR
             ),
-            hp_up_text
+            bomb_text
         )
 
         self._image.blit(
