@@ -11,6 +11,7 @@ from .base.context import Context
 from .base.floor import Floor
 from .base.room import Room
 from .base.sprite import Sprite
+from .base.game_constants import SpriteType
 from .level_loader import LevelLoader
 from .sprites.sidebar import SideBar
 from .base.music_manager import MusicManager
@@ -47,7 +48,8 @@ class Game(object):
         for floor in self.floors:
             if floor.name == floor_name:
                 self.current_floor = floor
-
+        for player in self.current_room.sprites.find_by_type(SpriteType.PLAYER):
+            self.current_floor.take_player_properties(player)
         self.set_room(floor.initial_room.name)
 
     def set_room(self, room_name):

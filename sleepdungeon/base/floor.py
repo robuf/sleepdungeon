@@ -10,6 +10,12 @@ class Floor(object):
         self.name = name
         self.rooms = []
 
+
+    def take_player_properties(self, old_player):
+        for player in self.initial_room.sprites.find_by_type(SpriteType.PLAYER):
+            player.selected_weapon = old_player.selected_weapon
+
+
     @property
     def initial_room(self) -> Room:
         for room in self.rooms:
