@@ -29,13 +29,13 @@ class EnemySaber(Enemy):
     __SURFACE_SWORD_ATTACK_RIGHT: pygame.Surface = None
 
     _WIDTH = 1
-    _HEIGHT = 1
+    _HEIGHT = 1.5
     _ANIMATION_LENGTH = 4
     _MILISECONDS_PER_FRAME = 200
     _MOVE_COOLDOWN = 400
 
     def __init__(self):
-        super().__init__([1, 1])
+        super().__init__([1, 1.5])
 
         self.animation_i = 0
         self.frame_cooldown = 0
@@ -71,8 +71,8 @@ class EnemySaber(Enemy):
                 pygame.Rect(
                     self.tile_size * self.animation_i,
                     0,
-                    self.tile_size,
-                    self.tile_size
+                    self.tile_size * self.width,
+                    self.tile_size * self.height
                 )
             )
         else:
@@ -83,8 +83,8 @@ class EnemySaber(Enemy):
                 pygame.Rect(
                     self.tile_size * factor * (self.attack_phase - 1),
                     0,
-                    self.tile_size * factor,
-                    self.tile_size
+                    self.tile_size * factor * self.width,
+                    self.tile_size * self.height
                 )
             )
 
@@ -125,29 +125,29 @@ class EnemySaber(Enemy):
         cls.__SURFACE_SWORD_UP = pygame.transform.smoothscale(
             cls.__BASE_SWORD_UP_SURFACE,
             (
-                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
-                cls._HEIGHT * cls.tile_size
+                int(cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH),
+                int(cls._HEIGHT * cls.tile_size)
             )
         )
         cls.__SURFACE_SWORD_DOWN = pygame.transform.smoothscale(
             cls.__BASE_SWORD_DOWN_SURFACE,
             (
-                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
-                cls._HEIGHT * cls.tile_size
+                int(cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH),
+                int(cls._HEIGHT * cls.tile_size)
             )
         )
         cls.__SURFACE_SWORD_LEFT = pygame.transform.smoothscale(
             cls.__BASE_SWORD_LEFT_SURFACE,
             (
-                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
-                cls._HEIGHT * cls.tile_size
+                int(cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH),
+                int(cls._HEIGHT * cls.tile_size)
             )
         )
         cls.__SURFACE_SWORD_RIGHT = pygame.transform.smoothscale(
             cls.__BASE_SWORD_RIGHT_SURFACE,
             (
-                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
-                cls._HEIGHT * cls.tile_size
+                int(cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH),
+                int(cls._HEIGHT * cls.tile_size)
             )
         )
 
@@ -155,27 +155,27 @@ class EnemySaber(Enemy):
             cls.__BASE_SWORD_ATTACK_UP_SURFACE,
             (
                 int(cls._WIDTH * cls.tile_size * 2),
-                cls._HEIGHT * cls.tile_size
+                int(cls._HEIGHT * cls.tile_size)
             )
         )
         cls.__SURFACE_SWORD_ATTACK_DOWN = pygame.transform.smoothscale(
             cls.__BASE_SWORD_ATTACK_DOWN_SURFACE,
             (
                 int(cls._WIDTH * cls.tile_size * 2),
-                cls._HEIGHT * cls.tile_size
+                int(cls._HEIGHT * cls.tile_size)
             )
         )
         cls.__SURFACE_SWORD_ATTACK_LEFT = pygame.transform.smoothscale(
             cls.__BASE_SWORD_ATTACK_LEFT_SURFACE,
             (
                 int(cls._WIDTH * 1.5 * cls.tile_size * 2),
-                cls._HEIGHT * cls.tile_size
+                int(cls._HEIGHT * cls.tile_size)
             )
         )
         cls.__SURFACE_SWORD_ATTACK_RIGHT = pygame.transform.smoothscale(
             cls.__BASE_SWORD_ATTACK_RIGHT_SURFACE,
             (
                 int(cls._WIDTH * 1.5 * cls.tile_size * 2),
-                cls._HEIGHT * cls.tile_size
+                int(cls._HEIGHT * cls.tile_size)
             )
         )

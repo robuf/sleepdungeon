@@ -37,10 +37,7 @@ class Room(object):
                     continue
 
                 x = None
-                try:
-                    x = Room.parse(line)
-                except:
-                    print("Cannot parse line: '" + str(line) + "'")
+                x = Room.parse(line)
 
                 if x is not None:
                     self.sprites.append(x)
