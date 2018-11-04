@@ -73,7 +73,7 @@ class Door(Sprite):
         if len(player) == 1:
             player: Player = player[0]
 
-            self.locked = player.key < self.key_count
+            self.locked = player.keys < self.key_count
 
             if player.facing == self.facing and not self.locked:
                 context.change_room = self.next_room

@@ -46,10 +46,19 @@ class Enemy(LivingObject):
 
         source = self.position.x, self.position.y, self.facing.value
         target = player.position.x, player.position.y
-        obstacles = [(sprite.position.x, sprite.position.y) for sprite in context.sprites if
-                     sprite != self and sprite.sprite_type not in Enemy.IGNORED_TYPES]
+        obstacles = [(sprite.position.x, sprite.position.y)
+                for sprite in context.sprites
+                    if (sprite != self and
+                        sprite.sprite_type not in Enemy.IGNORED_TYPES)
+            ]
+        doors = [tuple(door.center) for door in context.sprites.find_by_type(SpriteType.DOOR)]
 
-        path = find_path(source, target, get_border_with_obstacles(obstacles), self.target_distance)
+        path = find_path(
+            source,
+            target,
+            get_border_with_obstacles(obstacles, doors),
+            self.target_distance
+        )
 
         if path is not None:
             facing = self.facing

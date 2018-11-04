@@ -64,10 +64,14 @@ class Player(LivingObject):
         super().__init__([1, 1.5])
         self.animation_i = 0
 
-        self.lifes = 6
+        self.lifes = 8
 
-        self.max_lifes = 6
-        self.key = 0
+        self.max_lifes = 8
+        self.keys = 0
+        self.boss_keys = 0
+        self.dmg_ups = 0
+        self.hp_ups = 0
+        self.spd_ups = 0
         self.facing = Facing.FACING_DOWN
 
         self.selected_weapon = Sword()
@@ -278,20 +282,23 @@ class Player(LivingObject):
         for item in item_list:
             if isinstance(item, Key):
                 context.sprites.remove(item)
-                self.key += 1
+                self.keys += 1
 
             elif isinstance(item, Hpup):
                 context.sprites.remove(item)
+                self.hp_ups += 1
 
                 self.heal(1)
 
             elif isinstance(item, Dmgup):
                 context.sprites.remove(item)
+                self.dmg_ups +=1
                 for weapon in self.weapon_list:
                     weapon.attack_damage += 1
 
             elif isinstance(item, Spdup):
                 context.sprites.remove(item)
+                self.spd_ups += 1
                 self._MOVE_COOLDOWN *= 0.9
 
     def die(self, context: Context):
