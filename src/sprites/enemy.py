@@ -60,7 +60,8 @@ class Enemy(LivingObject):
 
                 elif step.type == ActionType.MOVE:
                     self.move(facing, context)
-                    break
+                    return
+            self.facing = facing
 
     @property
     def sprite_type(self) -> SpriteType:
