@@ -10,6 +10,8 @@ from .base.room import Room
 from .base.sprite import Sprite
 from .level_loader import LevelLoader
 from .sprites.sidebar import SideBar
+from .base.music_manager import MusicManager
+
 
 
 class Game(object):
@@ -33,6 +35,7 @@ class Game(object):
         self.current_floor = self.floors[0]
         self.current_room = self.current_floor.initial_room
         self.sidebar = SideBar()
+        MusicManager.playmusic(self.current_room.music)
         self.current_room.sprites.append(self.sidebar)
 
         Sprite._update_render_context(self.render_context)
@@ -46,6 +49,7 @@ class Game(object):
 
     def set_room(self, room_name):
         self.current_room = self.current_floor.get_room(room_name)
+        MusicManager.playmusic(self.current_room.music)
         self.context.block_doors = True
         Sprite._update_render_context(self.render_context)
         self.current_room.sprites.append(self.sidebar)

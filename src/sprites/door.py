@@ -87,7 +87,7 @@ class Door(Sprite):
             cls.__BASE_LEFT_SURFACE = base.subsurface(pygame.Rect(100, 200, 100, 300))
             cls.__BASE_RIGHT_SURFACE = base.subsurface(pygame.Rect(0, 200, 100, 300))
 
-            base = pygame.image.load(IMG_DIR + "room/doors_locked.png").convert_alpha()
+            base = pygame.image.load(IMG_DIR + "room/door_locked.png").convert_alpha()
             cls.__BASE_UP_SURFACE_LOCKED = base.subsurface(pygame.Rect(0, 0, 300, 100))
             cls.__BASE_DOWN_SURFACE_LOCKED = base.subsurface(pygame.Rect(0, 100, 300, 100))
             cls.__BASE_LEFT_SURFACE_LOCKED = base.subsurface(pygame.Rect(100, 200, 100, 300))
