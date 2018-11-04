@@ -20,13 +20,13 @@ class EnemyShielder(Enemy):
     __SURFACE_RIGHT: pygame.Surface = None
 
     _WIDTH = 1
-    _HEIGHT = 1
+    _HEIGHT = 1.5
     _ANIMATION_LENGTH = 4
     _MILISECONDS_PER_FRAME = 200
     _MOVE_COOLDOWN = 400
 
     def __init__(self):
-        super().__init__([1, 1])
+        super().__init__([1, 1.5])
         self.animation_i = 0
         self.frame_cooldown = 0
 
@@ -48,8 +48,8 @@ class EnemyShielder(Enemy):
             pygame.Rect(
                 self.tile_size * self.animation_i,
                 0,
-                self.tile_size,
-                self.tile_size
+                self.tile_size * self.width,
+                self.tile_size * self.height
             )
         )
 
@@ -68,28 +68,28 @@ class EnemyShielder(Enemy):
         cls.__SURFACE_UP = pygame.transform.smoothscale(
             cls.__BASE_UP_SURFACE,
             (
-                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
-                cls._HEIGHT * cls.tile_size
+                int(cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH),
+                int(cls._HEIGHT * cls.tile_size)
             )
         )
         cls.__SURFACE_DOWN = pygame.transform.smoothscale(
             cls.__BASE_DOWN_SURFACE,
             (
-                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
-                cls._HEIGHT * cls.tile_size
+                int(cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH),
+                int(cls._HEIGHT * cls.tile_size)
             )
         )
         cls.__SURFACE_LEFT = pygame.transform.smoothscale(
             cls.__BASE_LEFT_SURFACE,
             (
-                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
-                cls._HEIGHT * cls.tile_size
+                int(cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH),
+                int(cls._HEIGHT * cls.tile_size)
             )
         )
         cls.__SURFACE_RIGHT = pygame.transform.smoothscale(
             cls.__BASE_RIGHT_SURFACE,
             (
-                cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH,
-                cls._HEIGHT * cls.tile_size
+                int(cls._WIDTH * cls.tile_size * cls._ANIMATION_LENGTH),
+                int(cls._HEIGHT * cls.tile_size)
             )
         )

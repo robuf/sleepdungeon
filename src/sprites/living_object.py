@@ -24,7 +24,7 @@ class LivingObject(Sprite):
     # initialisieren
     def __init__(self, size):
         super().__init__()
-        self.z_index = ZIndex.PLAYGROUND
+        self.z_index = ZIndex.PLAYGROUND + 1
         self.width, self.height = size
 
         self.facing: Facing = Facing.FACING_UP
@@ -80,6 +80,8 @@ class LivingObject(Sprite):
         self.position = new_pos
         self.move_cooldown_current = self._MOVE_COOLDOWN
         self.moving = True
+
+        self.z_index = ZIndex.PLAYGROUND + self.position.y
 
     def swap(self):
         if self.move_cooldown_current > 0:
@@ -172,6 +174,7 @@ class LivingObject(Sprite):
     def rect(self) -> pygame.Rect:
         rect = super().rect
 
+        rect.move_ip(0, -self.tile_size // 2)
         if self.moving:
             progress = LivingObject.ease(self.move_cooldown_current / self._MOVE_COOLDOWN)
             if self.facing == Facing.FACING_UP:
