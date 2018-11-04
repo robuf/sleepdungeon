@@ -1,6 +1,6 @@
 import pygame
 
-from src import RenderContext
+from ..render_context import RenderContext
 from ..base.context import Context
 from ..base.game_constants import SpriteType, Facing
 from ..base.sprite import Sprite

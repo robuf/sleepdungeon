@@ -2,5 +2,5 @@
 
 Run this project:
 ```bash
-python3 bin/game
+python3 bin/sleepdungeon
 ```

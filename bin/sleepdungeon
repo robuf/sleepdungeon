@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 try:
-	import src
+	import sleepdungeon
 except ImportError:
 	# Module is not installed.
 	import inspect
@@ -15,8 +15,8 @@ except ImportError:
 	)
 	import sys
 	sys.path.insert(0, str(directory.parent))
-	import src
+	import sleepdungeon
 
 
 if __name__ == "__main__":
-	src.GameJam20().main()
+	sleepdungeon.GameJam20().main()
