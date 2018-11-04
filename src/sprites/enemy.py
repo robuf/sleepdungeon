@@ -38,6 +38,9 @@ class Enemy(LivingObject):
     def update(self, context):
         super().update(context)
 
+        if self.move_cooldown_current > 0:
+            return
+
         if self.can_attack(context, SpriteType.PLAYER):
             self.attack(context, SpriteType.PLAYER)
             return
@@ -47,10 +50,10 @@ class Enemy(LivingObject):
         source = self.position.x, self.position.y, self.facing.value
         target = player.position.x, player.position.y
         obstacles = [(sprite.position.x, sprite.position.y)
-                for sprite in context.sprites
-                    if (sprite != self and
-                        sprite.sprite_type not in Enemy.IGNORED_TYPES)
-            ]
+                     for sprite in context.sprites
+                     if (sprite != self and
+                         sprite.sprite_type not in Enemy.IGNORED_TYPES)
+                     ]
         doors = [tuple(door.center) for door in context.sprites.find_by_type(SpriteType.DOOR)]
 
         path = find_path(
