@@ -37,8 +37,7 @@ class EnemyArcher(Enemy):
 
         self.target_distance = 3
 
-    @property
-    def image(self):
+    def _image(self) -> pygame.Surface:
         img = None
         if self.facing == Facing.FACING_UP:
             img = EnemyArcher.__SURFACE_UP

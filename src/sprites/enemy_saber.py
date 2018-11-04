@@ -37,8 +37,7 @@ class EnemySaber(Enemy):
         self.selected_weapon = Sword()
         self.weapon_list = [self.selected_weapon]
 
-    @property
-    def image(self):
+    def _image(self) -> pygame.Surface:
         img = None
         if self.facing == Facing.FACING_UP:
             img = EnemySaber.__SURFACE_UP

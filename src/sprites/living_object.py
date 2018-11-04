@@ -27,6 +27,8 @@ class LivingObject(Sprite):
         self.move_cooldown_current = 0
         self.animation_cooldown = 0
 
+        self.damage_current = 0
+
         self.weapon_list: List[Weapon] = []
         self.selected_weapon = None
 
@@ -93,6 +95,11 @@ class LivingObject(Sprite):
                 self.animation_i = 0
         self.animation_cooldown -= context.delta_t
 
+        if self.damage_current > 0:
+            self.damage_current -= context.delta_t
+            if self.damage_current < 0:
+                self.damage_current = 0
+
         if self.move_cooldown_current > 0:
             self.move_cooldown_current -= context.delta_t
 
@@ -110,12 +117,32 @@ class LivingObject(Sprite):
     def damage(self, context: Context, damage: int):
         self.lifes -= damage
         # print(str(type(self)) + " has " + str(self.lifes) + " left")
+        self.damage_current = 200
+
+        if damage > 0:
+            pass
 
         if self.lifes <= 0:
             self.die(context)
 
     def die(self, context: Context):
         context.remove_sprite(self)
+
+    def _image(self) -> pygame.Surface:
+        return None
+
+    @property
+    def image(self):
+        image = self._image()
+
+        if self.damage_current > 0:
+            image = image.copy()
+            overlay = pygame.Surface((50, 50))
+            overlay.fill(pygame.Color(255, 50, 50, 1))
+
+            image.blit(overlay, (0, 0), special_flags=pygame.BLEND_MULT)
+
+        return image
 
     @property
     def bounding_box(self) -> pygame.Rect:
