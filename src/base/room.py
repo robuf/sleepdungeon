@@ -5,7 +5,7 @@ from ..sprites.door import Door
 from ..sprites.stair import Stair
 from ..sprites.background import Background
 from ..sprites.player import Player
-from ..sprites.stone import Stone
+from ..sprites.stone import Stone, BreakableStone
 from .sprite import Sprite
 from .sprites import Sprites
 from ..sprites.key import Key, KeyType
@@ -118,6 +118,9 @@ class Room(object):
 
             if t == "STONE":
                 return Stone(x, y)
+
+            if t == "BREAKABLE":
+                return BreakableStone(x, y)
 
         elif token[0] == "GHOST":
             t = token[1]

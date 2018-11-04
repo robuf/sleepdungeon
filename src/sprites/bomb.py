@@ -5,6 +5,7 @@ from ..base.sprite import SpriteType
 from ..base.sprites import Sprites
 from ..base.position import Position
 from ..base.game_constants import Facing
+from .stone import BreakableStone
 from typing import List
 
 
@@ -38,7 +39,9 @@ class DetonatingBomb(Item):
             sprites = context.sprites.find_by_pos(point)
             for sprite in sprites:
                 if sprite.sprite_type == SpriteType.ENEMY or sprite.sprite_type == SpriteType.PLAYER:
-                    sprite.damage(context, 2)
+                    sprite.damage(context, 4)
+                elif isinstance(sprite, BreakableStone):
+                    context.sprites.remove(sprite)
 
         context.sprites.remove(self)
 
