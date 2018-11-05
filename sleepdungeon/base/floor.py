@@ -13,8 +13,9 @@ class Floor(object):
 
     def take_player_properties(self, old_player):
         for player in self.initial_room.sprites.find_by_type(SpriteType.PLAYER):
-            player.selected_weapon = old_player.selected_weapon
-
+            for weapon in player.weapon_list:
+                if type(weapon) == type(old_player.selected_weapon):
+                    player.selected_weapon = weapon
 
     @property
     def initial_room(self) -> Room:
