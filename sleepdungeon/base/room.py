@@ -27,7 +27,7 @@ import os
 class Room(object):
     def __init__(self, path):
         self.name = os.path.split(path)[1].split(".")[0]
-        self.music = "music1"
+        self.music = "levelsoundtrack"
         self.sprites = Sprites()
         with open(path, 'r') as f:
             for line in f.readlines():
