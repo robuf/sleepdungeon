@@ -9,9 +9,9 @@ at the TU Dresden. Its is written in python3 with pygame.
 python3 bin/sleepdungeon
 ```
 
-### Credits
+## Credits
 
-#### Music
+### Music
 
 [levelsoundtrack](/sleepdungeon/res/sound/levelsoundtrack.ogg) is a slightly modified version of
 [La Calahorra](http://freemusicarchive.org/music/Rolemusic/~/calahorra) by 
