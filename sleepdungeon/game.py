@@ -15,7 +15,7 @@ from .base.game_constants import SpriteType
 from .level_loader import LevelLoader
 from .sprites.sidebar import SideBar
 from .base.music_manager import MusicManager
-
+from .main_menu import MainMenu
 
 
 class Game(object):
@@ -34,23 +34,24 @@ class Game(object):
         # print("Scale acceleration: " + pygame.transform.get_smoothscale_backend())
 
     def load(self):
-        self.context = Context()
+        Sprite._update_render_context(self.render_context)
+        menu = MainMenu.create_menu()
         self.floors = LevelLoader().load_levels()
-        self.current_floor = self.floors[0]
+        self.floors.append(menu)
+        self.current_floor = menu
         self.current_room = self.current_floor.initial_room
         self.sidebar = SideBar()
         MusicManager.playmusic(self.current_room.music)
         if not self.current_floor.menu:
             self.current_room.sprites.append(self.sidebar)
 
-        Sprite._update_render_context(self.render_context)
 
     def set_floor(self, floor_name):
         was_menu = self.current_floor.menu
         for floor in self.floors:
             if floor.name == floor_name:
                 self.current_floor = floor
-        if not was_menu:
+        if not was_menu and not self.current_floor.menu:
             for player in self.current_room.sprites.find_by_type(SpriteType.PLAYER):
                 self.current_floor.take_player_properties(player)
 
@@ -93,7 +94,7 @@ class Game(object):
         for sprite in self.context.sprites:
             sprite.update(self.context)
             if self.context.lost:
-                self.load()
+                self.set_floor("main_menu")
                 return
 
     def render(self):
