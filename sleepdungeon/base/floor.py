@@ -6,10 +6,11 @@ from .game_constants import SpriteType
 
 
 class Floor(object):
-    def __init__(self, name: str):
+    def __init__(self, name: str, initial_room: Room = None):
         self.name = name
-        self.rooms = []
-
+        self.menu = False
+        self.rooms = [initial_room] if initial_room else []
+        self._initial_room = initial_room
 
     def take_player_properties(self, old_player):
         for player in self.initial_room.sprites.find_by_type(SpriteType.PLAYER):
@@ -19,6 +20,8 @@ class Floor(object):
 
     @property
     def initial_room(self) -> Room:
+        if self._initial_room:
+            return self._initial_room
         for room in self.rooms:
             if room.sprites.find_by_type(SpriteType.PLAYER):
                 return room

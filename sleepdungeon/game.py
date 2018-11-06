@@ -40,23 +40,29 @@ class Game(object):
         self.current_room = self.current_floor.initial_room
         self.sidebar = SideBar()
         MusicManager.playmusic(self.current_room.music)
-        self.current_room.sprites.append(self.sidebar)
+        if not self.current_floor.menu:
+            self.current_room.sprites.append(self.sidebar)
 
         Sprite._update_render_context(self.render_context)
 
     def set_floor(self, floor_name):
+        was_menu = self.current_floor.menu
         for floor in self.floors:
             if floor.name == floor_name:
                 self.current_floor = floor
-        for player in self.current_room.sprites.find_by_type(SpriteType.PLAYER):
-            self.current_floor.take_player_properties(player)
-        self.set_room(floor.initial_room.name)
+        if not was_menu:
+            for player in self.current_room.sprites.find_by_type(SpriteType.PLAYER):
+                self.current_floor.take_player_properties(player)
+
+
+        self.set_room(self.current_floor.initial_room.name)
 
     def set_room(self, room_name):
         self.current_room = self.current_floor.get_room(room_name)
         MusicManager.playmusic(self.current_room.music)
         self.context.block_doors = True
-        self.current_room.sprites.append(self.sidebar)
+        if not self.current_floor.menu:
+            self.current_room.sprites.append(self.sidebar)
 
     def update(self):
         events = pygame.event.get()
