@@ -299,7 +299,7 @@ class Player(LivingObject):
                 context.sprites.remove(item)
                 self.hp_ups += 1
 
-                self.heal(1)
+                self.heal(Hpup._HEAL)
 
             elif isinstance(item, Dmgup):
                 context.sprites.remove(item)

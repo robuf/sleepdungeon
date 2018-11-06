@@ -24,6 +24,9 @@ import random
 # Leben, Items
 
 class LivingObject(Sprite):
+    _DROP_HEART_CHANCE = 30
+    _DROP_BOMB_CHANCE = 10
+    _DROP_POWERUP_CHANCE = 2
 
     # initialisieren
     def __init__(self, size):
@@ -204,7 +207,12 @@ class LivingObject(Sprite):
     def die(self, context: Context):
         # Nach enemy filtern
         if self.max_lifes < 6:
-            self.drop(context, 30, 10, 2)
+            self.drop(
+                context,
+                self._DROP_HEART_CHANCE,
+                self._DROP_BOMB_CHANCE,
+                self._DROP_POWERUP_CHANCE
+            )
         context.remove_sprite(self)
 
     def drop(self, context: Context, heart_chance, bomb_chance, power_up_chance):
