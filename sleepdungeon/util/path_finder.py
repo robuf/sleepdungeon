@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-
+from random import shuffle
 from typing import Tuple, List, Optional, Dict
 from enum import Enum
 
@@ -9,7 +9,9 @@ Entity = Tuple[int, int, int]
 
 
 def __find_next_points(point: Point) -> List[Point]:
-    return [(point[0] + 1, point[1]), (point[0] - 1, point[1]), (point[0], point[1] + 1), (point[0], point[1] - 1)]
+    l = [(point[0] + 1, point[1]), (point[0] - 1, point[1]), (point[0], point[1] + 1), (point[0], point[1] - 1)]
+    shuffle(l)
+    return l
 
 
 def get_border_with_obstacles(obstacles: List[Point], doors: List[Point] = []) -> List[Point]:
@@ -27,19 +29,17 @@ def get_border_with_obstacles(obstacles: List[Point], doors: List[Point] = []) -
                 continue
             copy.append((x, y))
 
-
     for x in (0, 12):
         for y in range(0, 9):
-            for door in doors:
-                if (x, y) in doors:
-                    # These are additional obstacles behind the doors.
-                    # They prevent enemies from leaving the room.
-                    if x == 0:
-                        copy.append((-1, y))
-                    else:
-                        copy.append((13, y))
-                    continue
-                copy.append((x, y))
+            if (x, y) in doors:
+                # These are additional obstacles behind the doors.
+                # They prevent enemies from leaving the room.
+                if x == 0:
+                    copy.append((-1, y))
+                else:
+                    copy.append((13, y))
+                continue
+            copy.append((x, y))
 
     # print(copy)
 
@@ -68,6 +68,8 @@ def find_path(source: Entity, target: Point, obstacles: List[Point], distance: i
                     change = True
                     parent[n] = p
                     new.append(n)
+
+        shuffle(new)
 
         for n in new:
             if n[0] == target[0] and abs(n[1] - target[1]) == distance:
