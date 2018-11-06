@@ -20,7 +20,9 @@ each with individual skills and experiences developed the game:
  - [Lars Westermann](https://github.com/pixix4) - Coding  
 
 
-## How to start the game:
+## How to play the game:
+
+### Installing and running
 
 Make sure you have Python3 and PyGame installed, then run
 
@@ -28,9 +30,22 @@ Make sure you have Python3 and PyGame installed, then run
 python3 bin/sleepdungeon
 ```
 
+### Controlls
+
 Use **W**, **A**, **S**, **D** or the **Arrow-Keys** to move the player. Change between
 bow and sword with **E**. Attack the enemies with
 the **Spacebar**. If you have a bomb in your inventory - plant it with **Q**.
+
+### Main menu
+
+You can play the game in 3 different difficulties.
+The left enemy (shielder) is easy, you will find many hearts and they will heal 2 health points.
+
+The archer in the middle is the original mode and
+the saber to the left is the hard mode - you will
+find only a few hearts.
+
+### Gameplay
 
 Collect all five keys and the motivating boss key to reach the final room.
 
