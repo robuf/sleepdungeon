@@ -5,7 +5,7 @@ SleepDungeon is a simple dungeon crawler and the result of a 48 hours game jam.
 The game is written in Python3 and PyGame. It features simple but nice 2D
 graphics and challenges you with 30 rooms over two levels.
 
-![A screenshot of the first room in the game](doc/screenshots/tutorial.jpeg)
+![A wallpaper for the game](doc/title_image.png)
 
 The origin of the project was the [2. GameJam der Falkultät Informatik](https://imld.de/gamejam/)
 at the TU Dresden.
@@ -34,7 +34,12 @@ the **Spacebar**. If you have a bomb in your inventory - plant it with **Q**.
 
 Collect all five keys and the motivating boss key to reach the final room.
 
+Heal your player with hearts and collect upgrades to become stronger and faster.
+
 The game also supports joysticks.
+
+The first level is a little turtorial to get used to the game play.
+![A screenshot of the first room in the game](doc/screenshots/tutorial.jpeg)
 
 ## Repository
 
@@ -46,6 +51,10 @@ Meanwhile the **original** branch contains the version that was created at the G
 
 The level design is documented in [this file](sleepdungeon/res/lvl/01/rooms). There also exists an early sketch of the level design:
 ![an early hand drawn sketch of the levels](doc/map-sketch_normal.jpeg)
+
+## Why is this game called SleepDungeon
+
+The name of the game is derived from the name of our team, **"Team sleep"** and the genre of the game.
 
 ## Credits
 
