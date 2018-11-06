@@ -25,10 +25,18 @@ import os
 
 
 class Room(object):
-    def __init__(self, path):
-        self.name = os.path.split(path)[1].split(".")[0]
+    def __init__(self, path: str, name: str = None):
         self.music = "levelsoundtrack"
         self.sprites = Sprites()
+
+        if not path:
+            if not name:
+                raise Exception("This rooms has no path or name")
+            self.name = name
+            return
+
+        self.name = name if name else os.path.split(path)[1].split(".")[0]
+
         with open(path, 'r') as f:
             for line in f.readlines():
                 line = line.strip()
