@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
+import random
 
 from .living_object import LivingObject
 from ..base.game_constants import SpriteType
@@ -71,12 +72,26 @@ class Enemy(LivingObject):
             while len(path) > 0:
                 step = path.pop(0)
                 if step.type == ActionType.TURN:
+                    self.moving = False
                     facing = Facing(step.direction)
 
                 elif step.type == ActionType.MOVE:
                     self.move(facing, context)
                     return
-            self.facing = facing
+            if self.facing != facing:
+                self.moving = False
+                self.facing = facing
+                self.move_cooldown_current = self._MOVE_COOLDOWN
+        else:
+            self.moving = False
+            rand = random.random()
+            if rand < 0.1:
+                self.move(self.facing, context)
+            elif rand < 0.3:
+                self.facing = random.choice(list(Facing))
+                self.move_cooldown_current = self._MOVE_COOLDOWN
+            else:
+                self.move_cooldown_current = self._MOVE_COOLDOWN
 
     @property
     def sprite_type(self) -> SpriteType:
