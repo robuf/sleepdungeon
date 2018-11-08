@@ -100,7 +100,11 @@ class Game(object):
     def render(self):
         self.render_context.screen.fill((200, 200, 100))
         for sprite in self.context.sprites.by_z_index:
-            self.render_context.screen.blit(sprite.image, sprite.rect)
+            img = sprite.image
+            rect = sprite.rect
+            if img is None or rect is None:
+                continue
+            self.render_context.screen.blit(img, rect)
 
     def game(self):
         self.load()
