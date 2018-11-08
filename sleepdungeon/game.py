@@ -94,6 +94,8 @@ class Game(object):
         for sprite in self.context.sprites:
             sprite.update(self.context)
             if self.context.lost:
+                self.context.lost = False
+                self.load()
                 self.set_floor("main_menu")
                 return
 
