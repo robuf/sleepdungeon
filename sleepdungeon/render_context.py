@@ -14,6 +14,7 @@ class RenderContext(object):
         self.screen: pygame.Surface = None
         self.tile_size = 0
         self.sidebar_width = 0
+        self.scaling = 1
 
         self.resize(resolution)
 
@@ -34,3 +35,4 @@ class RenderContext(object):
         self.screen = pygame.display.set_mode(self.resolution, pygame.RESIZABLE | pygame.HWSURFACE | pygame.DOUBLEBUF)
         self.tile_size = self.resolution[1] // 9
         self.sidebar_width = self.resolution[0] - 13 * self.tile_size
+        self.scaling = self.tile_size / 50

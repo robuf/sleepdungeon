@@ -13,6 +13,7 @@ class Sprite(ABC):
     __sprites = set()
     tile_size = 32
     sidebar_width = 0
+    scaling = 1
     __RENDER_CONTEXT = None
 
     def __init__(self):
@@ -33,6 +34,7 @@ class Sprite(ABC):
         Sprite.__RENDER_CONTEXT = render_context
         Sprite.sidebar_width = render_context.sidebar_width
         Sprite.tile_size =  render_context.tile_size
+        Sprite.scaling = render_context.scaling
 
         for sprite_class in Sprite.__sprites:
             sprite_class.update_render_context(render_context)

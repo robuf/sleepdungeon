@@ -38,11 +38,11 @@ the **Spacebar**. If you have a bomb in your inventory - plant it with **Q**.
 
 ### Main menu
 
-You can play the game in 3 different difficulties.
-The left enemy (shielder) is easy, you will find many hearts and they will heal 2 health points.
+You can play the game in 3 different difficulties:
 
-The archer in the middle is the original mode and
-the saber to the left is the hard mode - you will
+**Easy**, you will find many hearts and they will heal 2 health points.
+
+**Original mode**, just as intented by the team and **hard mode** - you will
 find only a few hearts.
 
 ### Gameplay

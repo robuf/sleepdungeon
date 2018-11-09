@@ -31,6 +31,7 @@ class Arrow(Sprite):
         damage: float
     ):
         super().__init__()
+        self.z_index = 10
         self.position = pos
         self.facing = facing
         self.range = range
