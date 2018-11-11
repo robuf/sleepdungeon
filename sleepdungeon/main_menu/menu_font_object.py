@@ -22,9 +22,10 @@ class MenuFontObject(Sprite):
     _WIDTH = 0
     _ANIMATION_LENGTH = 500
     _HEIGHT = 0
+
     def __init__(self, text: str, pos: List[int], visible = False):
         super().__init__()
-        self.z_index = 10
+        self.z_index = 128
         self.text = text
         self.new_text = None
         self.pos = pos
@@ -77,7 +78,7 @@ class MenuFontObject(Sprite):
         cls._HEIGHT = cls.__FONT.size(CHARSET)[1]
 
         for c in CHARSET:
-            cls.__GLYPHS[c] = cls.__FONT.render(c, True, (20,20,20))
+            cls.__GLYPHS[c] = cls.__FONT.render(c, True, (255, 255, 255))
 
     @property
     def image(self) -> pygame.Surface:

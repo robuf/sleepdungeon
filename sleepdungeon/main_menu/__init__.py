@@ -15,20 +15,22 @@ from .menu_font_object import MenuFontObject
 
 import pygame
 
+
 class MainMenu(Sprite):
     __BASE_BACKGROUND: pygame.Surface = None
     __BACKGROUND: pygame.Surface = None
     __RECT: pygame.Rect = None
+
     def __init__(self):
         super().__init__()
         self.z_index = 64
 
         self.btns = [
-            MenuFontObject("EASY", (120, 70), True),
-            MenuFontObject("ORIGINAL", (110, 140)),
-            MenuFontObject("HARDMODE", (130, 210)),
-            MenuFontObject("SOUND ON", (125, 280)),
-            MenuFontObject("EXIT", (145, 350))
+            MenuFontObject("EASY", (160, 150), True),
+            MenuFontObject("ORIGINAL", (160, 210)),
+            MenuFontObject("HARDMODE", (160, 270)),
+            MenuFontObject("SOUND ON", (160, 330)),
+            MenuFontObject("EXIT", (160, 390))
         ]
         self.initial_ticks = 5
         self.cooldown = 0
@@ -56,7 +58,6 @@ class MainMenu(Sprite):
             context.change_level = "00"
             self.start = False
             return
-
 
         for event in context.input_events:
             if event == InputEvent.ATTACK:
