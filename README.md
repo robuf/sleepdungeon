@@ -30,6 +30,9 @@ Make sure you have Python3 and PyGame installed, then run
 python3 bin/sleepdungeon
 ```
 
+If you are too lazy for this and use windows, you can also download
+[a binary for windows](https://sleepdungeon.de/downloads/sleepdungeon.zip).
+
 ### Controlls
 
 Use **W**, **A**, **S**, **D** or the **Arrow-Keys** to move the player. Change between
