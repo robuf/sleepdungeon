@@ -49,7 +49,8 @@ class MainMenu(Sprite):
             return
 
         if self.exit:
-            exit()
+            context.change_level = "exit"
+            return
 
         if self.start:
             context.change_level = "00"

@@ -85,6 +85,9 @@ class Game(object):
             self.context.change_room = None
 
         if self.context.change_level is not None:
+            if self.context.change_level == "exit":
+                self.running = False
+                return
             self.set_floor(self.context.change_level)
             self.context.change_level = None
 
