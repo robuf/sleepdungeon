@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import Tuple
+from .res import IMG_DIR
 
 import pygame
 
@@ -9,6 +10,9 @@ import pygame
 class RenderContext(object):
     def __init__(self, resolution: Tuple[int, int]):
         pygame.display.set_caption("GameJam2 - Dungeon")
+        pygame.display.set_icon(
+            pygame.image.load(IMG_DIR + "icon.png")
+        )
 
         self.resolution: Tuple[int, int] = (0, 0)
         self.screen: pygame.Surface = None
