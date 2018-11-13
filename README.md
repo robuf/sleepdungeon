@@ -19,6 +19,8 @@ each with individual skills and experiences developed the game:
  - [Robert Ludwig](https://github.com/MinniFlo) - Graphic design
  - [Lars Westermann](https://github.com/pixix4) - Coding  
 
+A short post with a let's play of the games tutorial is also available on
+[Karstens blog (German)](https://blog.kalehmann.de/blog/2018/09/29/sleepdungeon.html).
 
 ## How to play the game:
 
@@ -32,6 +34,9 @@ python3 bin/sleepdungeon
 
 If you are too lazy for this and use windows, you can also download
 [a binary for windows](https://sleepdungeon.de/downloads/sleepdungeon.zip).
+
+There is also an
+[app for macOS available](https://sleepdungeon.de/downloads/SleepDungeon.dmg).
 
 ### Controlls
 
