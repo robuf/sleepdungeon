@@ -38,7 +38,7 @@ If you are too lazy for this and use windows, you can also download
 There is also an
 [app for macOS available](https://sleepdungeon.de/downloads/SleepDungeon.dmg).
 
-### Controlls
+### Controls
 
 Use **W**, **A**, **S**, **D** or the **Arrow-Keys** to move the player. Change between
 bow and sword with **E**. Attack the enemies with
@@ -50,7 +50,7 @@ You can play the game in 3 different difficulties:
 
 **Easy**, you will find many hearts and they will heal 2 health points.
 
-**Original mode**, just as intented by the team and **hard mode** - you will
+**Original mode**, just as intended by the team and **hard mode** - you will
 find only a few hearts.
 
 ### Gameplay
@@ -61,7 +61,7 @@ Heal your player with hearts and collect upgrades to become stronger and faster.
 
 The game also supports joysticks.
 
-The first level is a little turtorial to get used to the game play.
+The first level is a little tutorial to get used to the game play.
 ![A screenshot of the first room in the game](doc/screenshots/tutorial.jpeg)
 
 ## Repository
