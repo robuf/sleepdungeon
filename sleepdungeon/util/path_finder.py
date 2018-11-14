@@ -47,6 +47,18 @@ def get_border_with_obstacles(obstacles: List[Point], doors: List[Point] = []) -
 
 
 def find_path(source: Entity, target: Point, obstacles: List[Point], distance: int = 0) -> Optional[List['Action']]:
+    while distance >= 0:
+        p = find_path_internal(source, target, obstacles, distance)
+
+        if p is not None:
+            return p
+        distance -= 1
+
+    return None
+
+
+def find_path_internal(source: Entity, target: Point, obstacles: List[Point], distance: int = 0) -> Optional[
+    List['Action']]:
     source_point = source[0], source[1]
     real_target: Point = target
 
