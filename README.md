@@ -20,7 +20,7 @@ each with individual skills and experiences developed the game:
  - [Lars Westermann](https://github.com/pixix4) - Coding  
 
 A short post with a let's play of the games tutorial is also available on
-[Karstens blog (German)](https://blog.kalehmann.de/blog/2018/09/29/sleepdungeon.html).
+[Karstens blog (German)](https://blog.kalehmann.de/blog/2018/11/11/sleepdungeon.html).
 
 ## How to play the game:
 
