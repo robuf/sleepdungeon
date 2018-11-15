@@ -26,11 +26,11 @@ class MainMenu(Sprite):
         self.z_index = 64
 
         self.btns = [
-            MenuFontObject("EASY", (160, 150), True),
-            MenuFontObject("ORIGINAL", (160, 210)),
-            MenuFontObject("HARDMODE", (160, 270)),
-            MenuFontObject("SOUND ON", (160, 330)),
-            MenuFontObject("EXIT", (160, 390))
+            MenuFontObject("EASY", (160, 130), True),
+            MenuFontObject("ORIGINAL", (160, 190)),
+            MenuFontObject("HARDMODE", (160, 250)),
+            MenuFontObject("SOUND ON", (160, 310)),
+            MenuFontObject("EXIT", (160, 370)),
         ]
         self.initial_ticks = 5
         self.cooldown = 0
@@ -82,11 +82,11 @@ class MainMenu(Sprite):
                     self.btns[self.selected].blend_out()
                 elif self.selected == 3:
                     if self.sound:
-                        self.btns[3].renew_text("SOUND OFF")
+                        self.btns[self.selected].renew_text("SOUND OFF")
                         self.sound = False
                         MusicManager.set_sound(False)
                     else:
-                        self.btns[3].renew_text("SOUND ON")
+                        self.btns[self.selected].renew_text("SOUND ON")
                         MusicManager.set_sound(True)
                         self.sound = True
                 elif self.selected == 4:
