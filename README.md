@@ -13,7 +13,7 @@ at the TU Dresden.
 During the 48 hours of the GameJam the following five members of our team,
 each with individual skills and experiences developed the game:
 
- - [Robert Ufer](https://github.com/r0bertu) - Coding
+ - [Robert Ufer](https://github.com/robuf) - Coding
  - [Martin Oehme](https://github.com/MartinOehme) - Level design and coding
  - [Karsten Lehmann](https://kalehmann.de) - Coding
  - [Robert Ludwig](https://github.com/MinniFlo) - Graphic design
