@@ -326,7 +326,7 @@ class Player(LivingObject):
 
         if self.bomb_count <= 0:
             return
-
-        self.bomb_count -= 1
-        det_bomb = DetonatingBomb(self.position.x, self.position.y)
-        context.sprites.append(det_bomb)
+        if (0 < self.position.x < 12) & (0 < self.position.y < 8):
+            self.bomb_count -= 1
+            det_bomb = DetonatingBomb(self.position.x, self.position.y)
+            context.sprites.append(det_bomb)
